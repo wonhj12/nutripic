@@ -5,7 +5,7 @@ import 'package:nutripic/utils/app_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: '.env');
+  await dotenv.load();
   await Firebase.initializeApp();
 
   runApp(const MainApp());
