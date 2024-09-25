@@ -8,6 +8,15 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+// .env 설정
+def dotenv = new Properties()
+def envFile = file("${rootProject.projectDir}/../.env")
+if (envFile.exists()) {
+    envFile.withInputStream { stream -> dotenv.load(stream) }
+} else {
+    throw new FileNotFoundException("Could not find .env file at ${envFile.path}")
+}
+
 android {
     namespace = "com.devkor.nutripic"
     compileSdk = flutter.compileSdkVersion
@@ -31,6 +40,13 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // AndroidManifest .env 설정
+        def kakaoKey = dotenv['KAKAO_NATIVE_APP_KEY']
+        if (kakaoKey == null) {
+            throw new GradleException("KAKAO_NATIVE_APP_KEY not found in .env")
+        }
+        manifestPlaceholders += [KAKAO_NATIVE_APP_KEY: kakaoKey]
     }
 
     buildTypes {
