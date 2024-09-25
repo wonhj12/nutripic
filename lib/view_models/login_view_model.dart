@@ -67,6 +67,9 @@ class LoginViewModel with ChangeNotifier {
 
   /// 카카오 로그인
   Future<kakao.User?> _kakaoLogin() async {
+    // 카카오 키 해시 확인을 위한 로그 (필요시 주석 해제 후 사용)
+    // debugPrint(await kakao.KakaoSdk.origin);
+
     try {
       // 카카오톡이 설치되어있으면 카카오톡으로 로그인 진행
       // 카카오톡이 없으면 카카오 계정으로 로그인 진행
