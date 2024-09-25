@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginViewModel with ChangeNotifier {
@@ -8,6 +9,7 @@ class LoginViewModel with ChangeNotifier {
   LoginViewModel({required this.context});
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final kakao.UserApi _kakaoApi = kakao.UserApi.instance;
 
   String email = '';
   String password = '';
@@ -23,6 +25,7 @@ class LoginViewModel with ChangeNotifier {
         user = await _emailLogin();
       // 카카오
       case 1:
+        await _kakaoLogin();
         break;
       // 구글
       case 2:
@@ -62,6 +65,25 @@ class LoginViewModel with ChangeNotifier {
     }
   }
 
+  /// 카카오 로그인
+  Future<kakao.User?> _kakaoLogin() async {
+    try {
+      // 카카오톡이 설치되어있으면 카카오톡으로 로그인 진행
+      // 카카오톡이 없으면 카카오 계정으로 로그인 진행
+      if (await kakao.isKakaoTalkInstalled()) {
+        await _kakaoApi.loginWithKakaoTalk();
+      } else {
+        await _kakaoApi.loginWithKakaoAccount();
+      }
+      final user = await _kakaoApi.me();
+
+      return user;
+    } catch (e) {
+      debugPrint('Error in _kakaoLogin: $e');
+      return null;
+    }
+  }
+
   /// 구글 로그인
   Future<User?> _googleLogin() async {
     try {
@@ -85,7 +107,6 @@ class LoginViewModel with ChangeNotifier {
           await _firebaseAuth.signInWithCredential(credential);
       final user = userCredential.user;
 
-      print(user);
       return user;
     } on FirebaseAuthException catch (e) {
       // https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth/signInWithCredential.html
