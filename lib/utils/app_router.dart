@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/home_view_model.dart';
 import 'package:nutripic/view_models/login_view_model.dart';
 import 'package:nutripic/views/home_view.dart';
@@ -7,9 +8,10 @@ import 'package:nutripic/views/login_view.dart';
 import 'package:provider/provider.dart';
 
 class AppRouter {
-  AppRouter();
+  final UserModel userModel;
+  AppRouter({required this.userModel});
 
-  static GoRouter getRouter() {
+  static GoRouter getRouter(UserModel userModel) {
     return GoRouter(
       initialLocation: '/login',
       redirect: (context, state) {
