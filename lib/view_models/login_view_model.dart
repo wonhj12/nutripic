@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -41,7 +42,10 @@ class LoginViewModel with ChangeNotifier {
 
     // Firebase 로그인 성공시 유저 정보 저장 및 서버에 유저 정보 요청
     // 토큰 저장
-    if (user != null) {}
+    // 홈으로 이동
+    if (user != null) {
+      if (context.mounted) context.go('/home');
+    }
   }
 
   /// 이메일 로그인
