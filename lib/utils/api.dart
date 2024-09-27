@@ -104,7 +104,7 @@ class API {
         debugPrint('DELETE 요청 실패: (${response.statusCode})${response.body}');
       }
 
-      return response.statusCode;
+      return response;
     } catch (e) {
       debugPrint('DELETE 요청 중 예외 발생: $e');
       return;
