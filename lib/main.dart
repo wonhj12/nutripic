@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,7 +12,19 @@ Future<void> main() async {
   await Firebase.initializeApp();
   KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']);
 
+  // 가능하다면 자동 로그인 진행
+  await autoLogin();
+
   runApp(const MainApp());
+}
+
+/// Firebase 로그인 정보가 있는지 확인 후 있다면 사용자 정보를 모델에 저장하는 함수
+Future<void> autoLogin() async {
+  // Firebase 로그인이 된 상태라면 서버에서 사용자 정보 요청
+  if (FirebaseAuth.instance.currentUser != null) {
+    userModel.uid = FirebaseAuth.instance.currentUser!.uid;
+    userModel.name = FirebaseAuth.instance.currentUser!.displayName;
+  }
 }
 
 // 모델

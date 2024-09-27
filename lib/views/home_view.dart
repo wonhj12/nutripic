@@ -18,7 +18,7 @@ class _HomeViewState extends State<HomeView> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Center(child: Text('asdf')),
+          Center(child: Text(homeViewModel.userModel.name ?? 'null')),
           ElevatedButton(
             onPressed: () => homeViewModel.logout(),
             child: const Text('로그아웃'),

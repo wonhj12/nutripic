@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/home_view_model.dart';
@@ -15,10 +14,9 @@ class AppRouter {
     return GoRouter(
       initialLocation: '/login',
       redirect: (context, state) {
-        User? user = FirebaseAuth.instance.currentUser;
-
-        // Firebase 로그인이 된 상태라면 홈으로 이동, 아니면 로그인 화면으로 이동
-        if (user == null) {
+        // 사용자 데이터가 있으면 firebase 로그인이 완료된 상태
+        // 사용자 데이터가 없으면 로그인 화면으로 이동, 있으면 홈 화면으로 이동
+        if (userModel.uid == null) {
           return '/login';
         } else if (state.fullPath == '/login') {
           return '/home';
@@ -31,7 +29,10 @@ class AppRouter {
         GoRoute(
           path: '/login',
           builder: (context, state) => ChangeNotifierProvider(
-            create: (context) => LoginViewModel(context: context),
+            create: (context) => LoginViewModel(
+              userModel: userModel,
+              context: context,
+            ),
             child: const LoginView(),
           ),
         ),
@@ -40,7 +41,10 @@ class AppRouter {
         GoRoute(
           path: '/home',
           builder: (context, state) => ChangeNotifierProvider(
-            create: (context) => HomeViewModel(context: context),
+            create: (context) => HomeViewModel(
+              userModel: userModel,
+              context: context,
+            ),
             child: const HomeView(),
           ),
         )
