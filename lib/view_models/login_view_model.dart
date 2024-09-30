@@ -42,13 +42,10 @@ class LoginViewModel with ChangeNotifier {
         break;
     }
 
-    // Firebase 로그인 성공시 사용자 정보 저장 및 서버에 사용자 정보 요청
-    // 토큰 저장
-    // 홈으로 이동
+    // Firebase 로그인 성공시 UserModel에 사용자 데이터 저장 후 홈으로 이동
     if (user != null) {
       // User Model에 사용자 정보 저장
-      userModel.uid = user.uid;
-      userModel.name = user.displayName;
+      userModel.fromFirebaseUser(user);
 
       if (context.mounted) context.go('/home');
     }
