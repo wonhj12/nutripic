@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:nutripic/view_models/diary_view_model.dart';
+import 'package:nutripic/views/diary_camera_view.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -13,7 +16,7 @@ class DiaryView extends StatefulWidget {
 class _DiaryViewState extends State<DiaryView> {
   @override
   Widget build(BuildContext context) {
-    final diaryViewModel = context.watch<DiaryViewModel>();
+    DiaryViewModel diaryViewModel = context.watch<DiaryViewModel>();
 
     return Scaffold(
       body: Column(
@@ -61,6 +64,22 @@ class _DiaryViewState extends State<DiaryView> {
             eventLoader: diaryViewModel.getDiariesForDay,
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return const DiaryCameraView();
+            },
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(25.0),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -13,9 +13,6 @@ class DiaryModel with ChangeNotifier {
   //게시물 사진 url
   //String? imageUrl;
 
-  //게시물 사진
-  //String? imageURL
-
   DiaryModel({
     this.date,
     this.diaryId,
