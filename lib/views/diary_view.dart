@@ -1,6 +1,8 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:nutripic/components/custom_app_bar.dart';
+import 'package:nutripic/view_models/diary_camera_view_model.dart';
 import 'package:nutripic/view_models/diary_view_model.dart';
 import 'package:nutripic/views/diary_camera_view.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +23,7 @@ class _DiaryViewState extends State<DiaryView> {
     return Scaffold(
       body: Column(
         children: [
+          const CustomAppBar(title: '식단 일기'),
           TableCalendar(
             focusedDay: DateTime.now(),
             firstDay: DateTime(2024, 1, 1),
@@ -71,7 +74,12 @@ class _DiaryViewState extends State<DiaryView> {
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
-              return const DiaryCameraView();
+              return ChangeNotifierProvider(
+                create: (context) =>
+                    DiaryCameraViewModel(), // SelectCamera에서 CameraViewModel 사용
+                lazy: false,
+                child: const DiaryCameraView(),
+              );
             },
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
