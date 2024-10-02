@@ -160,4 +160,9 @@ class LoginViewModel with ChangeNotifier {
       return null;
     }
   }
+
+  /// 회원가입 페이지로 이동
+  void signup() {
+    context.go('/login/signup');
+  }
 }
