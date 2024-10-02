@@ -18,6 +18,7 @@ dependencies:
   kakao_flutter_sdk_user: ^1.9.6
   provider: ^6.1.2
   sign_in_with_apple: ^6.1.2
+  table_calendar: ^3.1.2
 
 dev_dependencies:
   flutter_test:
