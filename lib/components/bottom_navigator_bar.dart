@@ -25,11 +25,4 @@ class BottomNavBar extends StatelessWidget {
       ),
     );
   }
-
-  void onTap(BuildContext context, int index) {
-    navigationShell.goBranch(
-      index,
-      initialLocation: index == navigationShell.currentIndex,
-    );
-  }
 }

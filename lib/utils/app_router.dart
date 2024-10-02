@@ -5,7 +5,6 @@ import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/home_view_model.dart';
 import 'package:nutripic/view_models/login_view_model.dart';
 import 'package:nutripic/views/camera_view.dart';
-import 'package:nutripic/views/detail_view.dart';
 import 'package:nutripic/views/diary_view.dart';
 import 'package:nutripic/views/home_view.dart';
 import 'package:nutripic/views/login_view.dart';
