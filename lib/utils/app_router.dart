@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/bottom_navigator_bar.dart';
 import 'package:nutripic/models/user_model.dart';
-import 'package:nutripic/view_models/home_view_model.dart';
 import 'package:nutripic/view_models/login_view_model.dart';
 import 'package:nutripic/view_models/signup_view_model.dart';
+import 'package:nutripic/view_models/user_info_view_model.dart';
 import 'package:nutripic/views/signup_view.dart';
 import 'package:nutripic/views/camera_view.dart';
 import 'package:nutripic/views/diary_view.dart';
-import 'package:nutripic/views/home_view.dart';
 import 'package:nutripic/views/login_view.dart';
 import 'package:nutripic/views/recipe_view.dart';
 import 'package:nutripic/views/refrigerator_view.dart';
@@ -41,18 +39,15 @@ class AppRouter {
       },
       routes: [
         StatefulShellRoute.indexedStack(
-          builder: (BuildContext context, GoRouterState state,
-              StatefulNavigationShell navigationShell) {
-            return BottomNavBar(navigationShell: navigationShell);
-          },
+          builder: (context, state, navigationShell) =>
+              BottomNavBar(navigationShell: navigationShell),
           branches: [
             // 냉장고
             StatefulShellBranch(
               routes: [
                 GoRoute(
                   path: '/refrigerator',
-                  builder: (BuildContext context, GoRouterState state) =>
-                      const RefrigeratorView(),
+                  builder: (context, state) => const RefrigeratorView(),
                 )
               ],
             ),
@@ -62,8 +57,7 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/diary',
-                  builder: (BuildContext context, GoRouterState state) =>
-                      const DiaryView(),
+                  builder: (context, state) => const DiaryView(),
                 )
               ],
             ),
@@ -73,8 +67,7 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/camera',
-                  builder: (BuildContext context, GoRouterState state) =>
-                      const CameraView(),
+                  builder: (context, state) => const CameraView(),
                 )
               ],
             ),
@@ -84,8 +77,7 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/recipe',
-                  builder: (BuildContext context, GoRouterState state) =>
-                      const RecipeView(),
+                  builder: (context, state) => const RecipeView(),
                 )
               ],
             ),
@@ -95,8 +87,13 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/user',
-                  builder: (BuildContext context, GoRouterState state) =>
-                      const UserInfoView(),
+                  builder: (context, state) => ChangeNotifierProvider(
+                    create: (context) => UserInfoViewModel(
+                      userModel: userModel,
+                      context: context,
+                    ),
+                    child: const UserInfoView(),
+                  ),
                 )
               ],
             ),
@@ -127,18 +124,6 @@ class AppRouter {
             )
           ],
         ),
-
-        // 홈
-        GoRoute(
-          path: '/home',
-          builder: (context, state) => ChangeNotifierProvider(
-            create: (context) => HomeViewModel(
-              userModel: userModel,
-              context: context,
-            ),
-            child: const HomeView(),
-          ),
-        )
       ],
     );
   }

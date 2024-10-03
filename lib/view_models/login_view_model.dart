@@ -47,7 +47,7 @@ class LoginViewModel with ChangeNotifier {
       // User Model에 사용자 정보 저장
       userModel.fromFirebaseUser(user);
 
-      if (context.mounted) context.go('/home');
+      if (context.mounted) context.go('/refrigerator');
     }
   }
 
