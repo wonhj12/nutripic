@@ -15,19 +15,12 @@ import 'package:nutripic/views/refrigerator_view.dart';
 import 'package:nutripic/views/user_info_view.dart';
 import 'package:provider/provider.dart';
 
-// for global key
-final GlobalKey<NavigatorState> _rootNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'root');
-final GlobalKey<NavigatorState> _sectionANavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'sectionANav');
-
 class AppRouter {
   final UserModel userModel;
   AppRouter({required this.userModel});
 
   static GoRouter getRouter(UserModel userModel) {
     return GoRouter(
-      navigatorKey: _rootNavigatorKey,
       initialLocation: '/login',
       redirect: (context, state) {
         // 사용자 데이터가 있으면 firebase 로그인이 완료된 상태
@@ -55,7 +48,6 @@ class AppRouter {
           branches: [
             // 냉장고
             StatefulShellBranch(
-              navigatorKey: _sectionANavigatorKey,
               routes: [
                 GoRoute(
                   path: '/refrigerator',
@@ -64,6 +56,7 @@ class AppRouter {
                 )
               ],
             ),
+
             // 식단일지
             StatefulShellBranch(
               routes: [
@@ -74,6 +67,7 @@ class AppRouter {
                 )
               ],
             ),
+
             // 카메라
             StatefulShellBranch(
               routes: [
@@ -84,6 +78,7 @@ class AppRouter {
                 )
               ],
             ),
+
             // 레시피
             StatefulShellBranch(
               routes: [
@@ -94,6 +89,7 @@ class AppRouter {
                 )
               ],
             ),
+
             // 사용자 정보
             StatefulShellBranch(
               routes: [
@@ -118,6 +114,7 @@ class AppRouter {
             child: const LoginView(),
           ),
           routes: [
+            // 회원가입
             GoRoute(
               path: 'signup',
               builder: (context, state) => ChangeNotifierProvider(
