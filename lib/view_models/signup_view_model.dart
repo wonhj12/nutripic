@@ -35,7 +35,7 @@ class SignupViewModel with ChangeNotifier {
       }
 
       // 회원가입 완료 후 바로 홈 화면으로 이동
-      if (context.mounted) context.go('/home');
+      if (context.mounted) context.go('/refrigerator');
     } on FirebaseAuthException catch (e) {
       // https://stackoverflow.com/questions/67617502/what-are-the-error-codes-for-flutter-firebase-auth-exception
       debugPrint('FirebaseAuthException in _emailLogin: ${e.code}');
