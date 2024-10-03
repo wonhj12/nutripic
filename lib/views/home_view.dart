@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nutripic/view_models/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,6 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     HomeViewModel homeViewModel = context.watch<HomeViewModel>();
-
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +22,7 @@ class _HomeViewState extends State<HomeView> {
           ElevatedButton(
             onPressed: () => homeViewModel.logout(),
             child: const Text('로그아웃'),
-          )
+          ),
         ],
       ),
     );
