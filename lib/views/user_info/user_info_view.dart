@@ -27,26 +27,29 @@ class UserInfoView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /* 프로필 */
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // 프로필 이미지
-                ProfileImage(src: userModel.profileUrl),
-                const SizedBox(width: 20),
+            InkWell(
+              onTap: () => userInfoViewModel.onTapEdit(),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // 프로필 이미지
+                  ProfileImage(src: userModel.profileUrl),
+                  const SizedBox(width: 20),
 
-                // 사용자 이름
-                Text(
-                  userInfoViewModel.userModel.name ?? 'null',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                  // 사용자 이름
+                  Text(
+                    userInfoViewModel.userModel.name ?? 'null',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                const Spacer(),
+                  const Spacer(),
 
-                // 화살표 아이콘
-                const Icon(Icons.arrow_forward_ios, size: 16)
-              ],
+                  // 화살표 아이콘
+                  const Icon(Icons.arrow_forward_ios, size: 16)
+                ],
+              ),
             ),
             const SizedBox(height: 36),
 
@@ -56,7 +59,6 @@ class UserInfoView extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 12),
-
             Container(
               width: double.infinity,
               height: 88,
@@ -73,7 +75,6 @@ class UserInfoView extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 12),
-
             const SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -94,7 +95,6 @@ class UserInfoView extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 12),
-
             Row(
               children: [
                 FoodTile(src: userModel.profileUrl, name: '양파'),
@@ -112,18 +112,11 @@ class UserInfoView extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 12),
-
             const ButtonTile(title: '공지사항'),
             const SizedBox(height: 8),
             const ButtonTile(title: 'FAQ'),
             const SizedBox(height: 8),
             const ButtonTile(title: '문의하기'),
-
-            //
-            ElevatedButton(
-              onPressed: () => userInfoViewModel.logout(),
-              child: const Text('로그아웃'),
-            ),
           ],
         ),
       ),
