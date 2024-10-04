@@ -22,11 +22,16 @@ class _DiaryPostViewState extends State<DiaryPostView> {
       body: Column(
         children: [
           const CustomAppBar(title: '새로운 게시물'),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Image.file(
-              File(widget.imagePath),
-              height: 300,
+          GestureDetector(
+            onTap: () {
+              diaryPostViewModel.showCameraSelectModal(context);
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: Image.file(
+                File(widget.imagePath),
+                height: 300,
+              ),
             ),
           ),
         ],

@@ -18,6 +18,7 @@ class DiaryCameraViewModel extends ChangeNotifier {
       notifyListeners();
 
       //이미지가 선택된 경우 이동
+      closeCameraSelectModal(context);
       context.go('/diary/post', extra: _image!.path);
     }
   }
