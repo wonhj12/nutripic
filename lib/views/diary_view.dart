@@ -33,6 +33,7 @@ class _DiaryViewState extends State<DiaryView> {
             },
             onDaySelected: (selectedDay, focusedDay) {
               diaryViewModel.updateSelectDay(selectedDay);
+              diaryViewModel.showDiaryRecordModal(context, selectedDay);
             },
             headerStyle: const HeaderStyle(
               formatButtonVisible: false,

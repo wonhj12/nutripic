@@ -61,11 +61,14 @@ class DiaryViewModel extends ChangeNotifier {
   }
 
   void showDiaryRecordModal(BuildContext context, DateTime date) {
+    final diaryRecords = getDiariesForDay(date);
+    if (diaryRecords.isEmpty) return;
+
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return ChangeNotifierProvider(
-          create: (context) => DiaryRecordViewModel(),
+          create: (context) => DiaryRecordViewModel(diaryRecords),
           child: const DiaryRecordView(),
         );
       },
