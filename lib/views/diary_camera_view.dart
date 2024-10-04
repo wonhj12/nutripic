@@ -57,9 +57,6 @@ class _DiaryCameraViewState extends State<DiaryCameraView> {
               InkWell(
                 onTap: () {
                   diaryCameraViewModel.getImage(ImageSource.camera, context);
-                  if (diaryCameraViewModel.image != null) {
-                    // 카메라에서 이미지가 선택되면 새로운 화면으로 전환
-                  }
                 },
                 child: const Column(
                   children: [

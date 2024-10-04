@@ -77,7 +77,7 @@ class AppRouter {
                         final imagePath = state.extra as String?;
                         return ChangeNotifierProvider(
                           create: (context) => DiaryPostViewModel(),
-                          child: DiaryPostView(imagePath: imagePath),
+                          child: DiaryPostView(imagePath: imagePath!),
                         );
                       },
                     ),
