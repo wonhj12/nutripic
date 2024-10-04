@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/bottom_navigator_bar.dart';
 import 'package:nutripic/models/user_model.dart';
-import 'package:nutripic/view_models/diary_camera_view_model.dart';
-import 'package:nutripic/view_models/diary_post_view_model.dart';
-import 'package:nutripic/view_models/diary_view_model.dart';
+import 'package:nutripic/view_models/diary/diary_camera_view_model.dart';
+import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
+import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:nutripic/view_models/home_view_model.dart';
 import 'package:nutripic/view_models/login_view_model.dart';
 import 'package:nutripic/views/camera_view.dart';
-import 'package:nutripic/views/diary_camera_view.dart';
-import 'package:nutripic/views/diary_post_view.dart';
-import 'package:nutripic/views/diary_view.dart';
+import 'package:nutripic/views/diary/diary_camera_view.dart';
+import 'package:nutripic/views/diary/diary_post_view.dart';
+import 'package:nutripic/views/diary/diary_view.dart';
 import 'package:nutripic/views/home_view.dart';
 import 'package:nutripic/views/login_view.dart';
 import 'package:nutripic/views/recipe_view.dart';
@@ -31,17 +31,17 @@ class AppRouter {
   static GoRouter getRouter(UserModel userModel) {
     return GoRouter(
       navigatorKey: _rootNavigatorKey,
-      initialLocation: '/diary',
+      initialLocation: '/login',
       redirect: (context, state) {
         // 사용자 데이터가 있으면 firebase 로그인이 완료된 상태
         // 사용자 데이터가 없으면 로그인 화면으로 이동, 있으면 홈 화면으로 이동
-        // if (userModel.uid == null) {
-        //   return '/login';
-        // } else if (state.fullPath == '/login') {
-        //   return '/refrigerator';
-        // } else {
-        //   return null;
-        // }
+        if (userModel.uid == null) {
+          return '/login';
+        } else if (state.fullPath == '/login') {
+          return '/refrigerator';
+        } else {
+          return null;
+        }
       },
       routes: [
         StatefulShellRoute.indexedStack(

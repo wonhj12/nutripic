@@ -2,9 +2,9 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/custom_app_bar.dart';
-import 'package:nutripic/view_models/diary_camera_view_model.dart';
-import 'package:nutripic/view_models/diary_view_model.dart';
-import 'package:nutripic/views/diary_camera_view.dart';
+import 'package:nutripic/view_models/diary/diary_camera_view_model.dart';
+import 'package:nutripic/view_models/diary/diary_view_model.dart';
+import 'package:nutripic/views/diary/diary_camera_view.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 

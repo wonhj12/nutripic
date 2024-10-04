@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nutripic/view_models/diary_camera_view_model.dart';
+import 'package:nutripic/view_models/diary/diary_camera_view_model.dart';
 import 'package:provider/provider.dart';
 
 class DiaryCameraView extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/models/diary_model.dart';
-import 'package:nutripic/view_models/diary_camera_view_model.dart';
-import 'package:nutripic/view_models/diary_record_view_model.dart';
-import 'package:nutripic/views/diary_camera_view.dart';
-import 'package:nutripic/views/diary_record_view.dart';
+import 'package:nutripic/view_models/diary/diary_camera_view_model.dart';
+import 'package:nutripic/view_models/diary/diary_record_view_model.dart';
+import 'package:nutripic/views/diary/diary_camera_view.dart';
+import 'package:nutripic/views/diary/diary_record_view.dart';
 import 'package:provider/provider.dart';
 
 class DiaryViewModel extends ChangeNotifier {

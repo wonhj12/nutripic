@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/date_picker.dart';
-import 'package:nutripic/view_models/diary_camera_view_model.dart';
-import 'package:nutripic/views/diary_camera_view.dart';
+import 'package:nutripic/view_models/diary/diary_camera_view_model.dart';
+import 'package:nutripic/views/diary/diary_camera_view.dart';
 import 'package:provider/provider.dart';
 
 class DiaryPostViewModel with ChangeNotifier {
