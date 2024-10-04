@@ -39,7 +39,7 @@ class _DiaryCameraViewState extends State<DiaryCameraView> {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  diaryCameraViewModel.closeCameraSelectModal(context);
                 },
                 icon: const Icon(
                   Icons.close,
@@ -56,7 +56,7 @@ class _DiaryCameraViewState extends State<DiaryCameraView> {
             children: [
               InkWell(
                 onTap: () {
-                  diaryCameraViewModel.getImage(ImageSource.camera);
+                  diaryCameraViewModel.getImage(ImageSource.camera, context);
                   if (diaryCameraViewModel.image != null) {
                     // 카메라에서 이미지가 선택되면 새로운 화면으로 전환
                   }
@@ -76,10 +76,7 @@ class _DiaryCameraViewState extends State<DiaryCameraView> {
               ),
               InkWell(
                 onTap: () {
-                  diaryCameraViewModel.getImage(ImageSource.gallery);
-                  if (diaryCameraViewModel.image != null) {
-                    // 갤러리에서 이미지가 선택되면 새로운 화면으로 전환
-                  }
+                  diaryCameraViewModel.getImage(ImageSource.gallery, context);
                 },
                 child: const Column(
                   children: [

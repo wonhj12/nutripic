@@ -71,22 +71,7 @@ class _DiaryViewState extends State<DiaryView> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              return ChangeNotifierProvider(
-                create: (context) =>
-                    DiaryCameraViewModel(), // SelectCamera에서 CameraViewModel 사용
-                lazy: false,
-                child: const DiaryCameraView(),
-              );
-            },
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(25.0),
-              ),
-            ),
-          );
+          diaryViewModel.showCameraSelectModal(context);
         },
       ),
     );
