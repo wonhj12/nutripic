@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/view_models/diary_camera_view_model.dart';
+import 'package:nutripic/view_models/diary_record_view_model.dart';
 import 'package:nutripic/views/diary_camera_view.dart';
+import 'package:nutripic/views/diary_record_view.dart';
 import 'package:provider/provider.dart';
 
 class DiaryViewModel extends ChangeNotifier {
-  DateTime? _selectedDay;
-  DateTime? get selectedDay => _selectedDay;
+  DateTime? _selectedDate;
+  DateTime? get selectedDate => _selectedDate;
 
   //DiaryModel diaryModel;
   //BuildContext context;
@@ -29,16 +31,16 @@ class DiaryViewModel extends ChangeNotifier {
   Map<DateTime, List<DiaryModel>> get diarylist => _diarylist;
 
   void updateSelectDay(DateTime date) {
-    _selectedDay = date;
+    _selectedDate = date;
     notifyListeners();
   }
 
-  bool isSameDay(DateTime day) {
-    return _selectedDay == day;
+  bool isSameDay(DateTime date) {
+    return _selectedDate == date;
   }
 
-  List<DiaryModel> getDiariesForDay(DateTime day) {
-    return diarylist[day] ?? [];
+  List<DiaryModel> getDiariesForDay(DateTime date) {
+    return diarylist[date] ?? [];
   }
 
   void showCameraSelectModal(BuildContext context) {
@@ -47,8 +49,24 @@ class DiaryViewModel extends ChangeNotifier {
       builder: (BuildContext context) {
         return ChangeNotifierProvider(
           create: (context) => DiaryCameraViewModel(),
-          lazy: false,
           child: const DiaryCameraView(),
+        );
+      },
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.0),
+        ),
+      ),
+    );
+  }
+
+  void showDiaryRecordModal(BuildContext context, DateTime date) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ChangeNotifierProvider(
+          create: (context) => DiaryRecordViewModel(),
+          child: const DiaryRecordView(),
         );
       },
       shape: const RoundedRectangleBorder(

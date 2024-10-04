@@ -16,7 +16,6 @@ class DiaryPostViewModel with ChangeNotifier {
       builder: (BuildContext context) {
         return ChangeNotifierProvider(
           create: (context) => DiaryCameraViewModel(),
-          lazy: false,
           child: const DiaryCameraView(),
         );
       },
