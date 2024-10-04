@@ -17,6 +17,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
   @override
   Widget build(BuildContext context) {
     DiaryPostViewModel diaryPostViewModel = context.watch<DiaryPostViewModel>();
+    DateTime selectedDate = diaryPostViewModel.selectedDate;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -32,24 +33,38 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                 borderRadius: BorderRadius.circular(20.0),
                 child: Image.file(
                   File(widget.imagePath),
-                  height: 300,
+                  height: 250,
                 ),
               ),
             ),
             const SizedBox(
               height: 15.0,
             ),
-            Text("10월 4일"),
+            GestureDetector(
+              onTap: () {
+                diaryPostViewModel.onTapTimePicker(context);
+              },
+              child: Text(
+                '${selectedDate.year}년 ${selectedDate.month}월 ${selectedDate.day}일',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             const SizedBox(
               height: 15.0,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 30.0, right: 30.0),
               child: TextFormField(
-                maxLines: 5,
+                maxLines: 3,
                 decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.all(20.0),
+                  contentPadding: const EdgeInsets.all(10.0),
                   hintText: '게시글을 작성하세요',
+                  hintStyle: const TextStyle(
+                    fontSize: 15.0,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -58,6 +73,28 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                 textInputAction: TextInputAction.done,
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+              child: Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    diaryPostViewModel.submitPost(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: const Text(
+                    "게시",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

@@ -2,16 +2,19 @@ import 'package:flutter/cupertino.dart';
 
 class DatePicker extends StatelessWidget {
   final DateTime initialDate;
-  final Function(DateTime) onDateSelected;
+  final ValueChanged<DateTime> onDateSelected;
 
-  const DatePicker(
-      {Key? key, required this.initialDate, required this.onDateSelected})
-      : super(key: key);
+  const DatePicker({
+    Key? key,
+    required this.initialDate,
+    required this.onDateSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 250.0,
+      color: CupertinoColors.systemBackground,
       child: Column(
         children: [
           Container(
@@ -19,13 +22,11 @@ class DatePicker extends StatelessWidget {
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
               initialDateTime: initialDate,
-              onDateTimeChanged: (DateTime newDate) {
-                onDateSelected(newDate); // 선택한 날짜를 부모 위젯에 전달
-              },
+              onDateTimeChanged: onDateSelected,
             ),
           ),
           CupertinoButton(
-            child: Text("Done"),
+            child: Text("확인"),
             onPressed: () {
               Navigator.pop(context); // 모달 닫기
             },
