@@ -3,14 +3,16 @@ import 'package:nutripic/components/bottom_navigator_bar.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/login_view_model.dart';
 import 'package:nutripic/view_models/signup_view_model.dart';
-import 'package:nutripic/view_models/user_info_view_model.dart';
+import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
+import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:nutripic/views/signup_view.dart';
 import 'package:nutripic/views/camera_view.dart';
 import 'package:nutripic/views/diary_view.dart';
 import 'package:nutripic/views/login_view.dart';
 import 'package:nutripic/views/recipe_view.dart';
 import 'package:nutripic/views/refrigerator_view.dart';
-import 'package:nutripic/views/user_info_view.dart';
+import 'package:nutripic/views/user_info/user_edit_view.dart';
+import 'package:nutripic/views/user_info/user_info_view.dart';
 import 'package:provider/provider.dart';
 
 class AppRouter {
@@ -94,6 +96,18 @@ class AppRouter {
                     ),
                     child: const UserInfoView(),
                   ),
+                  routes: [
+                    GoRoute(
+                      path: 'edit',
+                      builder: (context, state) => ChangeNotifierProvider(
+                        create: (context) => UserEditViewModel(
+                          userModel: userModel,
+                          context: context,
+                        ),
+                        child: const UserEditView(),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
