@@ -7,8 +7,7 @@ import 'package:nutripic/views/diary/diary_camera_view.dart';
 import 'package:provider/provider.dart';
 
 class DiaryPostViewModel with ChangeNotifier {
-  DateTime _selectedDate = DateTime.now();
-  DateTime get selectedDate => _selectedDate;
+  DateTime selectedDate = DateTime.now();
 
   /// 카메라/갤러리 선택 모달 이동 (재사용이긴함)
   void showCameraSelectModal(BuildContext context) {
@@ -34,9 +33,9 @@ class DiaryPostViewModel with ChangeNotifier {
         context: context,
         builder: (context) {
           return DatePicker(
-            initialDate: _selectedDate,
+            initialDate: selectedDate,
             onDateSelected: (DateTime date) {
-              _selectedDate = date;
+              selectedDate = date;
               notifyListeners();
             },
           );
