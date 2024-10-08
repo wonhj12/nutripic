@@ -21,21 +21,25 @@ class DiaryViewModel extends ChangeNotifier {
     DateTime.utc(2024, 10, 24): [Diary(diaryId: '3', content: '삼')],
   };
 
-  ///날짜 선택 함수
+  //날짜 선택 후 selectedDate 업데이트
+  ///선택한 날짜 업데이트
   void updateSelectDay(DateTime date) {
     selectedDate = date;
     notifyListeners();
   }
 
-  ///선택된 날짜가 동일한지 확인하는 함수
+  //table_calender에서 선택된 날짜를 표시하기 위해 검사용
+  ///선택한 날짜와 동일한지 확인
   bool isSameDay(DateTime date) {
     return selectedDate == date;
   }
 
+  ///선택된 날짜의 일기 불러오기
   List<Diary> getDiariesForDay(DateTime date) {
     return diarylist[date] ?? [];
   }
 
+  ///카메라/갤러리 선택 모달 보여주기
   void showCameraSelectModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -53,6 +57,7 @@ class DiaryViewModel extends ChangeNotifier {
     );
   }
 
+  ///일기 목록 모달 보여주기
   void showDiaryRecordModal(BuildContext context, DateTime date) {
     final diaryRecords = getDiariesForDay(date);
     if (diaryRecords.isEmpty) return;

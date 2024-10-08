@@ -8,7 +8,7 @@ class DiaryCameraViewModel extends ChangeNotifier {
   File? image;
   final ImagePicker _picker = ImagePicker();
 
-  // 이미지 선택 함수 (카메라/갤러리)
+  /// 이미지 선택 함수 (카메라/갤러리)
   Future<void> getImage(ImageSource source, BuildContext context) async {
     final pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {

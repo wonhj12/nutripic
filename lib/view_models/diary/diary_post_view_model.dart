@@ -10,6 +10,7 @@ class DiaryPostViewModel with ChangeNotifier {
   DateTime _selectedDate = DateTime.now();
   DateTime get selectedDate => _selectedDate;
 
+  /// 카메라/갤러리 선택 모달 이동 (재사용이긴함)
   void showCameraSelectModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -27,6 +28,7 @@ class DiaryPostViewModel with ChangeNotifier {
     );
   }
 
+  /// 날짜 선택 모달 이동
   void onTapTimePicker(BuildContext context) {
     showCupertinoModalPopup(
         context: context,
@@ -41,8 +43,8 @@ class DiaryPostViewModel with ChangeNotifier {
         });
   }
 
+  ///게시물 전송
   void submitPost(BuildContext context) {
-    //전송
     context.go('/diary');
   }
 }
