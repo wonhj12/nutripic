@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool backButton;
 
@@ -27,5 +27,10 @@ class CustomAppBar extends StatelessWidget {
             )
           : null,
     );
+  }
+
+  @override
+  Size get preferredSize {
+    return const Size.fromHeight(kToolbarHeight);
   }
 }

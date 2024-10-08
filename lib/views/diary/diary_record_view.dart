@@ -14,7 +14,7 @@ class DiaryRecordView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: ListView.builder(
-        itemCount: diaryRecordViewModel.records.length,
+        itemCount: diaryRecordViewModel.diaryRecords.length,
         itemBuilder: (context, index) {
           final record = diaryRecordViewModel.diaryRecords[index];
           return ListTile(

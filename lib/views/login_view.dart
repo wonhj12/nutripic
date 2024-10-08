@@ -57,6 +57,12 @@ class _LoginViewState extends State<LoginView> {
               onPressed: () => loginViewModel.login(3),
               child: const Text('애플'),
             ),
+
+            // 회원가입
+            ElevatedButton(
+              onPressed: () => loginViewModel.signup(),
+              child: const Text('회원가입'),
+            ),
           ],
         ),
       ),

@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/models/user_model.dart';
 
-class HomeViewModel with ChangeNotifier {
+class UserEditViewModel with ChangeNotifier {
   UserModel userModel;
   BuildContext context;
-  HomeViewModel({required this.userModel, required this.context});
+  UserEditViewModel({required this.userModel, required this.context});
 
+  /// 로그아웃 후 login 페이지로 이동
   void logout() async {
     await FirebaseAuth.instance.signOut();
     userModel.reset();

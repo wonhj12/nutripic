@@ -5,21 +5,19 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DiaryCameraViewModel extends ChangeNotifier {
-  File? _image;
+  File? image;
   final ImagePicker _picker = ImagePicker();
-
-  File? get image => _image;
 
   // 이미지 선택 함수 (카메라/갤러리)
   Future<void> getImage(ImageSource source, BuildContext context) async {
     final pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {
-      _image = File(pickedFile.path);
+      image = File(pickedFile.path);
       notifyListeners();
 
       //이미지가 선택된 경우 이동
       closeCameraSelectModal(context);
-      context.go('/diary/post', extra: _image!.path);
+      context.go('/diary/post', extra: image!.path);
     }
   }
 

@@ -7,39 +7,32 @@ import 'package:nutripic/views/diary/diary_record_view.dart';
 import 'package:provider/provider.dart';
 
 class DiaryViewModel extends ChangeNotifier {
-  DateTime? _selectedDate;
-  DateTime? get selectedDate => _selectedDate;
+  DateTime? selectedDate;
 
   //DiaryModel diaryModel;
   //BuildContext context;
   //DiaryViewModel({required this.diaryModel, required this.context});
-
   //Map<DateTime, List<DiaryModel>> _diarylist = {};
-  final Map<DateTime, List<DiaryModel>> _diarylist = {
+  final Map<DateTime, List<Diary>> diarylist = {
     DateTime.utc(2024, 10, 22): [
-      DiaryModel(diaryId: '1', content: '일'),
-      DiaryModel(diaryId: '2', content: '이'),
+      Diary(diaryId: '1', content: '일'),
+      Diary(diaryId: '2', content: '이'),
     ],
-    DateTime.utc(2024, 10, 24): [
-      DiaryModel(
-        diaryId: '3',
-        content: '삼',
-      )
-    ],
+    DateTime.utc(2024, 10, 24): [Diary(diaryId: '3', content: '삼')],
   };
 
-  Map<DateTime, List<DiaryModel>> get diarylist => _diarylist;
-
+  ///날짜 선택 함수
   void updateSelectDay(DateTime date) {
-    _selectedDate = date;
+    selectedDate = date;
     notifyListeners();
   }
 
+  ///선택된 날짜가 동일한지 확인하는 함수
   bool isSameDay(DateTime date) {
-    return _selectedDate == date;
+    return selectedDate == date;
   }
 
-  List<DiaryModel> getDiariesForDay(DateTime date) {
+  List<Diary> getDiariesForDay(DateTime date) {
     return diarylist[date] ?? [];
   }
 

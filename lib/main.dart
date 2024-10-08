@@ -21,9 +21,14 @@ Future<void> main() async {
 /// Firebase 로그인 정보가 있는지 확인 후 있다면 사용자 정보를 모델에 저장하는 함수
 Future<void> autoLogin() async {
   // Firebase 로그인이 된 상태라면 서버에서 사용자 정보 요청
-  if (FirebaseAuth.instance.currentUser != null) {
-    userModel.uid = FirebaseAuth.instance.currentUser!.uid;
-    userModel.name = FirebaseAuth.instance.currentUser!.displayName;
+  final user = FirebaseAuth.instance.currentUser;
+
+  if (user != null) {
+    // 사용자가 존재한다면 모델에 데이터 저장
+    userModel.fromFirebaseUser(user);
+  } else {
+    // 사용자가 존재하지 않는다면 모델 리셋 (혹시 모를 상황 대비)
+    userModel.reset();
   }
 }
 
