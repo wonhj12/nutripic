@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/custom_app_bar.dart';
-import 'package:nutripic/view_models/signup_view_model.dart';
+import 'package:nutripic/view_models/login/signup_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SignupView extends StatefulWidget {
