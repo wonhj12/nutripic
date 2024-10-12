@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class API {
-  static String baseUrl = dotenv.env['API_URL']!;
+  static String baseUrl = dotenv.env['SERVER_API']!;
   static final _firebaseAuth = FirebaseAuth.instance;
 
   /// Firebase 인증을 위한 사용자 id token을 반환하는 함수
@@ -19,6 +19,24 @@ class API {
       token = await _firebaseAuth.currentUser!.getIdToken();
     } else {
       throw ErrorDescription('user-not-found');
+    }
+
+    return token;
+  }
+
+  /// 카카오 로그인시 백엔드 서버에서 firebase 인증을 위한 custom ID token을 받아오는 함수
+  static Future<String> postKakaoCustomToken(String uid) async {
+    String token = '';
+
+    try {
+      await _postApi(
+        'auth/kakao',
+        jsonEncode({'uid': uid}),
+        tokenRequired: false,
+      );
+    } catch (e) {
+      debugPrint('Error in postKakaoCustomToken: $e');
+      throw Error();
     }
 
     return token;
@@ -53,7 +71,6 @@ class API {
 
       if (response.statusCode == 200) {
         debugPrint('GET 요청 성공');
-        return jsonDecode(response.body);
       } else {
         debugPrint('GET 요청 실패: (${response.statusCode})${response.body}');
       }
@@ -86,11 +103,13 @@ class API {
 
       final response =
           await http.post(Uri.parse(apiUrl), headers: headers, body: jsonData);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         debugPrint('POST 요청 성공');
       } else {
         debugPrint('POST 요청 실패: (${response.statusCode})${response.body}');
       }
+
+      // final dioResponse = await dio.post(endPoint, data: jsonData);
 
       return response;
     } catch (e) {
