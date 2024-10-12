@@ -29,11 +29,13 @@ class API {
     String token = '';
 
     try {
-      await _postApi(
+      final response = await _postApi(
         'auth/kakao',
         jsonEncode({'uid': uid}),
         tokenRequired: false,
       );
+
+      token = jsonDecode(response.body)['firebaseToken'];
     } catch (e) {
       debugPrint('Error in postKakaoCustomToken: $e');
       throw Error();
@@ -108,8 +110,6 @@ class API {
       } else {
         debugPrint('POST 요청 실패: (${response.statusCode})${response.body}');
       }
-
-      // final dioResponse = await dio.post(endPoint, data: jsonData);
 
       return response;
     } catch (e) {
