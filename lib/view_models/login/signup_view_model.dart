@@ -28,7 +28,7 @@ class SignupViewModel with ChangeNotifier {
       // 정상적으로 회원가입이 됐으면 입력된 이름 저장
       // UserModel에 사용자 데이터 저장
       if (user != null) {
-        user.updateDisplayName(name);
+        await user.updateDisplayName(name);
         userModel.fromFirebaseUser(user);
         // updateDisplayName이 바로 반영되지 않기 때문에 수동으로 UserModel에 업데이트
         userModel.name = name;
