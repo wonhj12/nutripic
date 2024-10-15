@@ -126,6 +126,3 @@ app.*.symbols
 google-services.json
 GoogleService-Info.plist
 firebase.json
-
-# Keystore
-*.Keystore
