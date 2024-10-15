@@ -37,24 +37,29 @@ class UserModel with ChangeNotifier {
     name = user.displayName;
     email = user.email;
     profileUrl = user.photoURL;
-    final provider = user.providerData[0].providerId;
-    switch (provider) {
-      case 'password':
-        loginType = 0;
-        break;
-      case 'kakao':
-        loginType = 1;
-        break;
-      case 'google.com':
-        loginType = 2;
-        break;
-      case 'apple':
-        loginType = 3;
-        break;
-      default:
-        loginType = 0;
-        break;
+    if (user.providerData.isEmpty) {
+      loginType = 1;
+    } else {
+      final provider = user.providerData[0].providerId;
+      switch (provider) {
+        case 'password':
+          loginType = 0;
+          break;
+        case 'kakao':
+          loginType = 1;
+          break;
+        case 'google.com':
+          loginType = 2;
+          break;
+        case 'apple':
+          loginType = 3;
+          break;
+        default:
+          loginType = 0;
+          break;
+      }
     }
+
     createdAt = user.metadata.creationTime;
   }
 

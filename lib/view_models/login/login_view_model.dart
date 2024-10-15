@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:nutripic/models/user_model.dart';
+import 'package:nutripic/utils/api.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginViewModel with ChangeNotifier {
@@ -28,7 +29,7 @@ class LoginViewModel with ChangeNotifier {
         user = await _emailLogin();
       // 카카오
       case 1:
-        await _kakaoLogin();
+        user = await _kakaoLogin();
         break;
       // 구글
       case 2:
@@ -73,7 +74,7 @@ class LoginViewModel with ChangeNotifier {
   }
 
   /// 카카오 로그인
-  Future<kakao.User?> _kakaoLogin() async {
+  Future<User?> _kakaoLogin() async {
     // 카카오 키 해시 확인을 위한 로그 (필요시 주석 해제 후 사용)
     // debugPrint(await kakao.KakaoSdk.origin);
 
@@ -85,9 +86,23 @@ class LoginViewModel with ChangeNotifier {
       } else {
         await _kakaoApi.loginWithKakaoAccount();
       }
-      final user = await _kakaoApi.me();
+      final kakaoUser = await _kakaoApi.me();
 
-      return user;
+      // 카카오 userId 넘겨주면 firebase custom token 생성
+      final token = await API.postKakaoCustomToken(kakaoUser.id.toString());
+
+      // Firebase 인증
+      final userCredential = await _firebaseAuth.signInWithCustomToken(token);
+      final user = userCredential.user;
+
+      // 첫 카카오 로그인이면 기본 정보 등록
+      if (userCredential.additionalUserInfo != null &&
+          userCredential.additionalUserInfo!.isNewUser) {
+        await user?.updateDisplayName(kakaoUser.properties?['nickname']);
+        await user?.updatePhotoURL(kakaoUser.properties?['profile_image']);
+      }
+
+      return _firebaseAuth.currentUser;
     } catch (e) {
       debugPrint('Error in _kakaoLogin: $e');
       return null;
