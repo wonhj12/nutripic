@@ -47,6 +47,9 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _router,
+      theme: ThemeData(
+        fontFamily: 'Pretendard',
+      ),
     );
   }
 }
