@@ -14,10 +14,11 @@ class CustomThemeData {
       primary: Palette.primary,
       primaryContainer: Palette.sub,
       secondary: Palette.secondary,
+      error: Palette.delete,
     ),
     highlightColor: Colors.transparent, // Modal highlight color
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: Palette.primary),
+      style: TextButton.styleFrom(foregroundColor: Palette.sub),
     ),
   );
 }
