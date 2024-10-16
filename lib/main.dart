@@ -6,6 +6,7 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/utils/app_router.dart';
+import 'package:nutripic/utils/custom_theme_data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,9 +48,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _router,
-      theme: ThemeData(
-        fontFamily: 'Pretendard',
-      ),
+      theme: CustomThemeData.light,
     );
   }
 }
