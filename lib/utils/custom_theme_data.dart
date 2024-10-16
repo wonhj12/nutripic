@@ -12,6 +12,7 @@ class CustomThemeData {
     scaffoldBackgroundColor: Palette.background, // Scaffold BG
     colorScheme: const ColorScheme.light(
       primary: Palette.primary,
+      primaryContainer: Palette.sub,
       secondary: Palette.secondary,
     ),
     highlightColor: Colors.transparent, // Modal highlight color
