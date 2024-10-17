@@ -6,6 +6,7 @@ import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:nutripic/view_models/login/login_view_model.dart';
 import 'package:nutripic/view_models/login/signup_view_model.dart';
+import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:nutripic/views/diary/diary_view.dart';
@@ -14,7 +15,7 @@ import 'package:nutripic/views/camera_view.dart';
 import 'package:nutripic/views/diary/diary_post_view.dart';
 import 'package:nutripic/views/login/login_view.dart';
 import 'package:nutripic/views/recipe_view.dart';
-import 'package:nutripic/views/refrigerator_view.dart';
+import 'package:nutripic/views/refrigerator/refrigerator_view.dart';
 import 'package:nutripic/views/user_info/user_edit_view.dart';
 import 'package:nutripic/views/user_info/user_info_view.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +55,12 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/refrigerator',
-                  builder: (context, state) => const RefrigeratorView(),
+                  builder: (context, state) => ChangeNotifierProvider(
+                    create: (context) => RefrigeratorViewModel(
+                      context: context,
+                    ),
+                    child: const RefrigeratorView(),
+                  ),
                 )
               ],
             ),
