@@ -17,7 +17,7 @@ class RefrigeratorView extends StatelessWidget {
         context.watch<RefrigeratorViewModel>();
 
     return CustomScaffold(
-      appBar: const CustomAppBar(title: 'Nutripic', backButton: false),
+      appBar: const CustomAppBar(backButton: false),
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
