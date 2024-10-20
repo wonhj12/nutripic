@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nutripic/components/custom_navbar_item.dart';
 import 'package:nutripic/utils/palette.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -14,32 +14,32 @@ class BottomNavBar extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         enableFeedback: false,
         selectedItemColor: Palette.sub,
+        type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/refrigerator.svg'),
-            activeIcon:
-                SvgPicture.asset('assets/icons/refrigerator_active.svg'),
+          customNavBarItem(
+            src: 'assets/icons/refrigerator.svg',
+            active: 'assets/icons/refrigerator_active.svg',
             label: '냉장고',
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/record.svg'),
-            activeIcon: SvgPicture.asset('assets/icons/record_active.svg'),
+          customNavBarItem(
+            src: 'assets/icons/record.svg',
+            active: 'assets/icons/record_active.svg',
             label: '기록',
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/add.svg'),
-            activeIcon: SvgPicture.asset('assets/icons/add_active.svg'),
+          customNavBarItem(
+            src: 'assets/icons/add.svg',
+            active: 'assets/icons/add_active.svg',
             label: '식재료 추가',
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/search.svg'),
-            activeIcon: SvgPicture.asset('assets/icons/search_active.svg'),
+          customNavBarItem(
+            src: 'assets/icons/search.svg',
+            active: 'assets/icons/search_active.svg',
             label: '레시피 찾기',
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/my.svg'),
-            activeIcon: SvgPicture.asset('assets/icons/my_active.svg'),
-            label: '마이',
+          customNavBarItem(
+            src: 'assets/icons/my.svg',
+            active: 'assets/icons/my_active.svg',
+            label: '마이페이지',
           ),
         ],
         currentIndex: navigationShell.currentIndex,
