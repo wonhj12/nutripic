@@ -70,6 +70,10 @@ class Palette {
   static const TextStyle body =
       TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 
+  /// 식재료 개수
+  static const TextStyle foodCount =
+      TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: white);
+
   /* Shadows */
   static BoxShadow shadow =
       BoxShadow(color: gray200.withOpacity(0.25), blurRadius: 15);
