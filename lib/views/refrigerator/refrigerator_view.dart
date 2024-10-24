@@ -28,21 +28,36 @@ class RefrigeratorView extends StatelessWidget {
             children: [
               const Text('나의 냉장고', style: Palette.heading),
               const Spacer(),
-
-              // 정렬
-              const Text('추가한 순', style: Palette.body),
+              refrigeratorViewModel.isSelectable
+                  // 취소 버튼
+                  ? CustomButton(
+                      label: '취소',
+                      type: ButtonType.cancel,
+                      onPressed: refrigeratorViewModel.onTapCancel,
+                    )
+                  // 정렬
+                  : const Text('추가한 순', style: Palette.body),
               const SizedBox(width: 15),
-
-              // 선택 버튼
-              CustomButton(label: '선택', onPressed: () {})
+              refrigeratorViewModel.isSelectable
+                  // 삭제 버튼
+                  ? CustomButton(
+                      label: '삭제',
+                      type: ButtonType.delete,
+                      onPressed: refrigeratorViewModel.onTapDelete,
+                    )
+                  // 선택 버튼
+                  : CustomButton(
+                      label: '선택', onPressed: refrigeratorViewModel.onTapSelect)
             ],
           ),
           const SizedBox(height: 12),
 
           // 냉장고
-          const RefrigeratorContainer(
-            foods: [],
+          RefrigeratorContainer(
+            foods: refrigeratorViewModel.foods,
+            selectedFoods: refrigeratorViewModel.selectedFoods,
             addFood: null,
+            selectFood: refrigeratorViewModel.selectFood,
           ),
           const SizedBox(height: 15),
 
