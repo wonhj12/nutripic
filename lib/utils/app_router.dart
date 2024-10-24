@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/bottom_navigator_bar.dart';
 import 'package:nutripic/models/diary_model.dart';
+import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
@@ -22,10 +23,19 @@ import 'package:provider/provider.dart';
 
 class AppRouter {
   final UserModel userModel;
+  final RefrigeratorModel refrigeratorModel;
   final DiaryModel diaryModel;
-  AppRouter({required this.diaryModel, required this.userModel});
+  AppRouter({
+    required this.diaryModel,
+    required this.refrigeratorModel,
+    required this.userModel,
+  });
 
-  static GoRouter getRouter(UserModel userModel, DiaryModel diaryModel) {
+  static GoRouter getRouter(
+    UserModel userModel,
+    RefrigeratorModel refrigeratorModel,
+    DiaryModel diaryModel,
+  ) {
     return GoRouter(
       initialLocation: '/login',
       redirect: (context, state) {
@@ -57,6 +67,7 @@ class AppRouter {
                   path: '/refrigerator',
                   builder: (context, state) => ChangeNotifierProvider(
                     create: (context) => RefrigeratorViewModel(
+                      refrigeratorModel: refrigeratorModel,
                       context: context,
                     ),
                     child: const RefrigeratorView(),
