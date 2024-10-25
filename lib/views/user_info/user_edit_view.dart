@@ -3,7 +3,7 @@ import 'package:nutripic/components/button_tile.dart';
 import 'package:nutripic/components/custom_app_bar.dart';
 import 'package:nutripic/components/custom_scaffold.dart';
 import 'package:nutripic/components/custom_text_field.dart';
-import 'package:nutripic/components/profile_image.dart';
+import 'package:nutripic/components/user_info/profile_image.dart';
 import 'package:nutripic/main.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:provider/provider.dart';

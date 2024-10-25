@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nutripic/components/button_tile.dart';
 import 'package:nutripic/components/custom_app_bar.dart';
 import 'package:nutripic/components/custom_scaffold.dart';
-import 'package:nutripic/components/profile_image.dart';
-import 'package:nutripic/components/food_tile.dart';
-import 'package:nutripic/components/saved_recipe_tile.dart';
+import 'package:nutripic/components/user_info/profile_image.dart';
+import 'package:nutripic/components/refrigerator/food_tile.dart';
+import 'package:nutripic/components/user_info/saved_recipe_tile.dart';
 import 'package:nutripic/main.dart';
+import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -97,11 +98,38 @@ class UserInfoView extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                FoodTile(src: userModel.profileUrl, name: '양파'),
+                FoodTile(
+                  food: Food(
+                    name: '양파',
+                    count: 2,
+                    imageName: 'carrot',
+                    expireDate: DateTime.now(),
+                  ),
+                  isSelected: false,
+                  select: (_) {},
+                ),
                 const SizedBox(width: 12),
-                const FoodTile(src: null, name: '마늘'),
+                FoodTile(
+                  food: Food(
+                    name: '당근',
+                    count: 1,
+                    imageName: 'carrot',
+                    expireDate: DateTime.now(),
+                  ),
+                  isSelected: false,
+                  select: (_) {},
+                ),
                 const SizedBox(width: 12),
-                const FoodTile(src: null, name: '파프리카'),
+                FoodTile(
+                  food: Food(
+                    name: '닭가슴살',
+                    count: 2,
+                    imageName: 'chicken_breast',
+                    expireDate: DateTime.now(),
+                  ),
+                  isSelected: false,
+                  select: (_) {},
+                ),
               ],
             ),
             const SizedBox(height: 36),
