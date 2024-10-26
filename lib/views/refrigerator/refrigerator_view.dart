@@ -56,6 +56,7 @@ class RefrigeratorView extends StatelessWidget {
           RefrigeratorContainer(
             foods: refrigeratorViewModel.foods,
             selectedFoods: refrigeratorViewModel.selectedFoods,
+            isSelectable: refrigeratorViewModel.isSelectable,
             addFood: null,
             selectFood: refrigeratorViewModel.selectFood,
           ),
