@@ -1,5 +1,25 @@
 import 'package:flutter/cupertino.dart';
 
+/// `DatePicker` 위젯을 띄우는 함수
+Future<DateTime> showCustomDatePicker(
+  BuildContext context,
+  DateTime selectedDate,
+) async {
+  await showCupertinoModalPopup(
+    context: context,
+    builder: (context) {
+      return DatePicker(
+        initialDate: selectedDate,
+        onDateSelected: (DateTime date) {
+          selectedDate = date;
+        },
+      );
+    },
+  );
+
+  return selectedDate;
+}
+
 class DatePicker extends StatelessWidget {
   final DateTime initialDate;
   final ValueChanged<DateTime> onDateSelected;

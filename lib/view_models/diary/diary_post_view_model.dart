@@ -1,9 +1,8 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nutripic/components/custom_date_picker.dart';
+import 'package:nutripic/components/date_picker.dart';
 import 'package:nutripic/components/select_camera_modal.dart';
 import 'package:nutripic/models/diary_model.dart';
 
