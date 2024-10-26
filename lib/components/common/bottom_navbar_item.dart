@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-BottomNavigationBarItem customNavBarItem({
+BottomNavigationBarItem bottomNavbarItem({
   required String src,
   required String active,
   required String label,

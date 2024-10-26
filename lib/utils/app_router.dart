@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:nutripic/components/bottom_navigator_bar.dart';
+import 'package:nutripic/components/common/bottom_navbar.dart';
 import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
@@ -58,7 +58,7 @@ class AppRouter {
       routes: [
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) =>
-              BottomNavBar(navigationShell: navigationShell),
+              BottomNavbar(navigationShell: navigationShell),
           branches: [
             // 냉장고
             StatefulShellBranch(
