@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/utils/palette.dart';
 
-/// Custom Button 타입
-enum ButtonType {
+/// Select Button 타입
+enum SelectButtonType {
   normal(Palette.sub),
   cancel(Palette.gray400),
   delete(Palette.delete);
 
   final Color color;
-  const ButtonType(this.color);
+  const SelectButtonType(this.color);
 }
 
-class CustomButton extends StatelessWidget {
+class SelectButton extends StatelessWidget {
   final String label;
   final double? width;
   final double? height;
-  final ButtonType type;
+  final SelectButtonType type;
   final Function()? onPressed;
-  const CustomButton({
+  const SelectButton({
     super.key,
     required this.label,
     this.width = 55,
     this.height = 30,
-    this.type = ButtonType.normal,
+    this.type = SelectButtonType.normal,
     required this.onPressed,
   });
 
@@ -37,7 +37,7 @@ class CustomButton extends StatelessWidget {
           backgroundColor: type.color,
           padding: EdgeInsets.zero,
         ),
-        child: Text(label, style: Palette.body),
+        child: Text(label, style: Palette.body.copyWith(color: Palette.white)),
       ),
     );
   }
