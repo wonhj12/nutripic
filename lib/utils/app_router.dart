@@ -5,12 +5,14 @@ import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
+import 'package:nutripic/view_models/login/email_view_model.dart';
 import 'package:nutripic/view_models/login/login_view_model.dart';
 import 'package:nutripic/view_models/login/signup_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:nutripic/views/diary/diary_view.dart';
+import 'package:nutripic/views/login/email_view.dart';
 import 'package:nutripic/views/login/signup_view.dart';
 import 'package:nutripic/views/camera_view.dart';
 import 'package:nutripic/views/diary/diary_post_view.dart';
@@ -42,8 +44,9 @@ class AppRouter {
         // 사용자 데이터가 있으면 firebase 로그인이 완료된 상태
         // 사용자 데이터가 없으면 로그인 화면으로 이동, 있으면 홈 화면으로 이동
         if (userModel.uid == null) {
-          // 회원가입 페이지로 이동만 허용
-          if (state.fullPath == '/login/signup') {
+          // 회원가입, 이메일 로그인 페이지로 이동만 허용
+          if (state.fullPath == '/login/signup' ||
+              state.fullPath == '/login/email') {
             return null;
           }
 
@@ -56,6 +59,44 @@ class AppRouter {
         }
       },
       routes: [
+        // 로그인
+        GoRoute(
+          path: '/login',
+          builder: (context, state) => ChangeNotifierProvider(
+            create: (context) => LoginViewModel(
+              userModel: userModel,
+              context: context,
+            ),
+            child: const LoginView(),
+          ),
+          routes: [
+            // 이메일 로그인
+            GoRoute(
+              path: 'email',
+              builder: (context, state) => ChangeNotifierProvider(
+                create: (context) => EmailViewModel(
+                  userModel: userModel,
+                  context: context,
+                ),
+                child: const EmailView(),
+              ),
+            ),
+
+            // 회원가입
+            GoRoute(
+              path: 'signup',
+              builder: (context, state) => ChangeNotifierProvider(
+                create: (context) => SignupViewModel(
+                  userModel: userModel,
+                  context: context,
+                ),
+                child: const SignupView(),
+              ),
+            )
+          ],
+        ),
+
+        // 메인
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) =>
               BottomNavbar(navigationShell: navigationShell),
@@ -153,31 +194,6 @@ class AppRouter {
                 )
               ],
             ),
-          ],
-        ),
-
-        // 로그인
-        GoRoute(
-          path: '/login',
-          builder: (context, state) => ChangeNotifierProvider(
-            create: (context) => LoginViewModel(
-              userModel: userModel,
-              context: context,
-            ),
-            child: const LoginView(),
-          ),
-          routes: [
-            // 회원가입
-            GoRoute(
-              path: 'signup',
-              builder: (context, state) => ChangeNotifierProvider(
-                create: (context) => SignupViewModel(
-                  userModel: userModel,
-                  context: context,
-                ),
-                child: const SignupView(),
-              ),
-            )
           ],
         ),
       ],
