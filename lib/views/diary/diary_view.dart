@@ -25,22 +25,41 @@ class _DiaryViewState extends State<DiaryView> {
       body: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(
-                icon: Icon(Icons.chevron_left),
-                onPressed: diaryViewModel.goToPreviousMonth,
+              GestureDetector(
+                onTap: diaryViewModel.goToPreviousMonth,
+                child: Container(
+                  padding: const EdgeInsets.all(8), // 아이콘 주위 여백 설정
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent, // 배경색 없애기
+                  ),
+                  child: const Icon(
+                    Icons.chevron_left,
+                    size: 24,
+                    color: Colors.black, // 아이콘 색상 지정
+                  ),
+                ),
               ),
               Text(
                 '${diaryViewModel.focusedDay.month}월',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              IconButton(
-                icon: Icon(Icons.chevron_right),
-                onPressed: diaryViewModel.goToNextMonth,
+              GestureDetector(
+                onTap: diaryViewModel.goToNextMonth,
+                child: Container(
+                  padding: const EdgeInsets.all(8), // 아이콘 주위 여백 설정
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent, // 배경색 없애기
+                  ),
+                  child: const Icon(
+                    Icons.chevron_right,
+                    size: 24,
+                    color: Colors.black, // 아이콘 색상 지정
+                  ),
+                ),
               ),
             ],
           ),

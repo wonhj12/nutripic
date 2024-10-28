@@ -19,19 +19,24 @@ class DiaryViewModel extends ChangeNotifier {
 
   DateTime focusedDay = DateTime.now();
   DateTime? selectedDate;
-  PageController _pageController =
-      PageController(initialPage: DateTime.now().month - 1);
 
   void goToPreviousMonth() {
-    focusedDay = DateTime(focusedDay.year, focusedDay.month - 1);
+    if (focusedDay.month < 2) {
+      focusedDay = DateTime(focusedDay.year - 1, 12);
+    } else {
+      focusedDay = DateTime(focusedDay.year, focusedDay.month - 1);
+    }
     notifyListeners();
   }
 
   void goToNextMonth() {
-    _pageController.nextPage(
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+    if (focusedDay.month > 11) {
+      focusedDay = DateTime(focusedDay.year + 1, 1);
+    } else {
+      focusedDay = DateTime(focusedDay.year, focusedDay.month + 1);
+    }
+
+    notifyListeners();
   }
 
   void updateFocusedDay(DateTime newFocusedDay) {
