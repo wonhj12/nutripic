@@ -16,24 +16,39 @@ class DiaryViewModel extends ChangeNotifier {
   DiaryViewModel({required this.diaryModel, required this.context});
 
   final ImagePicker _picker = ImagePicker();
-  DateTime? selectedDate;
 
-  // 날짜 선택 후 selectedDate 업데이트
-  /// 선택한 날짜 업데이트
-  void updateSelectDay(DateTime date) {
-    selectedDate = date;
+  DateTime focusedDay = DateTime.now();
+  DateTime? selectedDate;
+  PageController _pageController =
+      PageController(initialPage: DateTime.now().month - 1);
+
+  void goToPreviousMonth() {
+    focusedDay = DateTime(focusedDay.year, focusedDay.month - 1);
     notifyListeners();
   }
 
-  // table_calender에서 선택된 날짜를 표시하기 위해 검사용
-  /// 선택한 날짜와 동일한지 확인
-  bool isSameDay(DateTime date) {
-    return selectedDate == date;
+  void goToNextMonth() {
+    _pageController.nextPage(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void updateFocusedDay(DateTime newFocusedDay) {
+    focusedDay = newFocusedDay;
+    notifyListeners();
   }
 
   /// 선택된 날짜의 일기 불러오기
   List<Diary> getDiariesForDay(DateTime date) {
-    return diaryModel.diaries[date] ?? [];
+    return diaryModel.diaries.where((diary) => diary.date == date).toList();
+  }
+
+  List<Diary> getDiariesForMonth(int year, int month) {
+    return diaryModel.diaries
+        .where(
+            (diary) => diary.date?.year == year && diary.date?.month == month)
+        .toList();
   }
 
   /// 카메라/갤러리 선택 후 사진 촬영
