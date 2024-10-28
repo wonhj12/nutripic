@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/main_button.dart';
 import 'package:nutripic/components/custom_text_field.dart';
+import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/login/email_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,9 @@ class _EmailViewState extends State<EmailView> {
 
     return CustomScaffold(
       resizeToAvoidBottomInset: true,
+      isLoading: emailViewModel.isLoading,
       body: Form(
+        key: emailViewModel.formKey,
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -50,6 +53,7 @@ class _EmailViewState extends State<EmailView> {
               CustomTextField(
                 label: '이메일',
                 controller: emailViewModel.email,
+                validator: emailViewModel.validateEmail(),
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 textFieldType: TextFieldType.email,
@@ -60,10 +64,21 @@ class _EmailViewState extends State<EmailView> {
               CustomTextField(
                 label: '비밀번호',
                 controller: emailViewModel.password,
+                validator: emailViewModel.validatePassword(),
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.done,
                 textFieldType: TextFieldType.password,
               ),
+
+              if (emailViewModel.errorText != null)
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    emailViewModel.errorText!,
+                    style: Palette.foodCount.copyWith(color: Palette.delete),
+                  ),
+                ),
               const SizedBox(height: 60),
 
               // 로그인 버튼

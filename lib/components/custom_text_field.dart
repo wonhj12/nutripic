@@ -7,6 +7,7 @@ class CustomTextField extends StatefulWidget {
   final String? label;
   final TextEditingController? controller;
   final GlobalKey<FormState>? formKey;
+  final String? Function(String?)? validator;
   final String? initialValue;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
@@ -16,6 +17,7 @@ class CustomTextField extends StatefulWidget {
     this.label,
     this.controller,
     this.formKey,
+    this.validator,
     this.initialValue,
     this.keyboardType,
     this.textInputAction,
@@ -100,9 +102,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: _focusNode.hasFocus
-            ? const TextStyle(color: Palette.sub)
-            : const TextStyle(color: Palette.black),
+        labelStyle: const TextStyle(color: Palette.black),
         // 선택되지 않았을 때 border
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -112,6 +112,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(width: 1, color: Palette.sub),
+        ),
+        // 선택되지 않았을 때 validation 에러 border
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(width: 1, color: Palette.delete),
+        ),
+        // Focus 상태 validation 에러 border
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(width: 1, color: Palette.delete),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -124,6 +134,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       obscureText:
           widget.textFieldType == TextFieldType.password ? _isObscure : false,
       textInputAction: widget.textInputAction,
+      validator: widget.validator,
     );
   }
 }
