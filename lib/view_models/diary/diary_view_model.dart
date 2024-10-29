@@ -20,6 +20,8 @@ class DiaryViewModel extends ChangeNotifier {
   DateTime focusedDay = DateTime.now();
   DateTime? selectedDate;
 
+  bool clicked = false;
+
   void goToPreviousMonth() {
     if (focusedDay.month < 2) {
       focusedDay = DateTime(focusedDay.year - 1, 12);
@@ -74,26 +76,27 @@ class DiaryViewModel extends ChangeNotifier {
     return properMealDays / totalDays;
   }
 
+  ///사진 추가 방식 선택
+  void floatingButtonClick() {
+    clicked = !clicked;
+    notifyListeners();
+  }
+
   /// 카메라/갤러리 선택 후 사진 촬영
-  Future<void> showCameraSelectModal() async {
-    // 모달 띄워서 사진 업로드 방식 선택 (카메라, 갤러리)
-    final mode = await selectCameraModal(context);
+  Future<void> imagePick(ImageSource source) async {
+    // 새로 등록시 기존 선택 되어잇는 diary 제거
+    diaryModel.reset();
 
-    if (mode != null) {
-      // 새로 등록시 기존 선택 되어잇는 diary 제거
-      diaryModel.reset();
+    // 이미지 촬영 / 갤러리에서 이미지 불러오기
+    final pickedFile = await _picker.pickImage(source: source);
 
-      // 이미지 촬영 / 갤러리에서 이미지 불러오기
-      final pickedFile = await _picker.pickImage(source: mode);
+    // 사진 촬영 완료 후 새 diary 생성, 사진 등록
+    if (pickedFile != null) {
+      final image = File(pickedFile.path);
+      diaryModel.diary = Diary(imageUrl: image.path);
 
-      // 사진 촬영 완료 후 새 diary 생성, 사진 등록
-      if (pickedFile != null) {
-        final image = File(pickedFile.path);
-        diaryModel.diary = Diary(imageUrl: image.path);
-
-        if (context.mounted) {
-          context.go('/diary/post');
-        }
+      if (context.mounted) {
+        context.go('/diary/post');
       }
     }
   }

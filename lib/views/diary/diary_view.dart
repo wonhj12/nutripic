@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nutripic/components/custom_app_bar.dart';
 import 'package:nutripic/components/custom_scaffold.dart';
 import 'package:nutripic/utils/palette.dart';
@@ -31,14 +32,14 @@ class _DiaryViewState extends State<DiaryView> {
               GestureDetector(
                 onTap: diaryViewModel.goToPreviousMonth,
                 child: Container(
-                  padding: const EdgeInsets.all(8), // 아이콘 주위 여백 설정
+                  padding: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
-                    color: Colors.transparent, // 배경색 없애기
+                    color: Colors.transparent,
                   ),
                   child: const Icon(
                     Icons.chevron_left,
                     size: 24,
-                    color: Colors.black, // 아이콘 색상 지정
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -53,14 +54,14 @@ class _DiaryViewState extends State<DiaryView> {
               GestureDetector(
                 onTap: diaryViewModel.goToNextMonth,
                 child: Container(
-                  padding: const EdgeInsets.all(8), // 아이콘 주위 여백 설정
+                  padding: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
-                    color: Colors.transparent, // 배경색 없애기
+                    color: Colors.transparent,
                   ),
                   child: const Icon(
                     Icons.chevron_right,
                     size: 24,
-                    color: Colors.black, // 아이콘 색상 지정
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -166,14 +167,12 @@ class _DiaryViewState extends State<DiaryView> {
                 diaryViewModel.updateFocusedDay(
                     focusedDay); // 페이지 변경 시에만 _focusedDay 업데이트
               },
-
               headerVisible: false,
               calendarStyle: const CalendarStyle(
                 isTodayHighlighted: false,
                 selectedDecoration: BoxDecoration(),
                 selectedTextStyle: TextStyle(),
               ),
-              //요일 간격
               daysOfWeekHeight: 25.0,
               calendarBuilders: CalendarBuilders(
                 dowBuilder: (context, day) {
@@ -249,49 +248,69 @@ class _DiaryViewState extends State<DiaryView> {
               ),
             ),
           ),
-
-          //게시글 추가버튼
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.end,
-          //   children: [
-          //     Padding(
-          //       padding: const EdgeInsets.only(bottom: 12),
-          //       child: GestureDetector(
-          //         onTap: () {
-          //           diaryViewModel.showCameraSelectModal();
-          //         },
-          //         child: Container(
-          //           width: 50,
-          //           height: 50,
-          //           decoration: BoxDecoration(
-          //             color: const Color(0xFF1FD893), // Button color
-          //             shape: BoxShape.circle, // Circular shape
-          //             boxShadow: [
-          //               BoxShadow(
-          //                 color: Colors.black.withOpacity(0.2),
-          //                 spreadRadius: 3,
-          //                 blurRadius: 6,
-          //                 offset: const Offset(0, 3),
-          //               ),
-          //             ],
-          //           ),
-          //           child: const Icon(
-          //             Icons.add,
-          //             color: Colors.white,
-          //             size: 30,
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          diaryViewModel.showCameraSelectModal();
-        },
+
+      //게시글 추가버튼
+      floatingActionButton: Stack(
+        children: [
+          if (diaryViewModel.clicked)
+            //TODO 화면 회색 블러 처리
+            GestureDetector(
+              onTap: diaryViewModel.floatingButtonClick,
+            ),
+
+          //카메라 선택 버튼
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+            bottom: diaryViewModel.clicked ? 65 : 0,
+            right: 0,
+            child: AnimatedOpacity(
+              opacity: diaryViewModel.clicked ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 300),
+              child: FloatingActionButton(
+                heroTag: "cameraTag",
+                shape: const CircleBorder(),
+                onPressed: () => diaryViewModel.imagePick(ImageSource.camera),
+                backgroundColor: Colors.grey,
+                child: const Icon(Icons.camera_alt),
+              ),
+            ),
+          ),
+
+          //갤러리 선택 버튼
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+            bottom: diaryViewModel.clicked ? 130 : 0,
+            right: 0,
+            child: AnimatedOpacity(
+              opacity: diaryViewModel.clicked ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 300),
+              child: FloatingActionButton(
+                heroTag: "galleryTag",
+                shape: const CircleBorder(),
+                onPressed: () => diaryViewModel.imagePick(ImageSource.gallery),
+                backgroundColor: Colors.grey,
+                child: const Icon(Icons.photo),
+              ),
+            ),
+          ),
+
+          //선택버튼
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: FloatingActionButton(
+              heroTag: "mainTag",
+              backgroundColor: const Color(0xFF1FD893),
+              shape: const CircleBorder(),
+              onPressed: diaryViewModel.floatingButtonClick,
+              child: Icon(diaryViewModel.clicked ? Icons.close : Icons.add),
+            ),
+          ),
+        ],
       ),
     );
   }
