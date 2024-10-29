@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
-import 'package:nutripic/components/custom_button.dart';
+import 'package:nutripic/components/select_button.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_container.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_select_container.dart';
@@ -30,9 +30,9 @@ class RefrigeratorView extends StatelessWidget {
               const Spacer(),
               refrigeratorViewModel.isSelectable
                   // 취소 버튼
-                  ? CustomButton(
+                  ? SelectButton(
                       label: '취소',
-                      type: ButtonType.cancel,
+                      type: SelectButtonType.cancel,
                       onPressed: refrigeratorViewModel.onTapCancel,
                     )
                   // 정렬
@@ -40,13 +40,13 @@ class RefrigeratorView extends StatelessWidget {
               const SizedBox(width: 15),
               refrigeratorViewModel.isSelectable
                   // 삭제 버튼
-                  ? CustomButton(
+                  ? SelectButton(
                       label: '삭제',
-                      type: ButtonType.delete,
+                      type: SelectButtonType.delete,
                       onPressed: refrigeratorViewModel.onTapDelete,
                     )
                   // 선택 버튼
-                  : CustomButton(
+                  : SelectButton(
                       label: '선택', onPressed: refrigeratorViewModel.onTapSelect)
             ],
           ),

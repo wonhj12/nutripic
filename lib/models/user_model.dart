@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+/// 로그인 방식 (이메일, 카카오, 구글, 애플)
+enum LoginType { email, kakao, google, apple }
+
 class UserModel with ChangeNotifier {
   /// Firebase에서 제공하는 uid
   String? uid;
@@ -15,9 +18,7 @@ class UserModel with ChangeNotifier {
   String? profileUrl;
 
   /// 사용자 로그인 타입
-  ///
-  /// 0 - email, 1 - kakao, 2 - google, 3 - apple
-  int? loginType;
+  LoginType? loginType;
 
   /// 사용자 생성 날짜
   DateTime? createdAt;
@@ -38,24 +39,24 @@ class UserModel with ChangeNotifier {
     email = user.email;
     profileUrl = user.photoURL;
     if (user.providerData.isEmpty) {
-      loginType = 1;
+      loginType = LoginType.kakao;
     } else {
       final provider = user.providerData[0].providerId;
       switch (provider) {
         case 'password':
-          loginType = 0;
+          loginType = LoginType.email;
           break;
         case 'kakao':
-          loginType = 1;
+          loginType = LoginType.kakao;
           break;
         case 'google.com':
-          loginType = 2;
+          loginType = LoginType.google;
           break;
         case 'apple':
-          loginType = 3;
+          loginType = LoginType.apple;
           break;
         default:
-          loginType = 0;
+          loginType = LoginType.email;
           break;
       }
     }

@@ -71,6 +71,9 @@ class Palette {
       TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 
   /// 식재료 개수
+  /// <br />Font size: 12
+  /// <br />Font weight: Regular
+  /// <br />Color: white
   static const TextStyle foodCount =
       TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: white);
 
