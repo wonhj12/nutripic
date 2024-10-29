@@ -249,14 +249,50 @@ class _DiaryViewState extends State<DiaryView> {
               ),
             ),
           ),
+
+          //게시글 추가버튼
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   children: [
+          //     Padding(
+          //       padding: const EdgeInsets.only(bottom: 12),
+          //       child: GestureDetector(
+          //         onTap: () {
+          //           diaryViewModel.showCameraSelectModal();
+          //         },
+          //         child: Container(
+          //           width: 50,
+          //           height: 50,
+          //           decoration: BoxDecoration(
+          //             color: const Color(0xFF1FD893), // Button color
+          //             shape: BoxShape.circle, // Circular shape
+          //             boxShadow: [
+          //               BoxShadow(
+          //                 color: Colors.black.withOpacity(0.2),
+          //                 spreadRadius: 3,
+          //                 blurRadius: 6,
+          //                 offset: const Offset(0, 3),
+          //               ),
+          //             ],
+          //           ),
+          //           child: const Icon(
+          //             Icons.add,
+          //             color: Colors.white,
+          //             size: 30,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: const Icon(Icons.add),
-      //   onPressed: () {
-      //     diaryViewModel.showCameraSelectModal();
-      //   },
-      // ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          diaryViewModel.showCameraSelectModal();
+        },
+      ),
     );
   }
 }
