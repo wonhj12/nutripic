@@ -49,11 +49,29 @@ class DiaryViewModel extends ChangeNotifier {
     return diaryModel.diaries.where((diary) => diary.date == date).toList();
   }
 
-  List<Diary> getDiariesForMonth(int year, int month) {
-    return diaryModel.diaries
-        .where(
-            (diary) => diary.date?.year == year && diary.date?.month == month)
-        .toList();
+  /// 일기 있는 날짜수 반환
+  int getDiariesForMonth() {
+    final diariesForMonth = diaryModel.diaries
+        .where((diary) =>
+            diary.date?.year == focusedDay.year &&
+            diary.date?.month == focusedDay.month)
+        .map((diary) => diary.date?.day)
+        .toSet();
+    return diariesForMonth.length;
+  }
+
+  /// 이번 달 날짜수 반환
+  int getTotalDaysInMonth() {
+    return DateTime(focusedDay.year, focusedDay.month + 1, 0)
+        .day; // 다음 달 0일로 설정해 해당 달의 마지막 날 계산
+  }
+
+  /// 건강한 식사 비율 반환
+  double getProperMealPercentage() {
+    final int totalDays = getTotalDaysInMonth();
+    final int properMealDays = getDiariesForMonth();
+    if (totalDays == 0) return 0.0;
+    return properMealDays / totalDays;
   }
 
   /// 카메라/갤러리 선택 후 사진 촬영
