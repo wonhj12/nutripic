@@ -30,6 +30,66 @@ class RefrigeratorViewModel with ChangeNotifier {
       imageName: 'chicken_breast',
       expireDate: DateTime(2024, 11, 6),
     ),
+    Food(
+      name: '당근',
+      count: 2,
+      imageName: 'carrot',
+      expireDate: DateTime(2024, 11, 11),
+    ),
+    Food(
+      name: '닭가슴살',
+      count: 1,
+      imageName: 'chicken_breast',
+      expireDate: DateTime(2024, 11, 6),
+    ),
+    Food(
+      name: '당근',
+      count: 2,
+      imageName: 'carrot',
+      expireDate: DateTime(2024, 11, 11),
+    ),
+    Food(
+      name: '닭가슴살',
+      count: 1,
+      imageName: 'chicken_breast',
+      expireDate: DateTime(2024, 11, 6),
+    ),
+    Food(
+      name: '당근',
+      count: 2,
+      imageName: 'carrot',
+      expireDate: DateTime(2024, 11, 11),
+    ),
+    Food(
+      name: '닭가슴살',
+      count: 1,
+      imageName: 'chicken_breast',
+      expireDate: DateTime(2024, 11, 6),
+    ),
+    Food(
+      name: '당근',
+      count: 2,
+      imageName: 'carrot',
+      expireDate: DateTime(2024, 11, 11),
+    ),
+    Food(
+      name: '닭가슴살',
+      count: 1,
+      imageName: 'chicken_breast',
+      expireDate: DateTime(2024, 11, 6),
+    ),
+    Food(
+      name: '당근',
+      count: 2,
+      imageName: 'carrot',
+      expireDate: DateTime(2024, 11, 11),
+    ),
+    Food(
+      name: '닭가슴살',
+      count: 1,
+      imageName: 'chicken_breast',
+      expireDate: DateTime(2024, 11, 6),
+    ),
   ];
 
   /// 선택된 식재료

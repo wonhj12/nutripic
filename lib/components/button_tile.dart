@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// 공지사항 등에서 사용되는 타일 버튼
 class ButtonTile extends StatelessWidget {
   final String title;
   final void Function()? onTap;

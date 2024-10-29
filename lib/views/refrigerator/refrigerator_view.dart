@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/custom_app_bar.dart';
+import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/custom_button.dart';
-import 'package:nutripic/components/custom_scaffold.dart';
+import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_container.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_select_container.dart';
 import 'package:nutripic/utils/palette.dart';
@@ -56,6 +56,7 @@ class RefrigeratorView extends StatelessWidget {
           RefrigeratorContainer(
             foods: refrigeratorViewModel.foods,
             selectedFoods: refrigeratorViewModel.selectedFoods,
+            isSelectable: refrigeratorViewModel.isSelectable,
             addFood: null,
             selectFood: refrigeratorViewModel.selectFood,
           ),

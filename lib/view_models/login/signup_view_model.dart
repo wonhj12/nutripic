@@ -29,9 +29,7 @@ class SignupViewModel with ChangeNotifier {
       // UserModel에 사용자 데이터 저장
       if (user != null) {
         await user.updateDisplayName(name);
-        userModel.fromFirebaseUser(user);
-        // updateDisplayName이 바로 반영되지 않기 때문에 수동으로 UserModel에 업데이트
-        userModel.name = name;
+        userModel.fromFirebaseUser(_firebaseAuth.currentUser ?? user);
       }
 
       // 회원가입 완료 후 바로 홈 화면으로 이동
