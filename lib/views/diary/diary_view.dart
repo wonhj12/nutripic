@@ -272,7 +272,9 @@ class _DiaryViewState extends State<DiaryView> {
               child: FloatingActionButton(
                 heroTag: "cameraTag",
                 shape: const CircleBorder(),
-                onPressed: () => diaryViewModel.imagePick(ImageSource.camera),
+                onPressed: () {
+                  diaryViewModel.imagePick(ImageSource.camera);
+                },
                 backgroundColor: Colors.grey,
                 child: const Icon(Icons.camera_alt),
               ),
