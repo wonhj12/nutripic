@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nutripic/components/custom_app_bar.dart';
+import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/custom_floating_action_button.dart';
-import 'package:nutripic/components/custom_scaffold.dart';
 import 'package:nutripic/components/diary/diary_calendar.dart';
 import 'package:nutripic/components/diary/diary_calendar_header.dart';
 import 'package:nutripic/components/diary/diary_summary_container.dart';
 import 'package:nutripic/utils/palette.dart';
+import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -78,19 +78,9 @@ class _DiaryViewState extends State<DiaryView> {
 
           //카메라 선택 버튼
           CustomFloatingActionButton(
+            heroTag: "cameraTag",
             type: ButtonType.gray,
             icon: Icons.camera_alt,
-            onPressed: () {
-              diaryViewModel.imagePick(ImageSource.camera);
-            },
-            animatedPositionBottom: diaryViewModel.clicked ? 65 : 0,
-            opacity: diaryViewModel.clicked ? 1.0 : 0.0,
-          ),
-
-          //갤러리 선택 버튼
-          CustomFloatingActionButton(
-            type: ButtonType.gray,
-            icon: Icons.photo,
             onPressed: () {
               diaryViewModel.imagePick(ImageSource.camera);
             },
@@ -98,8 +88,21 @@ class _DiaryViewState extends State<DiaryView> {
             opacity: diaryViewModel.clicked ? 1.0 : 0.0,
           ),
 
+          //갤러리 선택 버튼
+          CustomFloatingActionButton(
+            heroTag: "galleryTag",
+            type: ButtonType.gray,
+            icon: Icons.photo,
+            onPressed: () {
+              diaryViewModel.imagePick(ImageSource.gallery);
+            },
+            animatedPositionBottom: diaryViewModel.clicked ? 65 : 0,
+            opacity: diaryViewModel.clicked ? 1.0 : 0.0,
+          ),
+
           //선택버튼
           CustomFloatingActionButton(
+            heroTag: "mainTag",
             type: ButtonType.green,
             icon: diaryViewModel.clicked ? Icons.close : Icons.add,
             onPressed: diaryViewModel.floatingButtonClick,

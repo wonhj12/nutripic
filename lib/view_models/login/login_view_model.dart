@@ -15,28 +15,25 @@ class LoginViewModel with ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final kakao.UserApi _kakaoApi = kakao.UserApi.instance;
 
-  String email = '';
-  String password = '';
+  // 상단부터 로고까지 space 길이
+  double topPadding() {
+    return 228 - MediaQuery.of(context).padding.top;
+  }
 
   /// 로그인 선택 시 로그인 후 서버 인증 받는 함수
-  ///
-  /// `int loginType` : 0 - 이메일, 1 - 카카오, 2 - 구글, 3 - 애플
-  void login(int loginType) async {
+  void login(LoginType loginType) async {
     User? user;
     switch (loginType) {
-      // 이메일
-      case 0:
-        user = await _emailLogin();
       // 카카오
-      case 1:
+      case LoginType.kakao:
         user = await _kakaoLogin();
         break;
       // 구글
-      case 2:
+      case LoginType.google:
         user = await _googleLogin();
         break;
       // 애플
-      case 3:
+      case LoginType.apple:
         // user = await _appleLogin();
         break;
       default:
@@ -49,27 +46,6 @@ class LoginViewModel with ChangeNotifier {
       userModel.fromFirebaseUser(user);
 
       if (context.mounted) context.go('/refrigerator');
-    }
-  }
-
-  /// 이메일 로그인
-  Future<User?> _emailLogin() async {
-    try {
-      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email.trim(),
-        password: password.trim(),
-      );
-      final user = userCredential.user;
-
-      return user;
-    } on FirebaseAuthException catch (e) {
-      // https://stackoverflow.com/questions/67617502/what-are-the-error-codes-for-flutter-firebase-auth-exception
-      // https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth/signInWithEmailAndPassword.html
-      debugPrint('FirebaseAuthException in _emailLogin: ${e.code}');
-      return null;
-    } catch (e) {
-      debugPrint('Error in _emailLogin: $e');
-      return null;
     }
   }
 
@@ -174,6 +150,11 @@ class LoginViewModel with ChangeNotifier {
       debugPrint('Error in _appleLogin: $e');
       return null;
     }
+  }
+
+  /// 이메일 로그인 페이지로 이동
+  void emailLogin() {
+    context.go('/login/email');
   }
 
   /// 회원가입 페이지로 이동

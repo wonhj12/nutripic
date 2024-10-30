@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/button_tile.dart';
-import 'package:nutripic/components/custom_app_bar.dart';
-import 'package:nutripic/components/custom_scaffold.dart';
+import 'package:nutripic/components/common/custom_app_bar.dart';
+import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/user_info/profile_image.dart';
 import 'package:nutripic/components/refrigerator/food_tile.dart';
 import 'package:nutripic/components/user_info/saved_recipe_tile.dart';
@@ -106,6 +106,8 @@ class UserInfoView extends StatelessWidget {
                     expireDate: DateTime.now(),
                   ),
                   isSelected: false,
+                  isSelectable: false,
+                  showInfo: false,
                   select: (_) {},
                 ),
                 const SizedBox(width: 12),
@@ -117,6 +119,8 @@ class UserInfoView extends StatelessWidget {
                     expireDate: DateTime.now(),
                   ),
                   isSelected: false,
+                  isSelectable: false,
+                  showInfo: false,
                   select: (_) {},
                 ),
                 const SizedBox(width: 12),
@@ -128,6 +132,8 @@ class UserInfoView extends StatelessWidget {
                     expireDate: DateTime.now(),
                   ),
                   isSelected: false,
+                  isSelectable: false,
+                  showInfo: false,
                   select: (_) {},
                 ),
               ],

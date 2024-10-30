@@ -14,6 +14,7 @@ class CustomFloatingActionButton extends StatelessWidget {
   final IconData icon;
   final ButtonType type;
   final Function()? onPressed;
+  final String heroTag;
   final double animatedPositionBottom;
   final double opacity;
 
@@ -22,6 +23,7 @@ class CustomFloatingActionButton extends StatelessWidget {
     required this.icon,
     required this.type,
     required this.onPressed,
+    required this.heroTag,
     this.animatedPositionBottom = -1,
     this.opacity = 1.0,
   });
@@ -37,6 +39,7 @@ class CustomFloatingActionButton extends StatelessWidget {
               opacity: opacity,
               duration: const Duration(milliseconds: 300),
               child: FloatingActionButton(
+                heroTag: heroTag,
                 onPressed: onPressed,
                 backgroundColor: type.color,
                 shape: const CircleBorder(),
@@ -51,6 +54,7 @@ class CustomFloatingActionButton extends StatelessWidget {
             bottom: 0,
             right: 0,
             child: FloatingActionButton(
+              heroTag: heroTag,
               onPressed: onPressed,
               backgroundColor: type.color,
               shape: const CircleBorder(),
