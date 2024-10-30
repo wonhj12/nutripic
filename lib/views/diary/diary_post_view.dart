@@ -87,7 +87,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
 
             // 게시 버튼
             Padding(
-              padding: const EdgeInsets.only(left: 25, right: 25),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
