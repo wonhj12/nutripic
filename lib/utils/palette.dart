@@ -58,7 +58,7 @@ class Palette {
   /// Font size: 20
   /// <br />Font weight: Bold
   static const TextStyle title =
-      TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
+      TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
 
   /// Font size: 14
   /// <br />Font weight: Semibold
@@ -70,12 +70,10 @@ class Palette {
   static const TextStyle body =
       TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 
-  /// 식재료 개수
-  /// <br />Font size: 12
+  /// Font size: 12
   /// <br />Font weight: Regular
-  /// <br />Color: white
-  static const TextStyle foodCount =
-      TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: white);
+  static const TextStyle subbody =
+      TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
 
   /* Shadows */
   static BoxShadow shadow =

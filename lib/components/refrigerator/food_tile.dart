@@ -111,7 +111,7 @@ class FoodTile extends StatelessWidget {
                       child: Center(
                         child: Text(
                           'x${food.count}',
-                          style: Palette.foodCount,
+                          style: Palette.subbody.copyWith(color: Palette.white),
                         ),
                       ),
                     ),
