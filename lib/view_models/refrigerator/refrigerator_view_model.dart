@@ -10,87 +10,11 @@ class RefrigeratorViewModel with ChangeNotifier {
     required this.context,
   });
 
-  /// 냉장, 냉동, 실온
-  int selected = 0;
+  /// 현재 선택된 냉장고
+  StorageType storage = StorageType.fridge;
 
   /// 식재료 선택 가능 여부
   bool isSelectable = false;
-
-  // 식재료 더미 데이터 (나중에 RefrigeratorModel 생성해서 옮겨야함)
-  List<Food> foods = [
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-  ];
 
   /// 선택된 식재료
   Set<Food> selectedFoods = <Food>{};
@@ -117,7 +41,8 @@ class RefrigeratorViewModel with ChangeNotifier {
   /// <br /> 식재료 삭제
   void onTapDelete() {
     // selectedFoods에 있는 식재료를 리스트에서 삭제
-    foods.removeWhere((food) => selectedFoods.contains(food));
+    refrigeratorModel.foods[storage.rawValue]
+        .removeWhere((food) => selectedFoods.contains(food));
 
     // 삭제 후 selectedFoods 초기화
     selectedFoods.clear();
@@ -143,36 +68,19 @@ class RefrigeratorViewModel with ChangeNotifier {
 
   /// 냉장 버튼 클릭시 호출되는 함수
   void onTapRefrigerator() {
-    selected = 0;
-    // 더미 데이터
-    foods = [
-      Food(
-        name: '당근',
-        count: 2,
-        imageName: 'carrot',
-        expireDate: DateTime(2024, 11, 11),
-      ),
-      Food(
-        name: '닭가슴살',
-        count: 1,
-        imageName: 'chicken_breast',
-        expireDate: DateTime(2024, 11, 6),
-      ),
-    ];
+    storage = StorageType.fridge;
     notifyListeners();
   }
 
   /// 냉동 버튼 클릭시 호출되는 함수
   void onTapFreezer() {
-    selected = 1;
-    foods = refrigeratorModel.freezerFoods ?? [];
+    storage = StorageType.freezer;
     notifyListeners();
   }
 
   /// 실온 버튼 클릭시 호출되는 함수
   void onTapCabinet() {
-    selected = 2;
-    foods = refrigeratorModel.cabinetFoods ?? [];
+    storage = StorageType.room;
     notifyListeners();
   }
 }

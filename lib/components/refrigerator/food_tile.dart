@@ -56,7 +56,7 @@ class FoodTile extends StatelessWidget {
                       ),
                     ),
                     child: SvgPicture.asset(
-                      'assets/foods/${food.imageName}.svg',
+                      'assets/foods/${food.name}.svg',
                     ),
                   ),
                 ),
@@ -97,25 +97,25 @@ class FoodTile extends StatelessWidget {
                   ),
 
                 // 식재료 개수
-                if (showInfo && food.count > 1)
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 21,
-                      height: 21,
-                      decoration: const BoxDecoration(
-                        color: Palette.secondary,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'x${food.count}',
-                          style: Palette.subbody.copyWith(color: Palette.white),
-                        ),
-                      ),
-                    ),
-                  )
+                // if (showInfo && food.count > 1)
+                //   Positioned(
+                //     bottom: 0,
+                //     right: 0,
+                //     child: Container(
+                //       width: 21,
+                //       height: 21,
+                //       decoration: const BoxDecoration(
+                //         color: Palette.secondary,
+                //         shape: BoxShape.circle,
+                //       ),
+                //       child: Center(
+                //         child: Text(
+                //           'x${food.count}',
+                //           style: Palette.subbody.copyWith(color: Palette.white),
+                //         ),
+                //       ),
+                //     ),
+                //   )
               ],
             ),
           ),

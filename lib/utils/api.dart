@@ -35,7 +35,20 @@ class API {
       debugPrint('Error in postKakaoCustomToken: $e');
       throw Error();
     }
+
     return token;
+  }
+
+  /// 냉장고에 저장돼있는 식재료를 받아오는 함수
+  /// Freezer, Fridge, Room에 있는 foods를 반환
+  static Future<dynamic> getFoods() async {
+    try {
+      final response = await _getApi('/storage');
+      return response.data;
+    } catch (e) {
+      debugPrint('Error in getFoods: $e');
+      throw Error();
+    }
   }
 
   /* BASE API (GET, POST, PATCH, DELETE) */
