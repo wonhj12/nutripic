@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nutripic/components/refrigerator/food_dday.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/palette.dart';
 
@@ -48,16 +47,13 @@ class FoodTile extends StatelessWidget {
                     width: 72,
                     height: 72,
                     decoration: BoxDecoration(
-                      // color: Palette.white,
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: isSelected ? Palette.secondary : Palette.gray100,
                         width: 2,
                       ),
                     ),
-                    child: SvgPicture.asset(
-                      'assets/foods/${food.name}.svg',
-                    ),
+                    child: SvgPicture.asset('assets/foods/carrot.svg'),
                   ),
                 ),
 
@@ -89,40 +85,19 @@ class FoodTile extends StatelessWidget {
                   ),
 
                 // 식재료 D-day
-                if (showInfo)
-                  Positioned(
-                    top: 0,
-                    left: -16,
-                    child: FoodDday(dDay: food.dDay()),
-                  ),
-
-                // 식재료 개수
-                // if (showInfo && food.count > 1)
+                // if (showInfo)
                 //   Positioned(
-                //     bottom: 0,
-                //     right: 0,
-                //     child: Container(
-                //       width: 21,
-                //       height: 21,
-                //       decoration: const BoxDecoration(
-                //         color: Palette.secondary,
-                //         shape: BoxShape.circle,
-                //       ),
-                //       child: Center(
-                //         child: Text(
-                //           'x${food.count}',
-                //           style: Palette.subbody.copyWith(color: Palette.white),
-                //         ),
-                //       ),
-                //     ),
-                //   )
+                //     top: 0,
+                //     left: -16,
+                //     child: FoodDday(dDay: food.dDay()),
+                //   ),
               ],
             ),
           ),
           const SizedBox(height: 12),
 
           // 식재료 이름
-          Text(food.name, style: Palette.body)
+          Text(food.name, style: Palette.body),
         ],
       ),
     );
