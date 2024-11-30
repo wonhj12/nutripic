@@ -55,6 +55,11 @@ class Palette {
   static const TextStyle heading =
       TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
 
+  /// Font size: 24
+  /// <br />Font weight: Bold. Color: white
+  static const TextStyle headingWhite =
+      TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white);
+
   /// Font size: 20
   /// <br />Font weight: Bold
   static const TextStyle title =

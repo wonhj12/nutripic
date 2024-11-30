@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/common/bottom_navbar.dart';
+import 'package:nutripic/main.dart';
 import 'package:nutripic/models/diary_model.dart';
+import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
@@ -8,6 +10,8 @@ import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:nutripic/view_models/login/email_view_model.dart';
 import 'package:nutripic/view_models/login/login_view_model.dart';
 import 'package:nutripic/view_models/login/signup_view_model.dart';
+import 'package:nutripic/view_models/recipe/recipe_detail_view_model.dart';
+import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
@@ -17,7 +21,8 @@ import 'package:nutripic/views/login/signup_view.dart';
 import 'package:nutripic/views/camera_view.dart';
 import 'package:nutripic/views/diary/diary_post_view.dart';
 import 'package:nutripic/views/login/login_view.dart';
-import 'package:nutripic/views/recipe_view.dart';
+import 'package:nutripic/views/recipe/recipe_detail_view.dart';
+import 'package:nutripic/views/recipe/recipe_view.dart';
 import 'package:nutripic/views/refrigerator/refrigerator_view.dart';
 import 'package:nutripic/views/user_info/user_edit_view.dart';
 import 'package:nutripic/views/user_info/user_info_view.dart';
@@ -27,16 +32,20 @@ class AppRouter {
   final UserModel userModel;
   final RefrigeratorModel refrigeratorModel;
   final DiaryModel diaryModel;
+  final RecipeModel recipeModel;
+
   AppRouter({
     required this.diaryModel,
     required this.refrigeratorModel,
     required this.userModel,
+    required this.recipeModel,
   });
 
   static GoRouter getRouter(
     UserModel userModel,
     RefrigeratorModel refrigeratorModel,
     DiaryModel diaryModel,
+    RecipeModel recipeModel,
   ) {
     return GoRouter(
       initialLocation: '/login',
@@ -161,9 +170,26 @@ class AppRouter {
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: '/recipe',
-                  builder: (context, state) => const RecipeView(),
-                )
+                    path: '/recipe',
+                    builder: (context, state) => ChangeNotifierProvider(
+                          create: (context) => RecipeViewModel(
+                            recipeModel: recipeModel,
+                            context: context,
+                          ),
+                          child: const RecipeView(),
+                        ),
+                    routes: [
+                      GoRoute(
+                        path: 'detail',
+                        builder: (context, state) => ChangeNotifierProvider(
+                          create: (context) => RecipeDetailViewModel(
+                            recipeModel: recipeModel,
+                            context: context,
+                          ),
+                          child: RecipeDetailView(),
+                        ),
+                      )
+                    ])
               ],
             ),
 
