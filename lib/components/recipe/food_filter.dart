@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nutripic/components/recipe/food.dart';
 import 'package:nutripic/utils/palette.dart';
+import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
+import 'package:provider/provider.dart';
 
 class FoodFilter extends StatelessWidget {
   const FoodFilter({super.key});
 
   @override
   Widget build(BuildContext context) {
+    RecipeViewModel recipeViewModel = context.watch<RecipeViewModel>();
     return Container(
       padding: const EdgeInsets.only(top: 4, bottom: 4),
       width: double.infinity,
@@ -18,21 +22,34 @@ class FoodFilter extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SvgPicture.asset(
-            'assets/foods/carrot.svg',
-            fit: BoxFit.contain,
+          const Expanded(
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Food(),
+                  Food(),
+                ],
+              ),
+            ),
           ),
-          SvgPicture.asset(
-            'assets/foods/carrot.svg',
-            fit: BoxFit.contain,
-          ),
-          SvgPicture.asset(
-            'assets/foods/carrot.svg',
-            fit: BoxFit.contain,
-          ),
-          SvgPicture.asset(
-            'assets/foods/chicken_breast.svg',
-            fit: BoxFit.contain,
+          InkWell(
+            onTap: () {
+              recipeViewModel.showFilterDialog(context);
+            },
+            borderRadius: BorderRadius.circular(8),
+            splashColor: Colors.grey.withOpacity(0.3),
+            child: Container(
+              margin: const EdgeInsets.only(right: 13),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [Palette.shadow],
+              ),
+              child: SvgPicture.asset(
+                'assets/icons/filter.svg',
+              ),
+            ),
           ),
         ],
       ),

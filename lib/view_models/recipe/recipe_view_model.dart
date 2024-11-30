@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/objects/recipe.dart';
@@ -41,6 +42,61 @@ class RecipeViewModel with ChangeNotifier {
     List<Recipe> recipes = indices.map((index) => recipeList[index]).toList();
     recipeModel.saveRecipes(recipes);
     notifyListeners();
+  }
+
+  // 필터를 토글하는 메서드
+  void toggleFilter(String filter) {
+    if (_selectedFilters.contains(filter)) {
+      _selectedFilters.remove(filter);
+    } else {
+      _selectedFilters.add(filter);
+    }
+    notifyListeners(); // 상태 변경 알림
+  }
+
+// 다이얼로그 표시 메서드
+  void showFilterDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('필터에서 삭제할 음식을 선택하세요'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: _foodFilters.map((filter) {
+                return CheckboxListTile(
+                  title: Text(filter),
+                  value: _selectedFilters.contains(filter),
+                  onChanged: (bool? value) {
+                    toggleFilter(filter);
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+              child: const Text('취소'),
+            ),
+            TextButton(
+              onPressed: () {
+                applyFilters(context);
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void applyFilters(BuildContext context) {
+    print('적용된 필터: $_selectedFilters');
+    Navigator.of(context).pop(); // 다이얼로그 닫기
+    notifyListeners(); // 필터 적용 상태를 알림
   }
 }
 
@@ -95,3 +151,14 @@ List<Recipe> recipeList = [
       maxTime: 10,
       imageSource: 'assets/foods/buldak_noodle.png'),
 ];
+
+List<String> _foodFilters = [
+  'Carrot',
+  'Egg',
+  'Lettuce',
+  'Tomato',
+  'chicken',
+  'grape',
+  'potato',
+];
+final List<String> _selectedFilters = []; // 선택된 필터 저장
