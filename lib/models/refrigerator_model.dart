@@ -15,8 +15,16 @@ class RefrigeratorModel with ChangeNotifier {
   /// 0 - fridge, 1 - freezer,  2 - room
   List<List<Food>> foods = [[], [], []];
 
+  /// 모델을 초기화하는 함수
+  void reset() {
+    foods = [[], [], []];
+  }
+
   /// 음식 정보 가져와서 리스트에 저장
   Future<void> getFoods() async {
+    // 초기화 진행
+    reset();
+
     final response = await API.getFoods();
 
     for (var storage in response) {
