@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/objects/food.dart';
+import 'package:nutripic/utils/api.dart';
 
 class RefrigeratorViewModel with ChangeNotifier {
   RefrigeratorModel refrigeratorModel;
@@ -39,17 +40,26 @@ class RefrigeratorViewModel with ChangeNotifier {
 
   /// 삭제 버튼 클릭시 호출되는 함수
   /// <br /> 식재료 삭제
-  void onTapDelete() {
-    // selectedFoods에 있는 식재료를 리스트에서 삭제
-    refrigeratorModel.foods[storage.rawValue]
-        .removeWhere((food) => selectedFoods.contains(food));
+  void onTapDelete() async {
+    try {
+      // Optimistic Update를 위해서 API 요청은 후처리로 진행
+      final response = await API.deleteFood(selectedFoods.first.id);
+      print(response);
 
-    // 삭제 후 selectedFoods 초기화
-    selectedFoods.clear();
+      // selectedFoods에 있는 식재료를 리스트에서 삭제
+      refrigeratorModel.foods[storage.rawValue]
+          .removeWhere((food) => selectedFoods.contains(food));
 
-    // 선택 모드 종료
-    isSelectable = false;
-    notifyListeners();
+      // 삭제 후 selectedFoods 초기화
+      selectedFoods.clear();
+
+      // 선택 모드 종료
+      isSelectable = false;
+
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error');
+    }
   }
 
   /// 식재료 선택 함수
