@@ -20,6 +20,7 @@ class _LoginViewState extends State<LoginView> {
     LoginViewModel loginViewModel = context.watch<LoginViewModel>();
 
     return CustomScaffold(
+      isLoading: loginViewModel.isLoading,
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
