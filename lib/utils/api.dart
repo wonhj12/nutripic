@@ -16,6 +16,8 @@ class API {
     ),
   );
 
+  /* user */
+
   /// 카카오 로그인시 백엔드 서버에서 firebase 인증을 위한 custom ID token을 받아오는 함수
   static Future<String> postKakaoCustomToken(String uid) async {
     String token = '';
@@ -36,6 +38,20 @@ class API {
     }
 
     return token;
+  }
+
+  /// 회원가입 후 db에 사용자 정보를 저장하는 함수
+  static Future<dynamic> postUser(String uid) async {
+    try {
+      final response = await _postApi(
+        '/user/create',
+        jsonData: jsonEncode({'uid': uid}),
+      );
+
+      return response;
+    } catch (e) {
+      throw Error();
+    }
   }
 
   /* Storage */

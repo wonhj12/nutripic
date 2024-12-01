@@ -108,6 +108,11 @@ class LoginViewModel with ChangeNotifier {
           await _firebaseAuth.signInWithCredential(credential);
       final user = userCredential.user;
 
+      // 새 사용자면 db에 uid 등록
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        await API.postUser(user!.uid);
+      }
+
       return user;
     } on FirebaseAuthException catch (e) {
       // https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth/signInWithCredential.html
@@ -141,6 +146,11 @@ class LoginViewModel with ChangeNotifier {
       final userCredential =
           await _firebaseAuth.signInWithCredential(credential);
       final user = userCredential.user;
+
+      // 새 사용자면 db에 uid 등록
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        await API.postUser(user!.uid);
+      }
 
       return user;
     } on FirebaseAuthException catch (e) {
