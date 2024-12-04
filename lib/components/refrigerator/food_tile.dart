@@ -40,6 +40,7 @@ class FoodTile extends StatelessWidget {
         child: Column(
           children: [
             Stack(
+              alignment: Alignment.topCenter,
               children: [
                 // 식재료 사진
                 Container(
@@ -48,7 +49,7 @@ class FoodTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: isSelected ? Palette.secondary : Palette.gray100,
+                      color: isSelected ? Palette.delete : Palette.gray100,
                       width: 1,
                     ),
                   ),

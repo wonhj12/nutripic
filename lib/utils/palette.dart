@@ -11,11 +11,12 @@ class Palette {
   /// #296C53
   static const Color sub = Color(0xFF296C53);
 
-  /// #F85B49
-  static const Color delete = Color(0xFFF85B49);
+  /// #FF6A41
+  static const Color delete = Color(0xFFFF6A41);
 
   /// #F1FAF9
-  static const Color background = Color(0xFFF1FAF9);
+  // static const Color background = Color(0xFFF1FAF9);
+  static const Color background = Color(0xFFF9F9FA);
 
   /* Label colors */
   /// #252525
@@ -81,6 +82,10 @@ class Palette {
   static const TextStyle subbody =
       TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
 
+  /// Font size: 10
+  ///  <br />Font weight: Regular
+  static const TextStyle caption =
+      TextStyle(fontSize: 10, fontWeight: FontWeight.w400);
   /* Shadows */
   static BoxShadow shadow =
       BoxShadow(color: gray200.withOpacity(0.25), blurRadius: 15);

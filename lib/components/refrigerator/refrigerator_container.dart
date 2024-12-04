@@ -97,6 +97,7 @@ class RefrigeratorContainer extends StatelessWidget {
                               isSelected:
                                   selectedFoods.contains(foods[foodIndex]),
                               isSelectable: isSelectable,
+                              showDday: foods[foodIndex].showDday(),
                               select: selectFood,
                             );
                           },
