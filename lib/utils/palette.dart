@@ -11,8 +11,14 @@ class Palette {
   /// #296C53
   static const Color sub = Color(0xFF296C53);
 
+  /// #296C53 alpha 0.1
+  static const Color subContainer = Color.fromRGBO(41, 108, 84, 0.1);
+
   /// #FF6A41
   static const Color delete = Color(0xFFFF6A41);
+
+  /// #FF6A41 alpha 0.1
+  static const Color deleteContainer = Color.fromRGBO(255, 106, 65, 0.1);
 
   /// #F1FAF9
   // static const Color background = Color(0xFFF1FAF9);
