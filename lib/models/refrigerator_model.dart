@@ -2,15 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/api.dart';
 
-enum StorageType {
-  fridge(0),
-  freezer(1),
-  room(2);
-
-  final int rawValue;
-  const StorageType(this.rawValue);
-}
-
 class RefrigeratorModel with ChangeNotifier {
   /// 0 - fridge, 1 - freezer,  2 - room
   List<List<Food>> foods = [[], [], []];

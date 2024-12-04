@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/utils/api.dart';
+import 'package:nutripic/utils/enums/login_type.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginViewModel with ChangeNotifier {
