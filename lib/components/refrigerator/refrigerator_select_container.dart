@@ -24,15 +24,14 @@ class RefrigeratorSelectContainer extends StatelessWidget {
     ];
 
     return Container(
-      width: double.infinity,
-      height: 70,
+      width: 260,
+      height: 46,
       decoration: BoxDecoration(
-        color: Palette.white,
-        borderRadius: BorderRadius.circular(80),
-        boxShadow: [Palette.shadow],
+        color: Palette.gray100,
+        borderRadius: BorderRadius.circular(75),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(4),
         child: Stack(
           children: [
             // 선택된 항목 배경
@@ -41,10 +40,10 @@ class RefrigeratorSelectContainer extends StatelessWidget {
               duration: const Duration(milliseconds: 150),
               curve: Curves.fastOutSlowIn,
               child: Container(
-                width: MediaQuery.of(context).size.width / 3 - 16,
-                height: 54,
+                width: 84,
+                height: 38,
                 decoration: BoxDecoration(
-                  color: Palette.sub,
+                  color: Palette.gray700,
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),

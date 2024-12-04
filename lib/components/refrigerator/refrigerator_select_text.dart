@@ -26,10 +26,11 @@ class RefrigeratorSelectText extends StatelessWidget {
           child: Center(
             child: Text(
               typeString[type],
-              style: Palette.title.copyWith(
+              style: Palette.body.copyWith(
+                fontSize: 16,
                 fontWeight:
                     type == selected ? FontWeight.w600 : FontWeight.w400,
-                color: type == selected ? Palette.white : Palette.gray500,
+                color: type == selected ? Palette.white : Palette.gray300,
               ),
             ),
           ),
