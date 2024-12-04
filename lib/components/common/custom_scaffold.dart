@@ -5,6 +5,7 @@ class CustomScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final bool? resizeToAvoidBottomInset;
   final bool isLoading;
+  final double padding;
   final Widget? body;
 
   /// ### Padding, margin 등 공통 설정 값이 적용된 Scaffold
@@ -14,6 +15,7 @@ class CustomScaffold extends StatelessWidget {
     this.appBar,
     this.resizeToAvoidBottomInset,
     this.isLoading = false,
+    this.padding = 16,
     this.body,
   });
 
@@ -29,7 +31,7 @@ class CustomScaffold extends StatelessWidget {
             children: [
               // body
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: padding),
                 child: body,
               ),
 
