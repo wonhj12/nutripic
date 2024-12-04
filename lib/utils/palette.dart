@@ -36,11 +36,17 @@ class Palette {
   /// #9496A1
   static const Color gray400 = Color(0xFF9496A1);
 
-  /// #B3B5BD
-  static const Color gray200 = Color(0xFFB3B5BD);
+  /// #AAADB7
+  static const Color gray300 = Color(0xFFAAADB7);
+
+  /// #BDC0CB
+  static const Color gray200 = Color(0xFFBDC0CB);
 
   /// #DBDDE7
-  static const Color gray100 = Color(0xFFDBDDE7);
+  static const Color gray150 = Color(0xFFDBDDE7);
+
+  /// #ECEEF4
+  static const Color gray100 = Color(0xFFECEEF4);
 
   /// #F9F9F9
   static const Color gray50 = Color(0xFFF9F9F9);
