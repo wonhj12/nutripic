@@ -5,6 +5,9 @@ class Food {
   /// 식재료 이름
   final String name;
 
+  /// 아이콘 이름
+  final String icon;
+
   /// 대분류
   final String class1;
 
@@ -23,6 +26,7 @@ class Food {
   Food({
     required this.id,
     required this.name,
+    required this.icon,
     required this.class1,
     required this.class2,
     required this.addedDate,
@@ -40,6 +44,7 @@ class Food {
     return Food(
       id: json['id'],
       name: json['name'],
+      icon: json['icon'],
       class1: json['class1'],
       class2: json['class2'],
       addedDate: DateTime.parse(json['addedDate']),

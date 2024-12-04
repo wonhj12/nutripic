@@ -76,14 +76,17 @@ class RefrigeratorContainer extends StatelessWidget {
 
                         return GridView.builder(
                           itemCount: endIndex - startIndex,
-                          padding: const EdgeInsets.all(25),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 30,
+                            horizontal: 10,
+                          ),
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisSpacing: 25,
-                            crossAxisSpacing: 34,
-                            crossAxisCount: 3,
-                            childAspectRatio: 72 / 97,
+                            mainAxisSpacing: 24,
+                            crossAxisSpacing: 22,
+                            crossAxisCount: 4,
+                            childAspectRatio: 64 / 84,
                           ),
                           itemBuilder: (context, gridIndex) {
                             // 식재료 최종 index

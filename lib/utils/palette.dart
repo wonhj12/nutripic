@@ -74,7 +74,7 @@ class Palette {
   /// Font size: 14
   /// <br />Font weight: Regular
   static const TextStyle body =
-      TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
+      TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1);
 
   /// Font size: 12
   /// <br />Font weight: Regular
