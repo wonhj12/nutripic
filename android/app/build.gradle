@@ -1,8 +1,20 @@
 plugins {
     id "com.android.application"
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
     id "kotlin-android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
+}
+
+// .env 설정
+def dotenv = new Properties()
+def envFile = file("${rootProject.projectDir}/../.env")
+if (envFile.exists()) {
+    envFile.withInputStream { stream -> dotenv.load(stream) }
+} else {
+    throw new FileNotFoundException("Could not find .env file at ${envFile.path}")
 }
 
 android {
@@ -24,10 +36,17 @@ android {
         applicationId = "com.devkor.nutripic"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = 23 // flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // AndroidManifest .env 설정
+        def kakaoKey = dotenv['KAKAO_NATIVE_APP_KEY']
+        if (kakaoKey == null) {
+            throw new GradleException("KAKAO_NATIVE_APP_KEY not found in .env")
+        }
+        manifestPlaceholders += [KAKAO_NATIVE_APP_KEY: kakaoKey]
     }
 
     buildTypes {
