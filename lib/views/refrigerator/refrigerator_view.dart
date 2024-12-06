@@ -29,6 +29,12 @@ class RefrigeratorView extends StatelessWidget {
             children: [
               const Text('나의 냉장고', style: Palette.heading),
               const Spacer(),
+              IconButton(
+                onPressed: refrigeratorViewModel.onTapCamera,
+                icon: const Icon(
+                  Icons.camera,
+                ),
+              ),
               refrigeratorViewModel.isSelectable
                   // 취소 버튼
                   ? SelectButton(
