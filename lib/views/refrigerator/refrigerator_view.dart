@@ -54,7 +54,8 @@ class RefrigeratorView extends StatelessWidget {
 
           // 냉장고
           RefrigeratorContainer(
-            foods: refrigeratorViewModel.foods,
+            foods: refrigeratorViewModel.refrigeratorModel
+                .foods[refrigeratorViewModel.storage.rawValue],
             selectedFoods: refrigeratorViewModel.selectedFoods,
             isSelectable: refrigeratorViewModel.isSelectable,
             addFood: null,
@@ -64,7 +65,7 @@ class RefrigeratorView extends StatelessWidget {
 
           // 냉장고 선택 버튼
           RefrigeratorSelectContainer(
-            selected: refrigeratorViewModel.selected,
+            selected: refrigeratorViewModel.storage.rawValue,
             onTapRefrigerator: refrigeratorViewModel.onTapRefrigerator,
             onTapFreezer: refrigeratorViewModel.onTapFreezer,
             onTapCabinet: refrigeratorViewModel.onTapCabinet,

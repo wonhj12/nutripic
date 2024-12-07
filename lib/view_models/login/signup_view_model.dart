@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/models/user_model.dart';
+import 'package:nutripic/utils/api.dart';
 
 class SignupViewModel with ChangeNotifier {
   UserModel userModel;
@@ -27,8 +28,10 @@ class SignupViewModel with ChangeNotifier {
 
       // 정상적으로 회원가입이 됐으면 입력된 이름 저장
       // UserModel에 사용자 데이터 저장
+      // db에 uid 등록
       if (user != null) {
-        await user.updateDisplayName(name);
+        await API.postUser(user.uid); // db에 uid 등록
+        await user.updateDisplayName(name); // 이름 업데이트
         userModel.fromFirebaseUser(_firebaseAuth.currentUser ?? user);
       }
 
