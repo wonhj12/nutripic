@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/api.dart';
@@ -93,5 +94,10 @@ class RefrigeratorViewModel with ChangeNotifier {
   void onTapCabinet() {
     storage = StorageType.room;
     notifyListeners();
+  }
+
+  /// 카메라 호출 함수
+  void onTapCamera() {
+    context.go('/refrigerator/camera');
   }
 }
