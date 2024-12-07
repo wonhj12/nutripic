@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_select_text.dart';
+import 'package:nutripic/utils/enums/storage_type.dart';
 import 'package:nutripic/utils/palette.dart';
 
 class RefrigeratorSelectContainer extends StatelessWidget {
-  final int selected;
+  final StorageType selected;
   final Function()? onTapRefrigerator;
   final Function()? onTapFreezer;
   final Function()? onTapCabinet;
@@ -24,27 +25,26 @@ class RefrigeratorSelectContainer extends StatelessWidget {
     ];
 
     return Container(
-      width: double.infinity,
-      height: 70,
+      width: 260,
+      height: 46,
       decoration: BoxDecoration(
-        color: Palette.white,
-        borderRadius: BorderRadius.circular(80),
-        boxShadow: [Palette.shadow],
+        color: Palette.gray100,
+        borderRadius: BorderRadius.circular(75),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(4),
         child: Stack(
           children: [
             // 선택된 항목 배경
             AnimatedAlign(
-              alignment: alignment[selected],
+              alignment: alignment[selected.rawValue],
               duration: const Duration(milliseconds: 150),
               curve: Curves.fastOutSlowIn,
               child: Container(
-                width: MediaQuery.of(context).size.width / 3 - 16,
-                height: 54,
+                width: 84,
+                height: 38,
                 decoration: BoxDecoration(
-                  color: Palette.sub,
+                  color: Palette.gray700,
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
@@ -56,21 +56,21 @@ class RefrigeratorSelectContainer extends StatelessWidget {
               children: [
                 // 냉장
                 RefrigeratorSelectText(
-                  type: 0,
+                  type: StorageType.fridge,
                   selected: selected,
                   onTap: onTapRefrigerator,
                 ),
 
                 // 냉동
                 RefrigeratorSelectText(
-                  type: 1,
+                  type: StorageType.freezer,
                   selected: selected,
                   onTap: onTapFreezer,
                 ),
 
                 // 실온
                 RefrigeratorSelectText(
-                  type: 2,
+                  type: StorageType.room,
                   selected: selected,
                   onTap: onTapCabinet,
                 ),

@@ -5,6 +5,9 @@ class Food {
   /// 식재료 이름
   final String name;
 
+  /// 아이콘 이름
+  final String icon;
+
   /// 대분류
   final String class1;
 
@@ -23,12 +26,18 @@ class Food {
   Food({
     required this.id,
     required this.name,
+    required this.icon,
     required this.class1,
     required this.class2,
     required this.addedDate,
     required this.expireDate,
     required this.expired,
   });
+
+  /// 유통기한 표시 여부를 결정하는 함수
+  bool showDday() {
+    return dDay() <= 7;
+  }
 
   /// 유통기한 마감 d-day를 반환하는 함수
   int dDay() {
@@ -40,6 +49,7 @@ class Food {
     return Food(
       id: json['id'],
       name: json['name'],
+      icon: json['icon'],
       class1: json['class1'],
       class2: json['class2'],
       addedDate: DateTime.parse(json['addedDate']),

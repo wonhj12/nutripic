@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nutripic/utils/enums/select_button_type.dart';
 import 'package:nutripic/utils/palette.dart';
-
-/// Select Button 타입
-enum SelectButtonType {
-  normal(Palette.sub),
-  cancel(Palette.gray400),
-  delete(Palette.delete);
-
-  final Color color;
-  const SelectButtonType(this.color);
-}
 
 class SelectButton extends StatelessWidget {
   final String label;
@@ -20,7 +11,7 @@ class SelectButton extends StatelessWidget {
   const SelectButton({
     super.key,
     required this.label,
-    this.width = 55,
+    this.width = 56,
     this.height = 30,
     this.type = SelectButtonType.normal,
     required this.onPressed,
@@ -34,10 +25,13 @@ class SelectButton extends StatelessWidget {
       child: FilledButton(
         onPressed: onPressed,
         style: FilledButton.styleFrom(
-          backgroundColor: type.color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          backgroundColor: type.backgroundColor,
           padding: EdgeInsets.zero,
         ),
-        child: Text(label, style: Palette.body.copyWith(color: Palette.white)),
+        child: Text(label, style: Palette.subtitle.copyWith(color: type.color)),
       ),
     );
   }

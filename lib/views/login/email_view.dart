@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/main_button.dart';
 import 'package:nutripic/components/custom_text_field.dart';
+import 'package:nutripic/utils/enums/text_field_type.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/login/email_view_model.dart';
 import 'package:provider/provider.dart';

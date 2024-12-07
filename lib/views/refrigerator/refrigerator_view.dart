@@ -4,6 +4,7 @@ import 'package:nutripic/components/select_button.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_container.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_select_container.dart';
+import 'package:nutripic/utils/enums/select_button_type.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:provider/provider.dart';
@@ -65,7 +66,7 @@ class RefrigeratorView extends StatelessWidget {
 
           // 냉장고 선택 버튼
           RefrigeratorSelectContainer(
-            selected: refrigeratorViewModel.storage.rawValue,
+            selected: refrigeratorViewModel.storage,
             onTapRefrigerator: refrigeratorViewModel.onTapRefrigerator,
             onTapFreezer: refrigeratorViewModel.onTapFreezer,
             onTapCabinet: refrigeratorViewModel.onTapCabinet,

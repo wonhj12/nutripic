@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/api.dart';
+import 'package:nutripic/utils/enums/storage_type.dart';
 
 class RefrigeratorViewModel with ChangeNotifier {
   RefrigeratorModel refrigeratorModel;
