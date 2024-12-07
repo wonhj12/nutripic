@@ -19,6 +19,7 @@ class CameraView extends StatelessWidget {
     return CustomScaffold(
       isLoading: cameraViewModel.isLoading || !cameraViewModel.isCameraLoaded,
       padding: 0,
+      useSafeArea: false,
       body: Column(
         children: [
           // 상단
