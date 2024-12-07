@@ -57,10 +57,16 @@ class CameraView extends StatelessWidget {
 
           // 카메라 화면 비율과 동일하게 설정
           // 카메라 화면 확보
-
           // 카메라 화면 표시
           cameraViewModel.isCameraLoaded
-              ? CameraPreview(cameraViewModel.controller)
+              ? Stack(
+                  children: [
+                    CameraPreview(cameraViewModel.controller),
+
+                    // 감지된 식재료가 있으면 테두리 표시
+                    ...cameraViewModel.drawDetectionBoxes(),
+                  ],
+                )
               : Container(
                   color: Palette.black,
                   child: const AspectRatio(aspectRatio: 3 / 4),
