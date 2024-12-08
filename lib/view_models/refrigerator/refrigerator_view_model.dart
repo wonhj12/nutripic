@@ -45,8 +45,7 @@ class RefrigeratorViewModel with ChangeNotifier {
   void onTapDelete() async {
     try {
       // Optimistic Update를 위해서 API 요청은 후처리로 진행
-      final response = await API.deleteFood(selectedFoods.first.id);
-      print(response);
+      await API.deleteFood(selectedFoods.first.id);
 
       // selectedFoods에 있는 식재료를 리스트에서 삭제
       refrigeratorModel.foods[storage.rawValue]
