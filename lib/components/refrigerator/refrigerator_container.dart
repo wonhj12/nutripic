@@ -31,7 +31,7 @@ class RefrigeratorContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.only(bottom: 32),
+        padding: const EdgeInsets.only(bottom: 32),
         decoration: BoxDecoration(
           color: Palette.background,
           borderRadius: BorderRadius.circular(20),
