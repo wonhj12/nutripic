@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/utils/api.dart';
+import 'package:nutripic/utils/enums/login_type.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginViewModel with ChangeNotifier {
@@ -15,6 +16,8 @@ class LoginViewModel with ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final kakao.UserApi _kakaoApi = kakao.UserApi.instance;
 
+  bool isLoading = false;
+
   // 상단부터 로고까지 space 길이
   double topPadding() {
     return 228 - MediaQuery.of(context).padding.top;
@@ -22,6 +25,10 @@ class LoginViewModel with ChangeNotifier {
 
   /// 로그인 선택 시 로그인 후 서버 인증 받는 함수
   void login(LoginType loginType) async {
+    isLoading = true;
+    notifyListeners();
+
+    // 로그인 진행
     User? user;
     switch (loginType) {
       // 카카오
@@ -39,6 +46,9 @@ class LoginViewModel with ChangeNotifier {
       default:
         break;
     }
+
+    isLoading = false;
+    notifyListeners();
 
     // Firebase 로그인 성공시 UserModel에 사용자 데이터 저장 후 홈으로 이동
     if (user != null) {
@@ -108,6 +118,11 @@ class LoginViewModel with ChangeNotifier {
           await _firebaseAuth.signInWithCredential(credential);
       final user = userCredential.user;
 
+      // 새 사용자면 db에 uid 등록
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        await API.postUser(user!.uid);
+      }
+
       return user;
     } on FirebaseAuthException catch (e) {
       // https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth/signInWithCredential.html
@@ -141,6 +156,11 @@ class LoginViewModel with ChangeNotifier {
       final userCredential =
           await _firebaseAuth.signInWithCredential(credential);
       final user = userCredential.user;
+
+      // 새 사용자면 db에 uid 등록
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        await API.postUser(user!.uid);
+      }
 
       return user;
     } on FirebaseAuthException catch (e) {

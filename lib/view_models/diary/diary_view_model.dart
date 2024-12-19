@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nutripic/components/select_camera_modal.dart';
 import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/objects/diary.dart';
 import 'package:nutripic/view_models/diary/diary_record_view_model.dart';

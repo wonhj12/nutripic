@@ -5,11 +5,9 @@ import 'package:nutripic/components/custom_floating_action_button.dart';
 import 'package:nutripic/components/diary/diary_calendar.dart';
 import 'package:nutripic/components/diary/diary_calendar_header.dart';
 import 'package:nutripic/components/diary/diary_summary_container.dart';
-import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class DiaryView extends StatefulWidget {
   const DiaryView({super.key});
@@ -23,7 +21,7 @@ class _DiaryViewState extends State<DiaryView> {
   Widget build(BuildContext context) {
     DiaryViewModel diaryViewModel = context.watch<DiaryViewModel>();
     //DateTime _focusedDay = DateTime.now();
-    DateTime? _selectedDay;
+    DateTime? selectedDay;
 
     return CustomScaffold(
       appBar: const CustomAppBar(backButton: false),
@@ -54,9 +52,9 @@ class _DiaryViewState extends State<DiaryView> {
           //캘린더
           DiaryCalendar(
             focusedDay: diaryViewModel.focusedDay,
-            selectedDay: _selectedDay,
+            selectedDay: selectedDay,
             onDaySelected: (selectedDay, focusedDay) {
-              _selectedDay = selectedDay;
+              selectedDay = selectedDay;
               diaryViewModel.showDiaryRecordModal(selectedDay);
             },
             onPageChanged: (focusedDay) {

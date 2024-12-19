@@ -11,11 +11,18 @@ class Palette {
   /// #296C53
   static const Color sub = Color(0xFF296C53);
 
-  /// #F85B49
-  static const Color delete = Color(0xFFF85B49);
+  /// #296C53 alpha 0.1
+  static const Color subContainer = Color.fromRGBO(41, 108, 84, 0.1);
+
+  /// #FF6A41
+  static const Color delete = Color(0xFFFF6A41);
+
+  /// #FF6A41 alpha 0.1
+  static const Color deleteContainer = Color.fromRGBO(255, 106, 65, 0.1);
 
   /// #F1FAF9
-  static const Color background = Color(0xFFF1FAF9);
+  // static const Color background = Color(0xFFF1FAF9);
+  static const Color background = Color(0xFFF9F9FA);
 
   /* Label colors */
   /// #252525
@@ -36,11 +43,17 @@ class Palette {
   /// #9496A1
   static const Color gray400 = Color(0xFF9496A1);
 
-  /// #B3B5BD
-  static const Color gray200 = Color(0xFFB3B5BD);
+  /// #AAADB7
+  static const Color gray300 = Color(0xFFAAADB7);
+
+  /// #BDC0CB
+  static const Color gray200 = Color(0xFFBDC0CB);
 
   /// #DBDDE7
-  static const Color gray100 = Color(0xFFDBDDE7);
+  static const Color gray150 = Color(0xFFDBDDE7);
+
+  /// #ECEEF4
+  static const Color gray100 = Color(0xFFECEEF4);
 
   /// #F9F9F9
   static const Color gray50 = Color(0xFFF9F9F9);
@@ -58,7 +71,7 @@ class Palette {
   /// Font size: 20
   /// <br />Font weight: Bold
   static const TextStyle title =
-      TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
+      TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
 
   /// Font size: 14
   /// <br />Font weight: Semibold
@@ -68,15 +81,17 @@ class Palette {
   /// Font size: 14
   /// <br />Font weight: Regular
   static const TextStyle body =
-      TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
+      TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1);
 
-  /// 식재료 개수
-  /// <br />Font size: 12
+  /// Font size: 12
   /// <br />Font weight: Regular
-  /// <br />Color: white
-  static const TextStyle foodCount =
-      TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: white);
+  static const TextStyle subbody =
+      TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
 
+  /// Font size: 10
+  ///  <br />Font weight: Regular
+  static const TextStyle caption =
+      TextStyle(fontSize: 10, fontWeight: FontWeight.w400);
   /* Shadows */
   static BoxShadow shadow =
       BoxShadow(color: gray200.withOpacity(0.25), blurRadius: 15);

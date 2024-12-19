@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/objects/food.dart';
+import 'package:nutripic/utils/api.dart';
+import 'package:nutripic/utils/enums/storage_type.dart';
 
 class RefrigeratorViewModel with ChangeNotifier {
   RefrigeratorModel refrigeratorModel;
@@ -10,87 +13,11 @@ class RefrigeratorViewModel with ChangeNotifier {
     required this.context,
   });
 
-  /// 냉장, 냉동, 실온
-  int selected = 0;
+  /// 현재 선택된 냉장고
+  StorageType storage = StorageType.fridge;
 
   /// 식재료 선택 가능 여부
   bool isSelectable = false;
-
-  // 식재료 더미 데이터 (나중에 RefrigeratorModel 생성해서 옮겨야함)
-  List<Food> foods = [
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-    Food(
-      name: '당근',
-      count: 2,
-      imageName: 'carrot',
-      expireDate: DateTime(2024, 11, 11),
-    ),
-    Food(
-      name: '닭가슴살',
-      count: 1,
-      imageName: 'chicken_breast',
-      expireDate: DateTime(2024, 11, 6),
-    ),
-  ];
 
   /// 선택된 식재료
   Set<Food> selectedFoods = <Food>{};
@@ -115,16 +42,25 @@ class RefrigeratorViewModel with ChangeNotifier {
 
   /// 삭제 버튼 클릭시 호출되는 함수
   /// <br /> 식재료 삭제
-  void onTapDelete() {
-    // selectedFoods에 있는 식재료를 리스트에서 삭제
-    foods.removeWhere((food) => selectedFoods.contains(food));
+  void onTapDelete() async {
+    try {
+      // Optimistic Update를 위해서 API 요청은 후처리로 진행
+      await API.deleteFood(selectedFoods.first.id);
 
-    // 삭제 후 selectedFoods 초기화
-    selectedFoods.clear();
+      // selectedFoods에 있는 식재료를 리스트에서 삭제
+      refrigeratorModel.foods[storage.rawValue]
+          .removeWhere((food) => selectedFoods.contains(food));
 
-    // 선택 모드 종료
-    isSelectable = false;
-    notifyListeners();
+      // 삭제 후 selectedFoods 초기화
+      selectedFoods.clear();
+
+      // 선택 모드 종료
+      isSelectable = false;
+
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error');
+    }
   }
 
   /// 식재료 선택 함수
@@ -143,36 +79,24 @@ class RefrigeratorViewModel with ChangeNotifier {
 
   /// 냉장 버튼 클릭시 호출되는 함수
   void onTapRefrigerator() {
-    selected = 0;
-    // 더미 데이터
-    foods = [
-      Food(
-        name: '당근',
-        count: 2,
-        imageName: 'carrot',
-        expireDate: DateTime(2024, 11, 11),
-      ),
-      Food(
-        name: '닭가슴살',
-        count: 1,
-        imageName: 'chicken_breast',
-        expireDate: DateTime(2024, 11, 6),
-      ),
-    ];
+    storage = StorageType.fridge;
     notifyListeners();
   }
 
   /// 냉동 버튼 클릭시 호출되는 함수
   void onTapFreezer() {
-    selected = 1;
-    foods = refrigeratorModel.freezerFoods ?? [];
+    storage = StorageType.freezer;
     notifyListeners();
   }
 
   /// 실온 버튼 클릭시 호출되는 함수
   void onTapCabinet() {
-    selected = 2;
-    foods = refrigeratorModel.cabinetFoods ?? [];
+    storage = StorageType.room;
     notifyListeners();
+  }
+
+  /// 카메라 호출 함수
+  void onTapCamera() {
+    context.go('/refrigerator/camera');
   }
 }

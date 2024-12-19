@@ -5,6 +5,8 @@ class CustomScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final bool? resizeToAvoidBottomInset;
   final bool isLoading;
+  final double padding;
+  final bool useSafeArea;
   final Widget? body;
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
@@ -16,6 +18,8 @@ class CustomScaffold extends StatelessWidget {
     this.appBar,
     this.resizeToAvoidBottomInset,
     this.isLoading = false,
+    this.padding = 16,
+    this.useSafeArea = true,
     this.body,
     this.floatingActionButton,
     this.bottomNavigationBar,
@@ -29,11 +33,15 @@ class CustomScaffold extends StatelessWidget {
         appBar: appBar,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         body: SafeArea(
+          left: useSafeArea,
+          top: useSafeArea,
+          right: useSafeArea,
+          bottom: useSafeArea,
           child: Stack(
             children: [
               // body
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: padding),
                 child: body,
               ),
 

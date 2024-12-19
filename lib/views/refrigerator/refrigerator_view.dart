@@ -4,6 +4,7 @@ import 'package:nutripic/components/select_button.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_container.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_select_container.dart';
+import 'package:nutripic/utils/enums/select_button_type.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,12 @@ class RefrigeratorView extends StatelessWidget {
             children: [
               const Text('나의 냉장고', style: Palette.heading),
               const Spacer(),
+              IconButton(
+                onPressed: refrigeratorViewModel.onTapCamera,
+                icon: const Icon(
+                  Icons.camera,
+                ),
+              ),
               refrigeratorViewModel.isSelectable
                   // 취소 버튼
                   ? SelectButton(
@@ -54,7 +61,8 @@ class RefrigeratorView extends StatelessWidget {
 
           // 냉장고
           RefrigeratorContainer(
-            foods: refrigeratorViewModel.foods,
+            foods: refrigeratorViewModel.refrigeratorModel
+                .foods[refrigeratorViewModel.storage.rawValue],
             selectedFoods: refrigeratorViewModel.selectedFoods,
             isSelectable: refrigeratorViewModel.isSelectable,
             addFood: null,
@@ -64,7 +72,7 @@ class RefrigeratorView extends StatelessWidget {
 
           // 냉장고 선택 버튼
           RefrigeratorSelectContainer(
-            selected: refrigeratorViewModel.selected,
+            selected: refrigeratorViewModel.storage,
             onTapRefrigerator: refrigeratorViewModel.onTapRefrigerator,
             onTapFreezer: refrigeratorViewModel.onTapFreezer,
             onTapCabinet: refrigeratorViewModel.onTapCabinet,
