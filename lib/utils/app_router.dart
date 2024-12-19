@@ -8,6 +8,7 @@ import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:nutripic/view_models/login/email_view_model.dart';
 import 'package:nutripic/view_models/login/login_view_model.dart';
 import 'package:nutripic/view_models/login/signup_view_model.dart';
+import 'package:nutripic/view_models/onboarding_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
@@ -17,6 +18,7 @@ import 'package:nutripic/views/login/signup_view.dart';
 import 'package:nutripic/views/camera_view.dart';
 import 'package:nutripic/views/diary/diary_post_view.dart';
 import 'package:nutripic/views/login/login_view.dart';
+import 'package:nutripic/views/onboarding_view.dart';
 import 'package:nutripic/views/recipe_view.dart';
 import 'package:nutripic/views/refrigerator/refrigerator_view.dart';
 import 'package:nutripic/views/user_info/user_edit_view.dart';
@@ -94,6 +96,16 @@ class AppRouter {
               ),
             )
           ],
+        ),
+        // 온보딩
+        GoRoute(
+          path: '/onboarding',
+          builder: (context, state) => ChangeNotifierProvider(
+            create: (context) => OnboardingViewModel(
+              context: context,
+            ),
+            child: const OnboardingView(),
+          ),
         ),
 
         // 메인
