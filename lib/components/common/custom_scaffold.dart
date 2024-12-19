@@ -7,6 +7,7 @@ class CustomScaffold extends StatelessWidget {
   final bool isLoading;
   final Widget? body;
   final Widget? floatingActionButton;
+  final Widget? bottomNavigationBar;
 
   /// ### Padding, margin 등 공통 설정 값이 적용된 Scaffold
   /// 좌우 padding: 20px
@@ -17,6 +18,7 @@ class CustomScaffold extends StatelessWidget {
     this.isLoading = false,
     this.body,
     this.floatingActionButton,
+    this.bottomNavigationBar,
   });
 
   @override
@@ -41,6 +43,7 @@ class CustomScaffold extends StatelessWidget {
           ),
         ),
         floatingActionButton: floatingActionButton,
+        bottomNavigationBar: bottomNavigationBar,
       ),
     );
   }
