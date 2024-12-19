@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/utils/palette.dart';
@@ -113,7 +114,9 @@ class OnboardingView extends StatelessWidget {
       bottomNavigationBar: SizedBox(
         height: 60,
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            context.go('/refrigerator');
+          },
           style: TextButton.styleFrom(
             backgroundColor: Palette.primary,
             shape: const RoundedRectangleBorder(
