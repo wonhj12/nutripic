@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
-import 'package:nutripic/components/refrigerator/food_tile.dart';
-import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/onboarding_view_model.dart';
 import 'package:provider/provider.dart';
@@ -68,25 +66,44 @@ class OnboardingView extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 20,
+            height: 30,
           ),
           Expanded(
             child: GridView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               itemCount: onboardingViewModel.allergies.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 10,
+                mainAxisSpacing: 15,
                 crossAxisSpacing: 10,
-                crossAxisCount: 3,
-                childAspectRatio: 1,
+                crossAxisCount: 2,
+                childAspectRatio: 4.4,
               ),
               itemBuilder: (context, index) {
-                return FoodTile(
-                  food: onboardingViewModel.allergies[index],
-                  isSelected: onboardingViewModel.selectedAllergies
-                      .contains(onboardingViewModel.allergies[index]),
-                  isSelectable: true,
-                  select: onboardingViewModel.selectAllergies,
-                  showInfo: false,
+                final allergy = onboardingViewModel.allergies[index];
+                final isSelected =
+                    onboardingViewModel.isAllergySelected(allergy);
+
+                return GestureDetector(
+                  onTap: () {
+                    onboardingViewModel.selectAllergies(allergy);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: isSelected ? Palette.secondary : Palette.gray200,
+                        width: 2,
+                      ),
+                    ),
+                    child: Text(
+                      onboardingViewModel.allergies[index],
+                      style: TextStyle(
+                        color: isSelected ? Palette.secondary : Palette.gray200,
+                      ),
+                    ),
+                  ),
                 );
               },
             ),
