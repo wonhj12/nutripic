@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nutripic/components/refrigerator/food_tile.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/palette.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RefrigeratorContainer extends StatelessWidget {
   /// 전체 식재료 리스트
@@ -30,12 +29,11 @@ class RefrigeratorContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PageController controller = PageController();
-
     return Expanded(
       child: Container(
+        padding: const EdgeInsets.only(bottom: 32),
         decoration: BoxDecoration(
-          color: Palette.white,
+          color: Palette.background,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [Palette.shadow],
         ),
@@ -58,67 +56,29 @@ class RefrigeratorContainer extends StatelessWidget {
                 ),
               )
             // 식재료 리스트가 있으면 GridView 생성
-            : Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: PageView.builder(
-                      controller: controller,
-                      physics: const ClampingScrollPhysics(),
-                      itemCount: (foods.length / 9).ceil(),
-                      itemBuilder: (context, pageIndex) {
-                        // 현제 페이지의 시작 index
-                        final int startIndex = pageIndex * 9;
-                        // 현제 페이지의 마지막 식재료 index
-                        // foods.length가 최대 크기
-                        final int endIndex =
-                            (startIndex + 9).clamp(0, foods.length);
-
-                        return GridView.builder(
-                          itemCount: endIndex - startIndex,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 30,
-                            horizontal: 10,
-                          ),
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisSpacing: 24,
-                            crossAxisSpacing: 22,
-                            crossAxisCount: 4,
-                            childAspectRatio: 64 / 84,
-                          ),
-                          itemBuilder: (context, gridIndex) {
-                            // 식재료 최종 index
-                            final foodIndex = startIndex + gridIndex;
-
-                            return FoodTile(
-                              food: foods[foodIndex],
-                              isSelected:
-                                  selectedFoods.contains(foods[foodIndex]),
-                              isSelectable: isSelectable,
-                              showDday: foods[foodIndex].showDday(),
-                              select: selectFood,
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-
-                  // 페이지 indicator
-                  SmoothPageIndicator(
-                    controller: controller,
-                    count: (foods.length / 9).ceil(),
-                    effect: const WormEffect(
-                      dotWidth: 5,
-                      dotHeight: 5,
-                      dotColor: Palette.gray100,
-                      activeDotColor: Palette.sub,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                ],
+            : GridView.builder(
+                shrinkWrap: true,
+                itemCount: foods.length,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 30,
+                  horizontal: 10,
+                ),
+                physics: const BouncingScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisSpacing: 24,
+                  crossAxisSpacing: 22,
+                  crossAxisCount: 4,
+                  childAspectRatio: 64 / 84,
+                ),
+                itemBuilder: (context, foodIndex) {
+                  return FoodTile(
+                    food: foods[foodIndex],
+                    isSelected: selectedFoods.contains(foods[foodIndex]),
+                    isSelectable: isSelectable,
+                    showDday: foods[foodIndex].showDday(),
+                    select: selectFood,
+                  );
+                },
               ),
       ),
     );
