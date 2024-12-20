@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nutripic/components/recipe/overlay_box.dart';
 import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/palette.dart';
 
@@ -9,6 +10,9 @@ class RecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Stack(
       children: [
         Positioned.fill(
@@ -19,33 +23,28 @@ class RecipeCard extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 20), // 하단 여백
-            padding: const EdgeInsets.symmetric(
-                horizontal: 20, vertical: 10), // 내부 여백
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.7), // 투명한 흰색 배경
-              borderRadius: BorderRadius.circular(10), // 모서리 둥글게
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3), // 그림자 위치
-                ),
-              ],
+          child: OverlayBox(
+            margin: EdgeInsets.only(
+                bottom: screenHeight * 0.02), // 하단 여백을 화면 높이의 5%로 설정
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.05, // 가로 패딩을 화면 너비의 5%로 설정
+              vertical: screenHeight * 0.02, // 세로 패딩을 화면 높이의 2%로 설정
             ),
-            child: Text(
-              recipe.recipeName, // 예: 레시피 제목
-              style: const TextStyle(
-                color: Colors.black, // 텍스트 색상
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            width: screenWidth * 0.9, // 박스 너비를 화면 너비의 90%로 설정
+            height: screenHeight * 0.1, // 박스 높이를 화면 높이의 10%로 설정
+            child: Center(
+              child: Text(
+                recipe.recipeName,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: screenWidth * 0.05, // 폰트 크기를 화면 너비의 5%로 설정
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center, // 텍스트 가운데 정렬
             ),
           ),
-        ),
+        )
       ],
     );
   }
