@@ -9,28 +9,44 @@ class RecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Palette.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [Palette.shadow],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: Image.asset(
-              recipe.imageSource,
-              fit: BoxFit.fitHeight,
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            recipe.imageSource,
+            fit: BoxFit.fitHeight,
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 20), // 하단 여백
+            padding: const EdgeInsets.symmetric(
+                horizontal: 20, vertical: 10), // 내부 여백
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.7), // 투명한 흰색 배경
+              borderRadius: BorderRadius.circular(10), // 모서리 둥글게
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: const Offset(0, 3), // 그림자 위치
+                ),
+              ],
+            ),
+            child: Text(
+              recipe.recipeName, // 예: 레시피 제목
+              style: const TextStyle(
+                color: Colors.black, // 텍스트 색상
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center, // 텍스트 가운데 정렬
             ),
           ),
-          Text(recipe.recipeName),
-          Text("${recipe.difficulty}개"),
-          Text("${recipe.minTime}분~${recipe.maxTime}분")
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
