@@ -14,12 +14,16 @@ class Recipe {
   // 이미지 소스
   final String imageSource;
 
+  // 즐겨찾기 여부
+  bool isFavorite;
+
   Recipe({
     required this.recipeName,
     required this.difficulty,
     required this.minTime,
     required this.maxTime,
     required this.imageSource,
+    this.isFavorite = false,
   });
 
   @override

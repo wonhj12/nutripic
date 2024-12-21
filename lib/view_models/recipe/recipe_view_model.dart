@@ -54,6 +54,21 @@ class RecipeViewModel with ChangeNotifier {
     notifyListeners(); // 상태 변경 알림
   }
 
+// 즐겨찾기 상태를 토글하는 메서드
+  void toggleFavorite(Recipe recipe) {
+    int index = recipeModel.recipes.indexOf(recipe);
+    if (index != -1) {
+      bool? currentFavorite = recipeModel.recipes[index].isFavorite;
+      print("Toggling favorite for ${recipe.recipeName}: $currentFavorite");
+
+      // `currentFavorite`이 null인지 확인
+      recipeModel.recipes[index].isFavorite = !currentFavorite;
+      print("New favorite state: ${recipeModel.recipes[index].isFavorite}");
+
+      notifyListeners();
+    }
+  }
+
 // 다이얼로그 표시 메서드
   void showFilterDialog(BuildContext context) {
     showDialog(
