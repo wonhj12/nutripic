@@ -29,20 +29,21 @@ class RecipeCard extends StatelessWidget {
             Positioned.fill(
               child: Image.asset(
                 recipe.imageSource,
-                fit: BoxFit.cover, // 이미지가 화면을 꽉 채우도록 설정
+                fit: BoxFit.fitHeight, // 이미지가 화면을 꽉 채우도록 설정
               ),
             ),
             // 오버레이 박스
             Align(
               alignment: Alignment.bottomCenter,
               child: OverlayBox(
-                margin: EdgeInsets.only(bottom: screenHeight * 0.02), // 하단 여백
+                margin:
+                    EdgeInsets.only(bottom: screenHeight * (32 / 812)), // 하단 여백
                 padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.05, // 가로 패딩
-                  vertical: screenHeight * 0.02, // 세로 패딩
+                  vertical: screenHeight * 0.01, // 세로 패딩
                 ),
-                width: screenWidth * 0.9, // 박스 너비
-                height: screenHeight * 0.15, // 박스 높이
+                width: screenWidth * (343 / 375), // 박스 너비
+                height: screenHeight * (76 / 812), // 박스 높이
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -81,9 +82,9 @@ class RecipeCard extends StatelessWidget {
                               SizedBox(width: screenWidth * 0.02),
                               // 소요 시간
                               Text(
-                                "${recipe.minTime}-${recipe.maxTime}분",
+                                "${recipe.maxTime}분 이내",
                                 style: TextStyle(
-                                  color: Colors.black54,
+                                  color: Colors.blue,
                                   fontSize: screenWidth * 0.035,
                                 ),
                               ),
@@ -95,10 +96,8 @@ class RecipeCard extends StatelessWidget {
                     // 오른쪽: 즐겨찾기 버튼
                     IconButton(
                       icon: Icon(
-                        recipe.isFavorite
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: recipe.isFavorite ? Colors.red : Colors.black,
+                        Icons.favorite,
+                        color: recipe.isFavorite ? Colors.red : Colors.black26,
                         size: screenWidth * 0.07, // 하트 아이콘 크기
                       ),
                       onPressed: () {

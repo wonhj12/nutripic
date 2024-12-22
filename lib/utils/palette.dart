@@ -82,6 +82,20 @@ class Palette {
   static const TextStyle foodCount =
       TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: white);
 
+  /// 레시피 순서 번호
+  /// <br />Font size: 40
+  /// <br />Font weight: w500
+  /// <br />Color: 0xFFBACBA1
+  static const TextStyle recipeOrder = TextStyle(
+      fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xFFBACBA1));
+
+  /// 레시피 설명
+  /// <br />Font size: 16
+  /// <br />Font weight: Regular
+  /// <br />Color: Black
+  static const TextStyle recipeStep =
+      TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black);
+
   /* Shadows */
   static BoxShadow shadow =
       BoxShadow(color: gray200.withOpacity(0.25), blurRadius: 15);

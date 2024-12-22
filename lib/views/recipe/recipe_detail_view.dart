@@ -1,18 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:nutripic/components/recipe/recipe_step_item.dart';
+import 'package:nutripic/models/recipe_model.dart';
+import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/recipe/recipe_detail_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:nutripic/components/recipe/recipe_info.dart';
+import 'package:nutripic/components/recipe/ingredient_item.dart';
 
 class RecipeDetailView extends StatelessWidget {
-  RecipeDetailView({super.key});
-
-  final PageController _pageController = PageController();
-  final ScrollController _scrollController = ScrollController();
+  const RecipeDetailView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     RecipeDetailViewModel recipeDetailViewModel =
         context.watch<RecipeDetailViewModel>();
+
+    Recipe? recipe = recipeDetailViewModel.recipeModel.specificRecipe;
+
+    if (recipe == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('오류'),
+        ),
+        body: const Center(
+          child: Text(
+            '지정된 레시피가 없습니다.',
+            style: TextStyle(fontSize: 18, color: Colors.red),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -22,59 +43,101 @@ class RecipeDetailView extends StatelessWidget {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                recipeDetailViewModel.recipeModel.specificRecipe?.imageSource ??
-                    'assets/foods/buldak_noodle.png',
-                fit: BoxFit.fitWidth,
-              ),
-              title: Container(
-                alignment: Alignment.bottomRight,
-                padding: const EdgeInsets.only(right: 16),
-                child: Text(
-                  recipeDetailViewModel
-                          .recipeModel.specificRecipe?.recipeName ??
-                      'Name Error',
-                  style: Palette.headingWhite,
-                ),
+                recipe.imageSource,
+                fit: BoxFit.cover,
               ),
             ),
           ),
           SliverToBoxAdapter(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(height: 32),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      child: Text("asdf"),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 레시피 정보
+                  RecipeInfo(recipe: recipe),
+                  const SizedBox(height: 24),
+                  // 재료 섹션
+                  Container(
+                    padding: const EdgeInsets.all(15),
+                    width: MediaQuery.of(context).size.width * (343 / 375),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black26, width: 0.7),
+                      color: Colors.white, // 투명한 흰색 배경
+                      borderRadius: BorderRadius.circular(16), // 모서리 둥글게
                     ),
-                    SizedBox(
-                      width: 25,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "재료",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 0.7,
+                          color: Colors.black26,
+                        ),
+                        const SizedBox(height: 8),
+                        // 재료 리스트 (두 개씩)
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: recipe.ingredients
+                              .map((ingredient) =>
+                                  IngredientItem(ingredient: ingredient))
+                              .toList(),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      child: Text("asdf"),
+                  ),
+
+                  const SizedBox(height: 57),
+                  // 조리 단계 섹션
+
+////////////////////////////////////
+                  const SizedBox(height: 8),
+                  // 조리 단계 리스트
+                  Column(
+                    children: List.generate(recipe.steps.length, (index) {
+                      return RecipeStepItem(
+                        stepNumber: index + 1,
+                        stepDescription: recipe.steps[index],
+                      );
+                    }),
+                  ),
+                  const SizedBox(height: 32),
+                  // 레시피 완료 버튼
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // 레시피 완료 시 처리 (예: SnackBar 표시)
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('레시피를 완료했습니다!'),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: const Text(
+                        '레시피 완료',
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 32),
-                Container(
-                  color: Colors.yellow,
-                  width: 343,
-                  height: 150,
-                  child: const Text("Ingredients"),
-                ),
-                const SizedBox(
-                  height: 56,
-                ),
-                Container(
-                  color: Colors.black12,
-                  width: 343,
-                  child: const Text("recipeaklsdj;falksdjf;\nasdfa;sdfasdl"),
-                )
-              ],
+                  ),
+                  const SizedBox(height: 32),
+                ],
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

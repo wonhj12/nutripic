@@ -1,3 +1,5 @@
+import 'package:nutripic/objects/ingredient.dart';
+
 class Recipe {
   /// 레시피 이름
   final String recipeName;
@@ -17,6 +19,12 @@ class Recipe {
   // 즐겨찾기 여부
   bool isFavorite;
 
+  // 레시피 순서
+  List<String> steps;
+
+  // 재료
+  List<Ingredient> ingredients;
+
   Recipe({
     required this.recipeName,
     required this.difficulty,
@@ -24,6 +32,8 @@ class Recipe {
     required this.maxTime,
     required this.imageSource,
     this.isFavorite = false,
+    this.steps = const [],
+    this.ingredients = const [],
   });
 
   @override

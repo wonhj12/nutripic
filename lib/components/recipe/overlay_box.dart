@@ -25,7 +25,7 @@ class OverlayBox extends StatelessWidget {
       padding: padding ?? const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.7), // 투명한 흰색 배경
-        borderRadius: BorderRadius.circular(10), // 모서리 둥글게
+        borderRadius: BorderRadius.circular(16), // 모서리 둥글게
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
