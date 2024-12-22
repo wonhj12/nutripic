@@ -55,7 +55,7 @@ class RecipeCard extends StatelessWidget {
                         children: [
                           // 레시피 이름
                           Text(
-                            recipe.recipeName,
+                            recipe.name,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: screenWidth * 0.05, // 폰트 크기
@@ -82,7 +82,7 @@ class RecipeCard extends StatelessWidget {
                               SizedBox(width: screenWidth * 0.02),
                               // 소요 시간
                               Text(
-                                "${recipe.maxTime}분 이내",
+                                "${recipe.cookingTime}분 이내",
                                 style: TextStyle(
                                   color: Colors.blue,
                                   fontSize: screenWidth * 0.035,

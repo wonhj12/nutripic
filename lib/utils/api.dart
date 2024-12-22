@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/custom_interceptor.dart';
 
 class API {
@@ -52,30 +54,36 @@ class API {
     return [];
   }
 
-  static Future<List<dynamic>> getRecipes() async {
+  static Future<dynamic> getRecipes() async {
     try {
-      print("ffdaffda");
       final response = await _getApi('/recipe/recommended');
-      print("asdfasdf");
 
-      if (response != null)
-        return response;
-      else
+      if (response != null) {
+        return response.data;
+      } else {
         return ([]);
+      }
     } catch (e) {
       throw Exception('Failed to load recipes: $e');
     }
   }
 
-  static Future<dynamic> getSpecificRecipes(int idx) async {
+  static Future<dynamic> getSpecificRecipes(List<int> recipeIds) async {
     try {
-      final response = await _getApi('/recipe/detail/$idx');
-      print(response);
+      final response = await _getApi(
+        '/recipe/previews',
+        jsonData: jsonEncode({'recipeIds': recipeIds}),
+      );
 
-      if (response != null)
-        return response;
-      else
-        return ([]);
+      if (response != null && response.data != null) {
+        List<dynamic> data = response.data;
+        print(data);
+        List<Recipe> recipes =
+            data.map((json) => Recipe.fromJson(json)).toList();
+        return recipes;
+      } else {
+        return [];
+      }
     } catch (e) {
       throw Exception('Failed to load recipes: $e');
     }
@@ -88,12 +96,14 @@ class API {
   /// `tokenRequired`를 `false`로 설정하면 API 요청시 토큰을 헤더에 포함시키지 않음.
   static Future<dynamic> _getApi(
     String endPoint, {
+    String? jsonData,
     Map<String, dynamic>? queryParameters,
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
-    return await dio.get(endPoint, queryParameters: queryParameters);
+    return await dio.get(endPoint,
+        queryParameters: queryParameters, data: jsonData);
   }
 
   /// ### API POST

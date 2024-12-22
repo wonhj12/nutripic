@@ -17,13 +17,13 @@ class RecipeView extends StatelessWidget {
     RecipeViewModel recipeViewModel = context.watch<RecipeViewModel>();
 
     if (recipeViewModel.recipeModel.recipes.isEmpty) {
+      //recipeViewModel.updateRecipes();
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
       );
     }
-
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {

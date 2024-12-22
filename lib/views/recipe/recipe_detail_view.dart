@@ -85,7 +85,7 @@ class RecipeDetailView extends StatelessWidget {
                         Wrap(
                           spacing: 8,
                           runSpacing: 8,
-                          children: recipe.ingredients
+                          children: recipe.ingredient
                               .map((ingredient) =>
                                   IngredientItem(ingredient: ingredient))
                               .toList(),
@@ -101,10 +101,10 @@ class RecipeDetailView extends StatelessWidget {
                   const SizedBox(height: 8),
                   // 조리 단계 리스트
                   Column(
-                    children: List.generate(recipe.steps.length, (index) {
+                    children: List.generate(recipe.procedure.length, (index) {
                       return RecipeStepItem(
                         stepNumber: index + 1,
-                        stepDescription: recipe.steps[index],
+                        stepDescription: recipe.procedure[index],
                       );
                     }),
                   ),

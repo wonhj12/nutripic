@@ -1,17 +1,17 @@
 import 'package:nutripic/objects/ingredient.dart';
 
 class Recipe {
+  // 아이디
+  final int id;
+
   /// 레시피 이름
-  final String recipeName;
+  final String name;
 
   /// 난이도
   final int difficulty;
 
-  /// 최소 시간
-  final int minTime;
-
-  /// 최대 시간
-  final int maxTime;
+  /// 소요 시간
+  final int cookingTime;
 
   // 이미지 소스
   final String imageSource;
@@ -20,27 +20,28 @@ class Recipe {
   bool isFavorite;
 
   // 레시피 순서
-  List<String> steps;
+  List<String> procedure;
 
   // 재료
-  List<Ingredient> ingredients;
+  List<Ingredient> ingredient;
 
   Recipe({
-    required this.recipeName,
+    required this.id,
+    required this.name,
     required this.difficulty,
-    required this.minTime,
-    required this.maxTime,
-    required this.imageSource,
+    required this.cookingTime,
+    this.imageSource = 'assets/foods/cheese_pizza.png',
     this.isFavorite = false,
-    this.steps = const [],
-    this.ingredients = const [],
+    this.procedure = const [],
+    this.ingredient = const [],
   });
 
-  @override
-  String toString() {
-    return 'recipeName: $recipeName, '
-        'difficulty: $difficulty, '
-        'minTime: $minTime, '
-        'maxTime: $maxTime';
+  factory Recipe.fromJson(Map<String, dynamic> json) {
+    return Recipe(
+      id: json['id'],
+      name: json['name'],
+      difficulty: json['difficulty'],
+      cookingTime: json['cookingTime'],
+    );
   }
 }

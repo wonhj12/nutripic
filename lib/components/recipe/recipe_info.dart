@@ -16,7 +16,7 @@ class RecipeInfo extends StatelessWidget {
       children: [
         // 레시피 이름
         Text(
-          recipe.recipeName,
+          recipe.name,
           style: TextStyle(
             fontSize: screenWidth * 0.07,
             fontWeight: FontWeight.bold,
@@ -39,7 +39,7 @@ class RecipeInfo extends StatelessWidget {
             const SizedBox(width: 16),
             // 소요 시간
             Text(
-              "${recipe.minTime}-${recipe.maxTime}분",
+              "${recipe.cookingTime}분 이내",
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black54,

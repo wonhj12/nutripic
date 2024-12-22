@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/objects/ingredient.dart';
 import 'package:nutripic/objects/recipe.dart';
@@ -26,10 +29,10 @@ class RecipeViewModel with ChangeNotifier {
 
   void onTapAll() {
     recipeModel.saveSpecificRecipe(Recipe(
+        id: 3,
         difficulty: 1,
-        recipeName: 'qwer',
-        minTime: 1,
-        maxTime: 2,
+        name: 'qwer',
+        cookingTime: 2,
         imageSource: 'asdf'));
     context.go('/recipe/detail');
   }
@@ -37,17 +40,41 @@ class RecipeViewModel with ChangeNotifier {
   /// 레시피 전달하는 것.
   void updateRecipes() async {
     try {
-      //await API.getRecipes();
-      await API.getSpecificRecipes(1);
-      final random = Random();
-      final Set<int> indices = {};
+      final List<int> recipeIds = [];
 
-      while (indices.length < 4) {
-        indices.add(random.nextInt(recipeList.length));
+      final reconmmendedRecipes = await API.getRecipes();
+      if (reconmmendedRecipes != null) {
+        if (reconmmendedRecipes[0].length == 0 &&
+            reconmmendedRecipes[1].length == 0) {
+          final random = Random();
+          final Set<int> indices = {};
+
+          while (indices.length < 10) {
+            // 무한 루프 방지
+            indices.add(random.nextInt(30));
+          }
+          recipeIds.addAll(indices.toList());
+        } else {
+          //recipeIds.addAll(reconmmendedRecipes[0]);
+          //recipeIds.addAll(reconmmendedRecipes[1]);
+          final random = Random();
+          final Set<int> indices = {};
+
+          while (indices.length < 10) {
+            // 무한 루프 방지
+            indices.add(random.nextInt(30));
+          }
+          recipeIds.addAll(indices.toList());
+        }
+        //dynamic recipes = API.getSpecificRecipes(recipeIds);
+
+        final List<Recipe> recipes = await API.getSpecificRecipes(recipeIds);
+        recipeModel.saveRecipes(recipes);
+        notifyListeners();
+        return;
+      } else {
+        return;
       }
-      List<Recipe> recipes = indices.map((index) => recipeList[index]).toList();
-      recipeModel.saveRecipes(recipes);
-      notifyListeners();
     } catch (e, stackTrace) {
       debugPrint('Error: $e');
       debugPrint('StackTrace: $stackTrace');
@@ -69,7 +96,7 @@ class RecipeViewModel with ChangeNotifier {
     int index = recipeModel.recipes.indexOf(recipe);
     if (index != -1) {
       bool? currentFavorite = recipeModel.recipes[index].isFavorite;
-      print("Toggling favorite for ${recipe.recipeName}: $currentFavorite");
+      print("Toggling favorite for ${recipe.name}: $currentFavorite");
 
       // `currentFavorite`이 null인지 확인
       recipeModel.recipes[index].isFavorite = !currentFavorite;
@@ -125,6 +152,7 @@ class RecipeViewModel with ChangeNotifier {
   }
 }
 
+/*
 /// 더미 데이터
 List<Recipe> recipeList = [
   Recipe(
@@ -314,7 +342,7 @@ List<Recipe> recipeList = [
         "뜨겁게 데운 상태로 서빙합니다.",
       ]),
 ];
-
+*/
 List<String> _foodFilters = [
   'Carrot',
   'Egg',
