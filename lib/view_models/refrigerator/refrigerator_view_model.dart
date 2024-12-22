@@ -11,63 +11,7 @@ class RefrigeratorViewModel with ChangeNotifier {
   RefrigeratorViewModel({
     required this.refrigeratorModel,
     required this.context,
-  }) {
-    Food food = Food(
-        id: 0,
-        name: '당근',
-        icon: 'carrot',
-        class1: 'class1',
-        class2: 'class2',
-        addedDate: DateTime.now(),
-        expireDate: DateTime.now(),
-        expired: false);
-
-    refrigeratorModel.foods = [
-      [
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-      ],
-      [
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-      ],
-      []
-    ];
-  }
+  });
 
   /// 현재 선택된 냉장고
   StorageType storage = StorageType.fridge;
