@@ -8,7 +8,7 @@ class FoodDday extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 0,
+      bottom: 1,
       child: Container(
         width: 62,
         height: 16,

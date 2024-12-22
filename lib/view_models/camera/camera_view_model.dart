@@ -114,12 +114,13 @@ class CameraViewModel with ChangeNotifier {
   /// YOLO 모델 로드
   Future loadModel() async {
     try {
+      // 모델 레이블에 따라서 클래스 개수도 바꿔야 함
       _model = await PytorchLite.loadObjectDetectionModel(
-        'assets/model/yolo11n.torchscript',
-        80,
+        'assets/model/tdl.torchscript',
+        24,
         640,
         640,
-        labelPath: 'assets/model/labels_objectDetection_Coco.txt',
+        labelPath: 'assets/model/tdl.txt',
         objectDetectionModelType: ObjectDetectionModelType.yolov8,
       );
 
@@ -192,8 +193,6 @@ class CameraViewModel with ChangeNotifier {
       detectedFoods = await _model!.getCameraImagePrediction(
         cameraImage,
         rotation: _camFrameRotation,
-        minimumScore: 0.3,
-        iOUThreshold: 0.3,
       );
     }
 

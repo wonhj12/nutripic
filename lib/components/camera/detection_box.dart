@@ -33,7 +33,8 @@ class DetectionBox extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Container(
             color: Palette.sub,
-            child: Text(result.className ?? result.classIndex.toString()),
+            child: Text(
+                '${result.className ?? result.classIndex.toString()} ${result.score.toStringAsFixed(2)}'),
           ),
         ),
       ),

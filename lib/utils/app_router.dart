@@ -179,20 +179,20 @@ class AppRouter {
             ),
 
             // 카메라
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  path: '/camera',
-                  builder: (context, state) => ChangeNotifierProvider(
-                    create: (context) => CameraViewModel(
-                      refrigeratorModel: refrigeratorModel,
-                      context: context,
-                    ),
-                    child: const CameraView(),
-                  ),
-                ),
-              ],
-            ),
+            // StatefulShellBranch(
+            //   routes: [
+            //     GoRoute(
+            //       path: '/camera',
+            //       builder: (context, state) => ChangeNotifierProvider(
+            //         create: (context) => CameraViewModel(
+            //           refrigeratorModel: refrigeratorModel,
+            //           context: context,
+            //         ),
+            //         child: const CameraView(),
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
             // 레시피
             StatefulShellBranch(
