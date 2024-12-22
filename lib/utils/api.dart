@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:nutripic/utils/custom_interceptor.dart';
 
@@ -17,7 +18,6 @@ class API {
   );
 
   /* user */
-
   /// 카카오 로그인시 백엔드 서버에서 firebase 인증을 위한 custom ID token을 받아오는 함수
   static Future<String> postKakaoCustomToken(String uid) async {
     String token = '';
@@ -55,7 +55,6 @@ class API {
   }
 
   /* Storage */
-
   /// 냉장고에 저장돼있는 식재료를 받아오는 함수
   /// Freezer, Fridge, Room에 있는 foods를 반환
   static Future<List<dynamic>> getFoods() async {
@@ -63,13 +62,14 @@ class API {
       final response = await _getApi('/storage');
       if (response != null) return response.data;
     } catch (e) {
-      // debugPrint('Error in getFoods: $e');
+      debugPrint('Error in getFoods: $e');
       throw Error();
     }
 
     return [];
   }
 
+  /// 냉장고에 저장된 식재료를 삭제하는 함수
   static Future<dynamic> deleteFood(int foodId) async {
     try {
       final response = await _deleteApi(
@@ -79,6 +79,18 @@ class API {
       return response;
     } catch (e) {
       // debugPrint('Error in deleteFood: $e');
+      throw Error();
+    }
+  }
+
+  static Future<dynamic> postFoods(
+      List<Map<String, dynamic>> recognizedFoods) async {
+    try {
+      final response =
+          await _postApi('/storage/add', jsonData: jsonEncode(recognizedFoods));
+
+      return response;
+    } catch (e) {
       throw Error();
     }
   }
