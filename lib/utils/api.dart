@@ -38,6 +38,48 @@ class API {
     return token;
   }
 
+  /// 냉장고에 저장돼있는 식재료를 받아오는 함수
+  /// Freezer, Fridge, Room에 있는 foods를 반환
+  static Future<List<dynamic>> getFoods() async {
+    try {
+      final response = await _getApi('/storage');
+      if (response != null) return response.data;
+    } catch (e) {
+      // debugPrint('Error in getFoods: $e');
+      throw Error();
+    }
+
+    return [];
+  }
+
+  static Future<List<dynamic>> getRecipes() async {
+    try {
+      print("ffdaffda");
+      final response = await _getApi('/recipe/recommended');
+      print("asdfasdf");
+
+      if (response != null)
+        return response;
+      else
+        return ([]);
+    } catch (e) {
+      throw Exception('Failed to load recipes: $e');
+    }
+  }
+
+  static Future<dynamic> getSpecificRecipes(int idx) async {
+    try {
+      final response = await _getApi('/recipe/detail/$idx');
+      print(response);
+
+      if (response != null)
+        return response;
+      else
+        return ([]);
+    } catch (e) {
+      throw Exception('Failed to load recipes: $e');
+    }
+  }
   /* BASE API (GET, POST, PATCH, DELETE) */
 
   /// ### API GET

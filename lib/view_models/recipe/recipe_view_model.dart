@@ -6,6 +6,8 @@ import 'package:nutripic/objects/recipe.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:math';
 
+import 'package:nutripic/utils/api.dart';
+
 class RecipeViewModel with ChangeNotifier {
   RecipeModel recipeModel;
   BuildContext context;
@@ -33,16 +35,23 @@ class RecipeViewModel with ChangeNotifier {
   }
 
   /// 레시피 전달하는 것.
-  void updateRecipes() {
-    final random = Random();
-    final Set<int> indices = {};
+  void updateRecipes() async {
+    try {
+      //await API.getRecipes();
+      await API.getSpecificRecipes(1);
+      final random = Random();
+      final Set<int> indices = {};
 
-    while (indices.length < 4) {
-      indices.add(random.nextInt(recipeList.length));
+      while (indices.length < 4) {
+        indices.add(random.nextInt(recipeList.length));
+      }
+      List<Recipe> recipes = indices.map((index) => recipeList[index]).toList();
+      recipeModel.saveRecipes(recipes);
+      notifyListeners();
+    } catch (e, stackTrace) {
+      debugPrint('Error: $e');
+      debugPrint('StackTrace: $stackTrace');
     }
-    List<Recipe> recipes = indices.map((index) => recipeList[index]).toList();
-    recipeModel.saveRecipes(recipes);
-    notifyListeners();
   }
 
   // 필터를 토글하는 메서드
