@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:nutripic/components/image_button.dart';
 import 'package:nutripic/utils/palette.dart';
 
 class RecognizedFoodTile extends StatelessWidget {
   final String name;
-  const RecognizedFoodTile({super.key, required this.name});
+  final Function()? onTapEdit;
+  final Function()? onTapDelete;
+
+  /// `name = filename.svg`
+  const RecognizedFoodTile({
+    super.key,
+    required this.name,
+    required this.onTapEdit,
+    required this.onTapDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.max,
+      mainAxisSize: MainAxisSize.min,
       children: [
         // 식재료 이미지
         Container(
@@ -21,10 +31,41 @@ class RecognizedFoodTile extends StatelessWidget {
         ),
         const SizedBox(width: 16),
 
-        // 식재료 이름
-        Text(name),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 유통기한
+            Text(
+              'D-5',
+              style: Palette.subbody.copyWith(
+                color: Palette.delete,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
 
-        // 버튼
+            // 식재료 이름
+            Text(name, style: Palette.title),
+          ],
+        ),
+
+        const Spacer(),
+
+        // 수정 버튼
+        ImageButton(
+          img: '/edit.svg',
+          width: 24,
+          height: 24,
+          onTap: onTapEdit,
+        ),
+        const SizedBox(width: 24),
+
+        // 삭제 버튼
+        ImageButton(
+          img: '/trash.svg',
+          width: 24,
+          height: 24,
+          onTap: onTapDelete,
+        ),
       ],
     );
   }
