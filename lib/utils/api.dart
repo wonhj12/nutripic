@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/custom_interceptor.dart';
@@ -8,7 +9,7 @@ import 'package:nutripic/utils/custom_interceptor.dart';
 class API {
   static final dio = Dio(
     BaseOptions(
-      baseUrl: dotenv.env['SERVER_API']!,
+      baseUrl: 'http://3.34.19.133:3000/',
       connectTimeout: const Duration(milliseconds: 5000),
       receiveTimeout: const Duration(milliseconds: 3000),
       headers: {
@@ -51,6 +52,7 @@ class API {
 
       return response;
     } catch (e) {
+      debugPrint('Error in postUser: $e');
       throw Error();
     }
   }
@@ -130,6 +132,67 @@ class API {
       return response;
     } catch (e) {
       // debugPrint('Error in deleteFood: $e');
+      throw Error();
+    }
+  }
+  
+    /* Diary */
+
+  /// 특정 유저의 모든 다이어리 조회
+  static Future<dynamic> getDiariesForMonth(int idx) async {
+    try {
+      final response = await _getApi(
+        '/diary/calendar/$idx',
+      );
+      return response;
+    } catch (e) {
+      debugPrint('Error in getDiary: $e');
+      throw Error();
+    }
+  }
+
+  /// 특정 다이어리 조회
+  static Future<dynamic> getDiariesForDay(int diaryId) async {
+    try {
+      final response = await _getApi(
+        '/diary/$diaryId',
+      );
+      return response;
+    } catch (e) {
+      debugPrint('Error in getDiariesForDay: $e');
+      throw Error();
+    }
+  }
+
+  /// 다이어리 생성
+  static Future<dynamic> addDiary(
+      String body, DateTime date, String url) async {
+    try {
+      final response = await _postApi(
+        '/diary/add',
+        jsonData: jsonEncode({
+          'body': body,
+          'date': date.toIso8601String(),
+          'url': url,
+        }),
+      );
+      return response;
+    } catch (e) {
+      debugPrint('Error in addDiary: $e');
+      throw Error();
+    }
+  }
+
+  /// 특정 다이어리 삭제
+  static Future<dynamic> deleteDiary(int diaryId) async {
+    try {
+      final response = await _deleteApi(
+        '/diary/delete/$diaryId',
+      );
+      debugPrint(response);
+      return response;
+    } catch (e) {
+      debugPrint('Error in deleteDiary: $e');
       throw Error();
     }
   }

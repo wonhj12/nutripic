@@ -1,6 +1,6 @@
 class Diary {
   /// 게시물 아이디
-  String? diaryId;
+  int? diaryId;
 
   /// 게시 날짜
   DateTime? date;
@@ -17,6 +17,16 @@ class Diary {
     this.content,
     this.imageUrl,
   });
+
+  /// jsonData에서 받아온 데이터를 Diary로 변환 저장하는 함수
+  factory Diary.fromJson(Map<String, dynamic> json) {
+    return Diary(
+      diaryId: json['id'],
+      content: json['body'] ?? null,
+      imageUrl: json['url'],
+      date: DateTime.parse(json['date']),
+    );
+  }
 
   @override
   String toString() {

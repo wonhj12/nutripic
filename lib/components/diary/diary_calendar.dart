@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -33,73 +35,92 @@ class DiaryCalendar extends StatelessWidget {
           selectedDecoration: BoxDecoration(),
           selectedTextStyle: TextStyle(),
         ),
-        daysOfWeekHeight: 25.0,
+        daysOfWeekHeight: 30.0,
+        rowHeight: 80,
         calendarBuilders: CalendarBuilders(
           dowBuilder: (context, day) {
             final weekDays = ['월', '화', '수', '목', '금', '토', '일'];
             return Center(
               child: Text(
                 weekDays[day.weekday - 1], // day.weekday - 1로 요일 배열 접근
-                style: Palette.body,
+                style: Palette.caption,
               ),
             );
+          },
+          outsideBuilder: (context, day, focusedDay) {
+            return const SizedBox.shrink();
           },
           defaultBuilder: (context, day, focusedDay) {
             final diariesForDay = getDiariesForDay(day);
 
+            //해당 날짜에 일기가 있는 경우
             if (diariesForDay != null && diariesForDay.isNotEmpty) {
-              return Stack(
-                alignment: Alignment.center,
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Center(
-                    //사진 미리보기
-                    child: CircleAvatar(
-                      radius: 24,
-                      backgroundImage: NetworkImage(diariesForDay[0].imageUrl!),
-                    ),
-                  ),
                   Text(
                     day.day.toString(),
-                    style: const TextStyle(
-                      color: Palette.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Palette.caption,
                   ),
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundImage:
+                            FileImage(File(diariesForDay[0].imageUrl!)),
+                      ),
 
-                  //일기 개수
-                  if (diariesForDay.length > 1)
-                    Positioned(
-                      top: 0,
-                      right: 3,
-                      //컴포넌트화
-                      child: Container(
-                        width: 17,
-                        height: 17,
-                        decoration: const BoxDecoration(
-                          //팔레트 추가
-                          color: Color(0xFFFF5E47),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            diariesForDay.length.toString(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
+                      // 일기 두 개 이상일때 알림
+                      if (diariesForDay.length > 1)
+                        Positioned(
+                          top: -3,
+                          right: 0,
+                          //컴포넌트화
+                          child: Container(
+                            width: 13,
+                            height: 13,
+                            decoration: const BoxDecoration(
+                              //팔레트 추가
+                              color: Palette.secondary,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                diariesForDay.length.toString(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 5,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
                 ],
               );
             } else {
-              return Center(
-                child: Text(
-                  day.day.toString(),
-                  style: Palette.body,
-                ),
+              // 나머지 날짜들 처리
+              return Column(
+                children: [
+                  Text(
+                    day.day.toString(),
+                    style: Palette.caption,
+                  ),
+                  //이건 디자인 봐서 할지말지
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Palette.gray100,
+                  ),
+                ],
               );
             }
           },
