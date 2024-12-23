@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nutripic/utils/enums/text_field_type.dart';
 import 'package:nutripic/utils/palette.dart';
-
-enum TextFieldType { email, password, text }
 
 class CustomTextField extends StatefulWidget {
   final String? label;

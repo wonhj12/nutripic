@@ -26,11 +26,11 @@ class BottomNavbar extends StatelessWidget {
             active: 'assets/icons/record_active.svg',
             label: '기록',
           ),
-          bottomNavbarItem(
-            src: 'assets/icons/add.svg',
-            active: 'assets/icons/add_active.svg',
-            label: '식재료 추가',
-          ),
+          // bottomNavbarItem(
+          //   src: 'assets/icons/add.svg',
+          //   active: 'assets/icons/add_active.svg',
+          //   label: '식재료 추가',
+          // ),
           bottomNavbarItem(
             src: 'assets/icons/search.svg',
             active: 'assets/icons/search_active.svg',

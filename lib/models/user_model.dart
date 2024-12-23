@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-/// 로그인 방식 (이메일, 카카오, 구글, 애플)
-enum LoginType { email, kakao, google, apple }
+import 'package:nutripic/utils/enums/login_type.dart';
 
 class UserModel with ChangeNotifier {
   /// Firebase에서 제공하는 uid
