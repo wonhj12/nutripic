@@ -26,10 +26,15 @@ class RecipeViewModel with ChangeNotifier {
     try {
       dynamic specificRecipe = await API.getSpecificRecipes(recipe.id);
 
-      List<Ingredient> Ingredients = (specificRecipe['ingredient'] as List)
+      List<Ingredient> ingredients = (specificRecipe['ingredient'] as List)
           .map((json) => Ingredient.fromJson(json))
           .toList();
-      recipe.ingredient = Ingredients;
+      List<String> procedure = (specificRecipe['procedure'] as List)
+          .map((e) => e.toString())
+          .toList();
+
+      recipe.ingredient = ingredients;
+      recipe.procedure = procedure;
       recipeModel.saveSpecificRecipe(recipe);
       context.go('/recipe/detail');
     } catch (e) {
