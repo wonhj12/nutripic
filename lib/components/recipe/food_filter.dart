@@ -28,8 +28,8 @@ class FoodFilter extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  Food(),
-                  Food(),
+                  FoodIcon(),
+                  FoodIcon(),
                 ],
               ),
             ),

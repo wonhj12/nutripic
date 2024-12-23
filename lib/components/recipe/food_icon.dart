@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:flutter_svg/svg.dart';
 
-class Food extends StatelessWidget {
-  const Food({super.key});
+class FoodIcon extends StatelessWidget {
+  const FoodIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
