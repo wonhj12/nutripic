@@ -32,7 +32,7 @@ class DiaryCalendarHeader extends StatelessWidget {
         ),
         Text(
           '$month월',
-          style: Palette.title,
+          style: Palette.subtitle,
         ),
         GestureDetector(
           onTap: onTapRight,
@@ -44,7 +44,7 @@ class DiaryCalendarHeader extends StatelessWidget {
             child: const Icon(
               Icons.chevron_right,
               size: 24,
-              color: Colors.black,
+              color: Palette.black,
             ),
           ),
         ),
