@@ -41,6 +41,8 @@ class FoodAddContainer extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) =>
                 RecognizedFoodTile(
               name: recognizedFoods.elementAt(index),
+              onTapEdit: () {},
+              onTapDelete: () {},
             ),
           ),
         ),
