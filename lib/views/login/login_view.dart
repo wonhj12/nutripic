@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
-import 'package:nutripic/components/login/image_button.dart';
+import 'package:nutripic/components/image_button.dart';
 import 'package:nutripic/utils/enums/login_type.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:provider/provider.dart';
@@ -47,21 +47,21 @@ class _LoginViewState extends State<LoginView> {
 
           // 카카오 로그인
           ImageButton(
-            img: 'assets/icons/login_kakao.svg',
+            img: 'login_kakao.svg',
             onTap: () => loginViewModel.login(LoginType.kakao),
           ),
           const SizedBox(height: 10),
 
           // 구글 로그인
           ImageButton(
-            img: 'assets/icons/login_google.svg',
+            img: 'login_google.svg',
             onTap: () => loginViewModel.login(LoginType.google),
           ),
           const SizedBox(height: 10),
 
           // 애플 로그인
           ImageButton(
-            img: 'assets/icons/login_apple.svg',
+            img: 'login_apple.svg',
             onTap: () => loginViewModel.login(LoginType.apple),
           ),
           const SizedBox(height: 25),

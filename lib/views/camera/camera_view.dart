@@ -95,7 +95,7 @@ class CameraView extends StatelessWidget {
                   SelectButton(
                     label: '완료',
                     type: SelectButtonType.delete,
-                    onPressed: () {},
+                    onPressed: cameraViewModel.onTapComplete,
                   )
                 ],
               ),

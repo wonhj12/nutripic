@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/camera/detection_box.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:pytorch_lite/pytorch_lite.dart';
@@ -98,6 +99,9 @@ class CameraViewModel with ChangeNotifier {
     isCameraLoaded = controller.value.isInitialized;
     canTakePicture = isCameraLoaded;
 
+    // 인식한 식재료 초기화
+    refrigeratorModel.resetRecognition();
+
     // 카메라 초기화 완료시 YOLO detection 시작
     if (isCameraLoaded) {
       // 실시간 개체 감지를 위한 stream 시작
@@ -132,18 +136,28 @@ class CameraViewModel with ChangeNotifier {
 
   /// 사진 촬영
   /// <br /> 촬영한 사진들은 images 리스트에 저장
-  // TODO: 사진 촬영시 감지된 식재료들을 저장하는 로직 구현 필요
   void takePicture() async {
     // 카메라 init 오류 또는 사진 찍는 중
-    if (!controller.value.isInitialized || controller.value.isTakingPicture) {
+    if (!controller.value.isInitialized ||
+        controller.value.isTakingPicture ||
+        !canTakePicture) {
       return;
     }
 
     try {
+      // 사진 촬영 불가능하게 설정
+      canTakePicture = false;
+      notifyListeners();
+
       // 사진 촬영
       XFile file = await controller.takePicture();
       images.add(File(file.path));
 
+      // 인식된 식재료 모델에 추가
+      refrigeratorModel
+          .addRecognition(detectedFoods.map((e) => e.className!).toList());
+
+      canTakePicture = true;
       notifyListeners();
     } catch (e) {
       // 사진 촬영 오류
@@ -212,6 +226,15 @@ class CameraViewModel with ChangeNotifier {
               screenSize: actualPreviewSize,
             ))
         .toList();
+  }
+
+  /// 식재료 추가 확인 페이지로 이동
+  void onTapComplete() async {
+    // 인식한 식재료가 있을 때만 이동
+    if (refrigeratorModel.recognizedFoods.isNotEmpty) {
+      await GoRouter.of(context).push('/refrigerator/add');
+      context.pop();
+    }
   }
 }
 

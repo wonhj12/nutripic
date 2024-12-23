@@ -18,7 +18,7 @@ class ImageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SvgPicture.asset(img, width: width, height: height),
+        SvgPicture.asset('assets/icons/$img', width: width, height: height),
         Material(
           color: Colors.transparent,
           child: InkWell(

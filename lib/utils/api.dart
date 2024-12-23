@@ -42,7 +42,7 @@ class API {
     return token;
   }
 
-    /// 회원가입 후 db에 사용자 정보를 저장하는 함수
+  /// 회원가입 후 db에 사용자 정보를 저장하는 함수
   static Future<dynamic> postUser(String uid) async {
     try {
       final response = await _postApi(
@@ -65,13 +65,42 @@ class API {
       final response = await _getApi('/storage');
       if (response != null) return response.data;
     } catch (e) {
-      // debugPrint('Error in getFoods: $e');
+      debugPrint('Error in getFoods: $e');
       throw Error();
     }
 
     return [];
   }
 
+  /// 냉장고에 저장된 식재료를 삭제하는 함수
+  static Future<dynamic> deleteFood(int foodId) async {
+    try {
+      final response = await _deleteApi(
+        '/storage/delete',
+        jsonData: jsonEncode({'id': foodId}),
+      );
+      return response;
+    } catch (e) {
+      // debugPrint('Error in deleteFood: $e');
+      throw Error();
+    }
+  }
+
+  static Future<dynamic> postFoods(
+      List<Map<String, dynamic>> recognizedFoods) async {
+    try {
+      final response =
+          await _postApi('/storage/add', jsonData: jsonEncode(recognizedFoods));
+
+      return response;
+    } catch (e) {
+      throw Error();
+    }
+  }
+
+  /* Recipes */
+
+  /// 레시피 가져오는 함수
   static Future<dynamic> getRecipes() async {
     try {
       final response = await _getApi('/recipe/recommended');
@@ -122,21 +151,8 @@ class API {
       throw Exception('Failed to load recipes: $e');
     }
   }
-  
-  static Future<dynamic> deleteFood(int foodId) async {
-    try {
-      final response = await _deleteApi(
-        '/storage/delete',
-        jsonData: jsonEncode({'id': foodId}),
-      );
-      return response;
-    } catch (e) {
-      // debugPrint('Error in deleteFood: $e');
-      throw Error();
-    }
-  }
-  
-    /* Diary */
+
+  /* Diary */
 
   /// 특정 유저의 모든 다이어리 조회
   static Future<dynamic> getDiariesForMonth(int idx) async {
@@ -196,7 +212,7 @@ class API {
       throw Error();
     }
   }
-  
+
   /* BASE API (GET, POST, PATCH, DELETE) */
 
   /// ### API GET

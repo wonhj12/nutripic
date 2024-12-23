@@ -11,63 +11,7 @@ class RefrigeratorViewModel with ChangeNotifier {
   RefrigeratorViewModel({
     required this.refrigeratorModel,
     required this.context,
-  }) {
-    Food food = Food(
-        id: 0,
-        name: '당근',
-        icon: 'carrot',
-        class1: 'class1',
-        class2: 'class2',
-        addedDate: DateTime.now(),
-        expireDate: DateTime.now(),
-        expired: false);
-
-    refrigeratorModel.foods = [
-      [
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-      ],
-      [
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-        food,
-      ],
-      []
-    ];
-  }
+  });
 
   /// 현재 선택된 냉장고
   StorageType storage = StorageType.fridge;
@@ -152,7 +96,11 @@ class RefrigeratorViewModel with ChangeNotifier {
   }
 
   /// 카메라 호출 함수
-  void onTapCamera() {
-    context.go('/refrigerator/camera');
+  void onTapCamera() async {
+    // 식재료 추가 후 냉장고 화면 업데이트를 위해서 비동기 처리
+    await GoRouter.of(context).push('/refrigerator/camera');
+
+    await refrigeratorModel.getFoods();
+    notifyListeners();
   }
 }
