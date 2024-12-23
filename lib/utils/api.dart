@@ -1,13 +1,15 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/custom_interceptor.dart';
 
 class API {
   static final dio = Dio(
     BaseOptions(
-      baseUrl: dotenv.env['SERVER_API']!,
+      baseUrl: 'http://3.34.19.133:3000/',
       connectTimeout: const Duration(milliseconds: 5000),
       receiveTimeout: const Duration(milliseconds: 3000),
       headers: {
@@ -50,6 +52,7 @@ class API {
 
       return response;
     } catch (e) {
+      debugPrint('Error in postUser: $e');
       throw Error();
     }
   }
@@ -95,6 +98,121 @@ class API {
     }
   }
 
+  /* Recipes */
+
+  /// 레시피 가져오는 함수
+  static Future<dynamic> getRecipes() async {
+    try {
+      final response = await _getApi('/recipe/recommended');
+
+      if (response != null) {
+        return response.data;
+      } else {
+        return ([]);
+      }
+    } catch (e) {
+      throw Exception('Failed to load recipes: $e');
+    }
+  }
+
+  static Future<dynamic> recipePreview(List<int> recipeIds) async {
+    try {
+      final response = await _getApi(
+        '/recipe/previews',
+        jsonData: jsonEncode({'recipeIds': recipeIds}),
+      );
+
+      if (response != null && response.data != null) {
+        List<dynamic> data = response.data;
+        List<Recipe> recipes =
+            data.map((json) => Recipe.fromJson(json)).toList();
+
+        return recipes;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      throw Exception('Failed to load recipes: $e');
+    }
+  }
+
+  static Future<dynamic> getSpecificRecipes(int id) async {
+    try {
+      final response = await _getApi(
+        '/recipe/detail/$id',
+      );
+
+      if (response != null && response.data != null) {
+        return response.data;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      throw Exception('Failed to load recipes: $e');
+    }
+  }
+
+  /* Diary */
+
+  /// 특정 유저의 모든 다이어리 조회
+  static Future<dynamic> getDiariesForMonth(int idx) async {
+    try {
+      final response = await _getApi(
+        '/diary/calendar/$idx',
+      );
+      return response;
+    } catch (e) {
+      debugPrint('Error in getDiary: $e');
+      throw Error();
+    }
+  }
+
+  /// 특정 다이어리 조회
+  static Future<dynamic> getDiariesForDay(int diaryId) async {
+    try {
+      final response = await _getApi(
+        '/diary/$diaryId',
+      );
+      return response;
+    } catch (e) {
+      debugPrint('Error in getDiariesForDay: $e');
+      throw Error();
+    }
+  }
+
+  /// 다이어리 생성
+  static Future<dynamic> addDiary(
+      String body, DateTime date, String url) async {
+    try {
+      final response = await _postApi(
+        '/diary/add',
+        jsonData: jsonEncode({
+          'body': body,
+          'date': date.toIso8601String(),
+          'url': url,
+        }),
+      );
+      return response;
+    } catch (e) {
+      debugPrint('Error in addDiary: $e');
+      throw Error();
+    }
+  }
+
+  /// 특정 다이어리 삭제
+  static Future<dynamic> deleteDiary(int diaryId) async {
+    try {
+      final response = await _deleteApi(
+        '/diary/delete/$diaryId',
+      );
+      debugPrint(response);
+      return response;
+    } catch (e) {
+      debugPrint('Error in deleteDiary: $e');
+      throw Error();
+    }
+  }
+
   /* BASE API (GET, POST, PATCH, DELETE) */
 
   /// ### API GET
@@ -103,12 +221,14 @@ class API {
   /// `tokenRequired`를 `false`로 설정하면 API 요청시 토큰을 헤더에 포함시키지 않음.
   static Future<dynamic> _getApi(
     String endPoint, {
+    String? jsonData,
     Map<String, dynamic>? queryParameters,
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
-    return await dio.get(endPoint, queryParameters: queryParameters);
+    return await dio.get(endPoint,
+        queryParameters: queryParameters, data: jsonData);
   }
 
   /// ### API POST
