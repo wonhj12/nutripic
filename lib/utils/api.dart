@@ -68,7 +68,7 @@ class API {
     }
   }
 
-  static Future<dynamic> getSpecificRecipes(List<int> recipeIds) async {
+  static Future<dynamic> recipePreview(List<int> recipeIds) async {
     try {
       final response = await _getApi(
         '/recipe/previews',
@@ -77,10 +77,26 @@ class API {
 
       if (response != null && response.data != null) {
         List<dynamic> data = response.data;
-        print(data);
         List<Recipe> recipes =
             data.map((json) => Recipe.fromJson(json)).toList();
         return recipes;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      throw Exception('Failed to load recipes: $e');
+    }
+  }
+
+  static Future<dynamic> getSpecificRecipes(int id) async {
+    try {
+      final response = await _getApi(
+        '/recipe/detail/$id',
+      );
+
+      if (response != null && response.data != null) {
+        //print(response.data);
+        return response.data;
       } else {
         return [];
       }

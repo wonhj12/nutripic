@@ -1,6 +1,13 @@
 class Ingredient {
-  final String name;
-  final String quantity;
+  final String ingredientName;
+  final String amount;
 
-  Ingredient({required this.name, required this.quantity});
+  Ingredient({required this.ingredientName, required this.amount});
+
+  factory Ingredient.fromJson(Map<String, dynamic> json) {
+    return Ingredient(
+      ingredientName: json['ingredientName'],
+      amount: json['amount'],
+    );
+  }
 }

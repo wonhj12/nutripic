@@ -23,12 +23,12 @@ class IngredientItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            ingredient.name,
+            ingredient.ingredientName,
             style: Palette.body,
           ),
           const SizedBox(width: 8),
           Text(
-            ingredient.quantity,
+            ingredient.amount,
             style: TextStyle(
               fontSize: screenWidth * 0.03,
               color: Colors.black54,

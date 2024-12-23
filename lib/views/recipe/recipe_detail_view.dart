@@ -42,8 +42,8 @@ class RecipeDetailView extends StatelessWidget {
             expandedHeight: 232,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                recipe.imageSource,
+              background: Image.network(
+                recipe.imageUrl,
                 fit: BoxFit.cover,
               ),
             ),

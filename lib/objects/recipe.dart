@@ -14,7 +14,7 @@ class Recipe {
   final int cookingTime;
 
   // 이미지 소스
-  final String imageSource;
+  final String imageUrl;
 
   // 즐겨찾기 여부
   bool isFavorite;
@@ -30,7 +30,7 @@ class Recipe {
     required this.name,
     required this.difficulty,
     required this.cookingTime,
-    this.imageSource = 'assets/foods/cheese_pizza.png',
+    this.imageUrl = 'assets/foods/cheese_pizza.png',
     this.isFavorite = false,
     this.procedure = const [],
     this.ingredient = const [],
@@ -42,6 +42,7 @@ class Recipe {
       name: json['name'],
       difficulty: json['difficulty'],
       cookingTime: json['cookingTime'],
+      imageUrl: json['imageUrl'],
     );
   }
 }

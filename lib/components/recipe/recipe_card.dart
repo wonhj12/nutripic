@@ -27,8 +27,8 @@ class RecipeCard extends StatelessWidget {
           children: [
             // 배경 이미지
             Positioned.fill(
-              child: Image.asset(
-                recipe.imageSource,
+              child: Image.network(
+                recipe.imageUrl,
                 fit: BoxFit.fitHeight, // 이미지가 화면을 꽉 채우도록 설정
               ),
             ),
