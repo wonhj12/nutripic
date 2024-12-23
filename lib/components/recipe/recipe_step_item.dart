@@ -15,7 +15,6 @@ class RecipeStepItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 화면 크기 정보 가져오기
-    final screenWidth = MediaQuery.of(context).size.width;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),

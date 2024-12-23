@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/models/recipe_model.dart';
-import 'package:nutripic/objects/ingredient.dart';
-import 'package:nutripic/objects/recipe.dart';
 
 class RecipeDetailViewModel extends ChangeNotifier {
   RecipeModel recipeModel;

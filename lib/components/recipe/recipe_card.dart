@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/recipe/overlay_box.dart';
 import 'package:nutripic/objects/recipe.dart';
-import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
-import 'package:nutripic/views/recipe/recipe_detail_view.dart';
 import 'package:provider/provider.dart';
 
 class RecipeCard extends StatelessWidget {

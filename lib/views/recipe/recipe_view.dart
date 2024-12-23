@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/common/custom_app_bar.dart';
-import 'package:nutripic/components/common/custom_scaffold.dart';
-import 'package:nutripic/components/recipe/food_filter.dart';
 import 'package:nutripic/components/recipe/recipe_card.dart';
-import 'package:nutripic/components/recipe/recipe_container.dart';
-import 'package:nutripic/main.dart';
-import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
 import 'package:provider/provider.dart';
 
