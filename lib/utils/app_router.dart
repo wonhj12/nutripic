@@ -6,19 +6,23 @@ import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/camera/camera_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
+import 'package:nutripic/view_models/diary/diary_record_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:nutripic/view_models/login/email_view_model.dart';
 import 'package:nutripic/view_models/login/login_view_model.dart';
 import 'package:nutripic/view_models/login/signup_view_model.dart';
+import 'package:nutripic/view_models/onboarding_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
+import 'package:nutripic/views/diary/diary_record_view.dart';
 import 'package:nutripic/views/diary/diary_view.dart';
 import 'package:nutripic/views/login/email_view.dart';
 import 'package:nutripic/views/login/signup_view.dart';
 import 'package:nutripic/views/camera/camera_view.dart';
 import 'package:nutripic/views/diary/diary_post_view.dart';
 import 'package:nutripic/views/login/login_view.dart';
+import 'package:nutripic/views/onboarding_view.dart';
 import 'package:nutripic/views/recipe_view.dart';
 import 'package:nutripic/views/refrigerator/refrigerator_view.dart';
 import 'package:nutripic/views/user_info/user_edit_view.dart';
@@ -101,6 +105,16 @@ class AppRouter {
             )
           ],
         ),
+        // 온보딩
+        GoRoute(
+          path: '/onboarding',
+          builder: (context, state) => ChangeNotifierProvider(
+            create: (context) => OnboardingViewModel(
+              context: context,
+            ),
+            child: const OnboardingView(),
+          ),
+        ),
 
         // 메인
         StatefulShellRoute.indexedStack(
@@ -152,12 +166,28 @@ class AppRouter {
                     GoRoute(
                       path: 'post',
                       builder: (context, state) {
+                        final selectedDay = state.extra as DateTime;
                         return ChangeNotifierProvider(
                           create: (context) => DiaryPostViewModel(
                             diaryModel: diaryModel,
                             context: context,
+                            selectedDate: selectedDay,
                           ),
                           child: const DiaryPostView(),
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      path: 'record',
+                      builder: (context, state) {
+                        final selectedDay = state.extra as DateTime;
+                        return ChangeNotifierProvider(
+                          create: (context) => DiaryRecordViewModel(
+                            diaryModel: diaryModel,
+                            context: context,
+                            selectedDate: selectedDay,
+                          ),
+                          child: const DiaryRecordView(),
                         );
                       },
                     ),
