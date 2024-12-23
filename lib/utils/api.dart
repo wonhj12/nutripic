@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/custom_interceptor.dart';
 
 class API {
@@ -18,7 +20,6 @@ class API {
   );
 
   /* user */
-
   /// 카카오 로그인시 백엔드 서버에서 firebase 인증을 위한 custom ID token을 받아오는 함수
   static Future<String> postKakaoCustomToken(String uid) async {
     String token = '';
@@ -41,7 +42,7 @@ class API {
     return token;
   }
 
-  /// 회원가입 후 db에 사용자 정보를 저장하는 함수
+    /// 회원가입 후 db에 사용자 정보를 저장하는 함수
   static Future<dynamic> postUser(String uid) async {
     try {
       final response = await _postApi(
@@ -57,7 +58,6 @@ class API {
   }
 
   /* Storage */
-
   /// 냉장고에 저장돼있는 식재료를 받아오는 함수
   /// Freezer, Fridge, Room에 있는 foods를 반환
   static Future<List<dynamic>> getFoods() async {
@@ -72,6 +72,57 @@ class API {
     return [];
   }
 
+  static Future<dynamic> getRecipes() async {
+    try {
+      final response = await _getApi('/recipe/recommended');
+
+      if (response != null) {
+        return response.data;
+      } else {
+        return ([]);
+      }
+    } catch (e) {
+      throw Exception('Failed to load recipes: $e');
+    }
+  }
+
+  static Future<dynamic> recipePreview(List<int> recipeIds) async {
+    try {
+      final response = await _getApi(
+        '/recipe/previews',
+        jsonData: jsonEncode({'recipeIds': recipeIds}),
+      );
+
+      if (response != null && response.data != null) {
+        List<dynamic> data = response.data;
+        List<Recipe> recipes =
+            data.map((json) => Recipe.fromJson(json)).toList();
+
+        return recipes;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      throw Exception('Failed to load recipes: $e');
+    }
+  }
+
+  static Future<dynamic> getSpecificRecipes(int id) async {
+    try {
+      final response = await _getApi(
+        '/recipe/detail/$id',
+      );
+
+      if (response != null && response.data != null) {
+        return response.data;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      throw Exception('Failed to load recipes: $e');
+    }
+  }
+  
   static Future<dynamic> deleteFood(int foodId) async {
     try {
       final response = await _deleteApi(
@@ -84,8 +135,8 @@ class API {
       throw Error();
     }
   }
-
-  /* Diary */
+  
+    /* Diary */
 
   /// 특정 유저의 모든 다이어리 조회
   static Future<dynamic> getDiariesForMonth(int idx) async {
@@ -145,7 +196,7 @@ class API {
       throw Error();
     }
   }
-
+  
   /* BASE API (GET, POST, PATCH, DELETE) */
 
   /// ### API GET
@@ -154,12 +205,14 @@ class API {
   /// `tokenRequired`를 `false`로 설정하면 API 요청시 토큰을 헤더에 포함시키지 않음.
   static Future<dynamic> _getApi(
     String endPoint, {
+    String? jsonData,
     Map<String, dynamic>? queryParameters,
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
-    return await dio.get(endPoint, queryParameters: queryParameters);
+    return await dio.get(endPoint,
+        queryParameters: queryParameters, data: jsonData);
   }
 
   /// ### API POST

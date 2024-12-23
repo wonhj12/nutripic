@@ -68,6 +68,11 @@ class Palette {
   static const TextStyle heading =
       TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
 
+  /// Font size: 24
+  /// <br />Font weight: Bold. Color: white
+  static const TextStyle headingWhite =
+      TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white);
+
   /// Font size: 20
   /// <br />Font weight: Bold
   static const TextStyle title =
@@ -88,10 +93,25 @@ class Palette {
   static const TextStyle subbody =
       TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
 
+  /// 레시피 순서 번호
+  /// <br />Font size: 40
+  /// <br />Font weight: w500
+  /// <br />Color: 0xFFBACBA1
+  static const TextStyle recipeOrder = TextStyle(
+      fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xFFBACBA1));
+
+  /// 레시피 설명
+  /// <br />Font size: 16
+  /// <br />Font weight: Regular
+  /// <br />Color: Black
+  static const TextStyle recipeStep =
+      TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black);
+  
   /// Font size: 10
   ///  <br />Font weight: Regular
   static const TextStyle caption =
       TextStyle(fontSize: 10, fontWeight: FontWeight.w400);
+  
   /* Shadows */
   static BoxShadow shadow =
       BoxShadow(color: gray200.withOpacity(0.25), blurRadius: 15);
