@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/common/bottom_navbar.dart';
 import 'package:nutripic/main.dart';
@@ -5,6 +6,7 @@ import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
+import 'package:nutripic/view_models/camera/camera_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:nutripic/view_models/login/email_view_model.dart';
@@ -18,7 +20,7 @@ import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:nutripic/views/diary/diary_view.dart';
 import 'package:nutripic/views/login/email_view.dart';
 import 'package:nutripic/views/login/signup_view.dart';
-import 'package:nutripic/views/camera_view.dart';
+import 'package:nutripic/views/camera/camera_view.dart';
 import 'package:nutripic/views/diary/diary_post_view.dart';
 import 'package:nutripic/views/login/login_view.dart';
 import 'package:nutripic/views/recipe/recipe_detail_view.dart';
@@ -41,6 +43,9 @@ class AppRouter {
     required this.recipeModel,
   });
 
+  static final GlobalKey<NavigatorState> _rootNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: 'root');
+
   static GoRouter getRouter(
     UserModel userModel,
     RefrigeratorModel refrigeratorModel,
@@ -48,6 +53,7 @@ class AppRouter {
     RecipeModel recipeModel,
   ) {
     return GoRouter(
+      navigatorKey: _rootNavigatorKey,
       initialLocation: '/login',
       redirect: (context, state) {
         // 사용자 데이터가 있으면 firebase 로그인이 완료된 상태
@@ -122,6 +128,19 @@ class AppRouter {
                     ),
                     child: const RefrigeratorView(),
                   ),
+                  routes: [
+                    GoRoute(
+                      path: 'camera',
+                      parentNavigatorKey: _rootNavigatorKey,
+                      builder: (context, state) => ChangeNotifierProvider(
+                        create: (context) => CameraViewModel(
+                          refrigeratorModel: refrigeratorModel,
+                          context: context,
+                        ),
+                        child: const CameraView(),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -157,14 +176,20 @@ class AppRouter {
             ),
 
             // 카메라
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  path: '/camera',
-                  builder: (context, state) => const CameraView(),
-                )
-              ],
-            ),
+            // StatefulShellBranch(
+            //   routes: [
+            //     GoRoute(
+            //       path: '/camera',
+            //       builder: (context, state) => ChangeNotifierProvider(
+            //         create: (context) => CameraViewModel(
+            //           refrigeratorModel: refrigeratorModel,
+            //           context: context,
+            //         ),
+            //         child: const CameraView(),
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
             // 레시피
             StatefulShellBranch(

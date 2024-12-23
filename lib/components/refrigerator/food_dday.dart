@@ -7,20 +7,19 @@ class FoodDday extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 48,
-      height: 22,
-      decoration: BoxDecoration(
-        color: Palette.background,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Palette.delete, width: 2),
-      ),
-      child: Center(
-        child: Text(
-          'D-$dDay',
-          style: Palette.body.copyWith(
-            color: Palette.delete,
-            fontWeight: FontWeight.w600,
+    return Positioned(
+      bottom: 1,
+      child: Container(
+        width: 62,
+        height: 16,
+        decoration: const BoxDecoration(
+          color: Palette.delete,
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
+        ),
+        child: Center(
+          child: Text(
+            'D-$dDay',
+            style: Palette.caption.copyWith(color: Palette.white),
           ),
         ),
       ),

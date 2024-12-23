@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nutripic/utils/enums/storage_type.dart';
 import 'package:nutripic/utils/palette.dart';
 
 class RefrigeratorSelectText extends StatelessWidget {
-  final int type;
-  final int selected;
+  final StorageType type;
+  final StorageType selected;
   final Function()? onTap;
   const RefrigeratorSelectText({
     super.key,
@@ -14,8 +15,6 @@ class RefrigeratorSelectText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> typeString = ['냉장', '냉동', '실온'];
-
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -25,11 +24,12 @@ class RefrigeratorSelectText extends StatelessWidget {
           height: 54,
           child: Center(
             child: Text(
-              typeString[type],
-              style: Palette.title.copyWith(
+              type.name,
+              style: Palette.body.copyWith(
+                fontSize: 16,
                 fontWeight:
                     type == selected ? FontWeight.w600 : FontWeight.w400,
-                color: type == selected ? Palette.white : Palette.gray500,
+                color: type == selected ? Palette.white : Palette.gray300,
               ),
             ),
           ),
