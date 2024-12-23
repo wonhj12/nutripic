@@ -59,7 +59,6 @@ class API {
       final response = await _getApi('/recipe/recommended');
 
       if (response != null) {
-        print(response.data);
         return response.data;
       } else {
         return ([]);
@@ -78,9 +77,9 @@ class API {
 
       if (response != null && response.data != null) {
         List<dynamic> data = response.data;
-        print(response.data);
         List<Recipe> recipes =
             data.map((json) => Recipe.fromJson(json)).toList();
+
         return recipes;
       } else {
         return [];
@@ -97,7 +96,6 @@ class API {
       );
 
       if (response != null && response.data != null) {
-        print(response.data);
         return response.data;
       } else {
         return [];

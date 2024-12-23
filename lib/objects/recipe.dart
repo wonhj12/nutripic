@@ -37,12 +37,19 @@ class Recipe {
   });
 
   factory Recipe.fromJson(Map<String, dynamic> json) {
+    List<Ingredient> ingredients = (json['ingredient'] as List)
+        .map((json) => Ingredient.fromJson(json))
+        .toList();
+    List<String> procedures =
+        (json['procedure'] as List).map((e) => e.toString()).toList();
     return Recipe(
       id: json['id'],
       name: json['name'],
       difficulty: json['difficulty'],
       cookingTime: json['cookingTime'],
       imageUrl: json['imageUrl'],
+      ingredient: ingredients,
+      procedure: procedures,
     );
   }
 }

@@ -24,17 +24,8 @@ class RecipeViewModel with ChangeNotifier {
   /// 레시피 상세 페이지로 이동
   void onTapDetail(Recipe recipe) async {
     try {
-      dynamic specificRecipe = await API.getSpecificRecipes(recipe.id);
+      //dynamic specificRecipe = await API.getSpecificRecipes(recipe.id);
 
-      List<Ingredient> ingredients = (specificRecipe['ingredient'] as List)
-          .map((json) => Ingredient.fromJson(json))
-          .toList();
-      List<String> procedure = (specificRecipe['procedure'] as List)
-          .map((e) => e.toString())
-          .toList();
-
-      recipe.ingredient = ingredients;
-      recipe.procedure = procedure;
       recipeModel.saveSpecificRecipe(recipe);
       context.go('/recipe/detail');
     } catch (e) {
