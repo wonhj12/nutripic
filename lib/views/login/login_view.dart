@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
-import 'package:nutripic/components/login/image_button.dart';
+import 'package:nutripic/components/image_button.dart';
 import 'package:nutripic/utils/enums/login_type.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:provider/provider.dart';
