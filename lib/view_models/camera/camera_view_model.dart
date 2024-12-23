@@ -229,8 +229,12 @@ class CameraViewModel with ChangeNotifier {
   }
 
   /// 식재료 추가 확인 페이지로 이동
-  void onTapComplete() {
-    context.pushReplacement('/refrigerator/add');
+  void onTapComplete() async {
+    // 인식한 식재료가 있을 때만 이동
+    if (refrigeratorModel.recognizedFoods.isNotEmpty) {
+      await GoRouter.of(context).push('/refrigerator/add');
+      context.pop();
+    }
   }
 }
 

@@ -15,25 +15,24 @@ class CameraAddView extends StatelessWidget {
 
     return CustomScaffold(
       appBar: const CustomAppBar(title: '분석 결과'),
-      body: Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // 인식된 식재료 리스트
-              FoodAddContainer(
-                recognizedFoods:
-                    cameraAddViewModel.refrigeratorModel.recognizedFoods,
-              ),
-              const SizedBox(height: 32),
+      isLoading: cameraAddViewModel.isLoading,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 인식된 식재료 리스트
+            FoodAddContainer(
+              recognizedFoods:
+                  cameraAddViewModel.refrigeratorModel.recognizedFoods,
+            ),
+            const SizedBox(height: 32),
 
-              // 보관 버튼
-              MainButton(
-                label: '보관하기',
-                onPressed: cameraAddViewModel.onPressedSave,
-              ),
-            ],
-          ),
+            // 보관 버튼
+            MainButton(
+              label: '보관하기',
+              onPressed: cameraAddViewModel.onPressedSave,
+            ),
+          ],
         ),
       ),
     );
