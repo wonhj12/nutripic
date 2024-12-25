@@ -30,7 +30,6 @@ import 'package:nutripic/views/login/login_view.dart';
 import 'package:nutripic/views/recipe/recipe_detail_view.dart';
 import 'package:nutripic/views/recipe/recipe_view.dart';
 import 'package:nutripic/views/onboarding_view.dart';
-import 'package:nutripic/views/recipe_view.dart';
 import 'package:nutripic/views/refrigerator/refrigerator_view.dart';
 import 'package:nutripic/views/user_info/user_edit_view.dart';
 import 'package:nutripic/views/user_info/user_info_view.dart';
@@ -238,26 +237,27 @@ class AppRouter {
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                    path: '/recipe',
-                    builder: (context, state) => ChangeNotifierProvider(
-                          create: (context) => RecipeViewModel(
-                            recipeModel: recipeModel,
-                            context: context,
-                          ),
-                          child: const RecipeView(),
+                  path: '/recipe',
+                  builder: (context, state) => ChangeNotifierProvider(
+                    create: (context) => RecipeViewModel(
+                      recipeModel: recipeModel,
+                      context: context,
+                    ),
+                    child: const RecipeView(),
+                  ),
+                  routes: [
+                    GoRoute(
+                      path: 'detail',
+                      builder: (context, state) => ChangeNotifierProvider(
+                        create: (context) => RecipeDetailViewModel(
+                          recipeModel: recipeModel,
+                          context: context,
                         ),
-                    routes: [
-                      GoRoute(
-                        path: 'detail',
-                        builder: (context, state) => ChangeNotifierProvider(
-                          create: (context) => RecipeDetailViewModel(
-                            recipeModel: recipeModel,
-                            context: context,
-                          ),
-                          child: RecipeDetailView(),
-                        ),
-                      )
-                    ])
+                        child: const RecipeDetailView(),
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
 
