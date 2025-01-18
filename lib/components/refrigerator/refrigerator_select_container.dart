@@ -24,11 +24,15 @@ class RefrigeratorSelectContainer extends StatelessWidget {
       Alignment.centerRight
     ];
 
-    return SizedBox(
-      width: 276,
-      height: 38,
+    return Container(
+      width: 282,
+      height: 52,
+      decoration: BoxDecoration(
+        color: Palette.gray00,
+        borderRadius: BorderRadius.circular(155),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(4),
+        padding: const EdgeInsets.all(6),
         child: Stack(
           children: [
             // 선택된 항목 배경
@@ -38,9 +42,9 @@ class RefrigeratorSelectContainer extends StatelessWidget {
               curve: Curves.fastOutSlowIn,
               child: Container(
                 width: 84,
-                height: 38,
+                height: 40,
                 decoration: BoxDecoration(
-                  color: Palette.gray00,
+                  color: Palette.green500,
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
