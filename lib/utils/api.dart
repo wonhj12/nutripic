@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/custom_interceptor.dart';
 
 class API {
   static final dio = Dio(
     BaseOptions(
-      baseUrl: 'http://3.34.19.133:3000/',
+      baseUrl: dotenv.env['SERVER_API']!,
       connectTimeout: const Duration(milliseconds: 5000),
       receiveTimeout: const Duration(milliseconds: 3000),
       headers: {
