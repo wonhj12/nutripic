@@ -12,7 +12,7 @@ class SelectButton extends StatelessWidget {
     super.key,
     required this.label,
     this.width = 56,
-    this.height = 30,
+    this.height = 28,
     this.type = SelectButtonType.normal,
     required this.onPressed,
   });
