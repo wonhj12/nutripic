@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
+  final Widget? titleWidget;
   final bool backButton;
   final Color? backgroundColor;
 
@@ -14,6 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     this.title,
+    this.titleWidget,
     this.backButton = true,
     this.backgroundColor,
   });
@@ -21,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: title != null ? Text(title!) : null,
+      title: title != null ? Text(title!) : titleWidget,
       centerTitle: true,
       backgroundColor: backgroundColor,
       leading: backButton
