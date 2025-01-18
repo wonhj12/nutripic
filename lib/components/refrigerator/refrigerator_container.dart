@@ -48,10 +48,10 @@ class RefrigeratorContainer extends StatelessWidget {
                       icon: const Icon(
                         Icons.add_circle_rounded,
                         size: 56,
-                        color: Palette.sub,
+                        color: Palette.green500,
                       ),
                     ),
-                    const Text('식재료를 추가해보세요', style: Palette.body),
+                    const Text('식재료를 추가해보세요', style: Palette.body1),
                   ],
                 ),
               )

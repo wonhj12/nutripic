@@ -81,8 +81,8 @@ class DiaryCalendar extends StatelessWidget {
                             width: 13,
                             height: 13,
                             decoration: const BoxDecoration(
-                              //팔레트 추가
-                              color: Palette.secondary,
+                              // 팔레트 추가
+                              color: Palette.green700,
                               shape: BoxShape.circle,
                             ),
                             child: Center(

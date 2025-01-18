@@ -19,7 +19,7 @@ class FoodDday extends StatelessWidget {
         child: Center(
           child: Text(
             'D-$dDay',
-            style: Palette.caption.copyWith(color: Palette.white),
+            style: Palette.caption.copyWith(color: Palette.gray00),
           ),
         ),
       ),

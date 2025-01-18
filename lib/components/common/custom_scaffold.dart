@@ -4,6 +4,7 @@ import 'package:nutripic/components/common/loading_screen.dart';
 class CustomScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final bool? resizeToAvoidBottomInset;
+  final Color? backgroundColor;
   final bool isLoading;
   final double padding;
   final bool useSafeArea;
@@ -17,6 +18,7 @@ class CustomScaffold extends StatelessWidget {
     super.key,
     this.appBar,
     this.resizeToAvoidBottomInset,
+    this.backgroundColor,
     this.isLoading = false,
     this.padding = 16,
     this.useSafeArea = true,
@@ -32,6 +34,7 @@ class CustomScaffold extends StatelessWidget {
       child: Scaffold(
         appBar: appBar,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+        backgroundColor: backgroundColor,
         body: SafeArea(
           left: useSafeArea,
           top: useSafeArea,

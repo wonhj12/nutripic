@@ -21,15 +21,13 @@ class RefrigeratorSelectText extends StatelessWidget {
         // Container가 있어야 텍스트 외에도 탭 가능
         child: Container(
           color: Colors.transparent,
-          height: 54,
+          height: 38,
           child: Center(
             child: Text(
               type.name,
-              style: Palette.body.copyWith(
-                fontSize: 16,
-                fontWeight:
-                    type == selected ? FontWeight.w600 : FontWeight.w400,
-                color: type == selected ? Palette.white : Palette.gray300,
+              style: Palette.title1SemiBold.copyWith(
+                color:
+                    type == selected ? const Color(0xFF3AA980) : Palette.gray00,
               ),
             ),
           ),

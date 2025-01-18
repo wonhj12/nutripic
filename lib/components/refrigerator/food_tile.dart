@@ -66,7 +66,7 @@ class FoodTile extends StatelessWidget {
             const SizedBox(height: 10),
 
             // 식재료 이름
-            Text(food.name, style: Palette.body),
+            Text(food.name, style: Palette.body1),
           ],
         ),
       ),

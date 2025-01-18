@@ -97,7 +97,7 @@ class DiaryCard extends StatelessWidget {
                     text: "아침  ",
                     style: TextStyle(
                       // 굵게
-                      color: Palette.primary, // 색상 변경
+                      color: Palette.green700, // 색상 변경
                       fontSize: 10, // 글씨 크기
                     ),
                   ),

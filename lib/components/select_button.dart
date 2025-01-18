@@ -31,7 +31,8 @@ class SelectButton extends StatelessWidget {
           backgroundColor: type.backgroundColor,
           padding: EdgeInsets.zero,
         ),
-        child: Text(label, style: Palette.subtitle.copyWith(color: type.color)),
+        child: Text(label,
+            style: Palette.subtitle1Medium.copyWith(color: type.color)),
       ),
     );
   }

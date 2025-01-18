@@ -24,13 +24,9 @@ class RefrigeratorSelectContainer extends StatelessWidget {
       Alignment.centerRight
     ];
 
-    return Container(
-      width: 260,
-      height: 46,
-      decoration: BoxDecoration(
-        color: Palette.gray100,
-        borderRadius: BorderRadius.circular(75),
-      ),
+    return SizedBox(
+      width: 276,
+      height: 38,
       child: Padding(
         padding: const EdgeInsets.all(4),
         child: Stack(
@@ -44,7 +40,7 @@ class RefrigeratorSelectContainer extends StatelessWidget {
                 width: 84,
                 height: 38,
                 decoration: BoxDecoration(
-                  color: Palette.gray700,
+                  color: Palette.gray00,
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
@@ -52,7 +48,6 @@ class RefrigeratorSelectContainer extends StatelessWidget {
 
             // 텍스트
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // 냉장
                 RefrigeratorSelectText(
@@ -60,6 +55,7 @@ class RefrigeratorSelectContainer extends StatelessWidget {
                   selected: selected,
                   onTap: onTapRefrigerator,
                 ),
+                const SizedBox(width: 12),
 
                 // 냉동
                 RefrigeratorSelectText(
@@ -67,6 +63,7 @@ class RefrigeratorSelectContainer extends StatelessWidget {
                   selected: selected,
                   onTap: onTapFreezer,
                 ),
+                const SizedBox(width: 12),
 
                 // 실온
                 RefrigeratorSelectText(
