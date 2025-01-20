@@ -34,6 +34,10 @@ class RecipeViewModel with ChangeNotifier {
     context.go('/recipe/detail');
   }
 
+  void onRecipeSearch() {
+    context.go('/recipe/search');
+  }
+
   /// 레시피 전달하는 것.
   void updateRecipes() async {
     try {

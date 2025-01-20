@@ -24,6 +24,7 @@ import 'package:nutripic/views/camera/camera_view.dart';
 import 'package:nutripic/views/diary/diary_post_view.dart';
 import 'package:nutripic/views/login/login_view.dart';
 import 'package:nutripic/views/recipe/recipe_detail_view.dart';
+import 'package:nutripic/views/recipe/recipe_search_view.dart';
 import 'package:nutripic/views/recipe/recipe_view.dart';
 import 'package:nutripic/views/refrigerator/refrigerator_view.dart';
 import 'package:nutripic/views/user_info/user_edit_view.dart';
@@ -204,6 +205,17 @@ class AppRouter {
                           child: const RecipeView(),
                         ),
                     routes: [
+                      // 검색 화면 경로 추가
+                      GoRoute(
+                        path: 'search',
+                        builder: (context, state) => ChangeNotifierProvider(
+                          create: (context) => RecipeViewModel(
+                            recipeModel: recipeModel,
+                            context: context,
+                          ),
+                          child: RecipeSearchView(),
+                        ),
+                      ),
                       GoRoute(
                         path: 'detail',
                         builder: (context, state) => ChangeNotifierProvider(
@@ -211,7 +223,7 @@ class AppRouter {
                             recipeModel: recipeModel,
                             context: context,
                           ),
-                          child: RecipeDetailView(),
+                          child: const RecipeDetailView(),
                         ),
                       )
                     ])

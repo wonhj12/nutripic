@@ -31,8 +31,7 @@ class RecipeView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.search, color: Colors.white), // 아이콘 색상 변경
             onPressed: () {
-              recipeViewModel
-                  .onTapDetail(recipeViewModel.recipeModel.recipes[0]);
+              recipeViewModel.onRecipeSearch();
             },
           ),
         ],
