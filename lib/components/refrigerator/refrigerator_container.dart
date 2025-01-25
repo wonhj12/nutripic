@@ -18,6 +18,7 @@ class RefrigeratorContainer extends StatelessWidget {
 
   /// 식재료 선택시 콜백 함수
   final Function(Food) selectFood;
+
   const RefrigeratorContainer({
     super.key,
     required this.foods,
@@ -68,7 +69,6 @@ class RefrigeratorContainer extends StatelessWidget {
                   food: foods[foodIndex],
                   isSelected: selectedFoods.contains(foods[foodIndex]),
                   isSelectable: isSelectable,
-                  showDday: foods[foodIndex].showDday(),
                   select: selectFood,
                 );
               },
