@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nutripic/components/recipe/food.dart';
+import 'package:nutripic/components/recipe/food_icon.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
 import 'package:provider/provider.dart';

@@ -134,7 +134,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                   // 시간 선택
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: DiaryPostViewModel.diary_time.map((time) {
+                    children: DiaryPostViewModel.diaryTime.map((time) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 2),
                         child: GestureDetector(
@@ -213,10 +213,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                     height: 40,
                     child: ElevatedButton(
                       onPressed: diaryPostViewModel.isPostable
-                          ? () {
-                              diaryPostViewModel.submitPost(context);
-                              context.go('/diary');
-                            }
+                          ? () => diaryPostViewModel.submitPost(context)
                           : null,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
