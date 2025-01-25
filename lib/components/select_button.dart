@@ -12,7 +12,7 @@ class SelectButton extends StatelessWidget {
     super.key,
     required this.label,
     this.width = 56,
-    this.height = 30,
+    this.height = 28,
     this.type = SelectButtonType.normal,
     required this.onPressed,
   });
@@ -31,7 +31,8 @@ class SelectButton extends StatelessWidget {
           backgroundColor: type.backgroundColor,
           padding: EdgeInsets.zero,
         ),
-        child: Text(label, style: Palette.subtitle.copyWith(color: type.color)),
+        child: Text(label,
+            style: Palette.subtitle1Medium.copyWith(color: type.color)),
       ),
     );
   }

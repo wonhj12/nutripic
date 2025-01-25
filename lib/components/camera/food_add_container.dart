@@ -17,7 +17,7 @@ class FoodAddContainer extends StatelessWidget {
         // 타이틀
         Row(
           children: [
-            const Text('냉장보관', style: Palette.title),
+            const Text('냉장보관', style: Palette.title1Medium),
             const Spacer(),
             IconButton(onPressed: () {}, icon: const Icon(Icons.add_rounded))
           ],

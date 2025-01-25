@@ -77,7 +77,7 @@ class _EmailViewState extends State<EmailView> {
                   padding: const EdgeInsets.only(top: 4),
                   child: Text(
                     emailViewModel.errorText!,
-                    style: Palette.subbody.copyWith(color: Palette.delete),
+                    style: Palette.subbody1.copyWith(color: Palette.delete),
                   ),
                 ),
               const SizedBox(height: 60),

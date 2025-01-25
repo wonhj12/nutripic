@@ -27,7 +27,7 @@ class CameraView extends StatelessWidget {
             child: Container(
               alignment: Alignment.bottomCenter,
               padding: const EdgeInsets.fromLTRB(26, 0, 26, 30),
-              color: Palette.black, // 상단 검정 테두리
+              color: Palette.gray900, // 상단 검정 테두리
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -37,7 +37,7 @@ class CameraView extends StatelessWidget {
                     icon: const Icon(
                       Icons.close,
                       size: 24,
-                      color: Palette.white,
+                      color: Palette.gray00,
                     ),
                   ),
 
@@ -47,7 +47,7 @@ class CameraView extends StatelessWidget {
                     icon: const Icon(
                       Icons.restart_alt_rounded,
                       size: 24,
-                      color: Palette.white,
+                      color: Palette.gray00,
                     ),
                   ),
                 ],
@@ -68,7 +68,7 @@ class CameraView extends StatelessWidget {
                   ],
                 )
               : Container(
-                  color: Palette.black,
+                  color: Palette.gray900,
                   child: const AspectRatio(aspectRatio: 3 / 4),
                 ),
 
@@ -77,7 +77,7 @@ class CameraView extends StatelessWidget {
             child: Container(
               alignment: Alignment.topCenter,
               padding: const EdgeInsets.fromLTRB(26, 28, 26, 0),
-              color: Palette.black,
+              color: Palette.gray900,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,

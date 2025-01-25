@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
+  final Widget? titleWidget;
   final bool backButton;
   final Color? backgroundColor;
 
   /// ### AppBar에서 필요한 기능들을 적용한 위젯
   /// `title` : AppBar 타이틀
-  /// - `title = null`일 경우 로고 표시
   ///
   /// `backBtn` : 뒤로가기 버튼 표시 여부
   /// - 뒤로가기 버튼이 표시되는 경우가 더 많아서 기본 값은 `true`로 설정
   const CustomAppBar({
     super.key,
     this.title,
+    this.titleWidget,
     this.backButton = true,
     this.backgroundColor,
   });
@@ -23,13 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: title != null
-          ? Text(title!)
-          : SvgPicture.asset(
-              'assets/icons/nutripic.svg',
-              width: 126,
-              height: 30,
-            ),
+      title: title != null ? Text(title!) : titleWidget,
       centerTitle: true,
       backgroundColor: backgroundColor,
       leading: backButton

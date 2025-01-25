@@ -4,9 +4,8 @@ import 'package:nutripic/utils/palette.dart';
 
 /// Select Button 타입
 enum SelectButtonType {
-  normal(Palette.sub, Palette.subContainer),
-  cancel(Palette.gray700, Palette.gray100),
-  delete(Palette.delete, Palette.deleteContainer);
+  normal(Palette.gray600, Palette.gray100),
+  delete(Palette.gray00, Palette.delete);
 
   final Color color;
   final Color backgroundColor;

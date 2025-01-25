@@ -26,13 +26,13 @@ class DetectionBox extends StatelessWidget {
         width: result.rect.width * factorX,
         height: result.rect.height * factorY,
         decoration: BoxDecoration(
-          border: Border.all(color: Palette.sub, width: 3),
+          border: Border.all(color: Palette.green500, width: 3),
           borderRadius: const BorderRadius.all(Radius.circular(2)),
         ),
         child: Align(
           alignment: Alignment.topLeft,
           child: Container(
-            color: Palette.sub,
+            color: Palette.green500,
             child: Text(
                 '${result.className ?? result.classIndex.toString()} ${result.score.toStringAsFixed(2)}'),
           ),
