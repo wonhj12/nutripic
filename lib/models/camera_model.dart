@@ -20,10 +20,22 @@ class CameraModel with ChangeNotifier {
 
   /// 모델 초기화
   void reset() {
+    // 카메라 컨트롤러 dispose
     controller?.dispose();
+
+    // 카메라 로딩 초기화
     isCameraLoaded = false;
-    images = [];
-    selectedImages = [];
+
+    // 이미지 삭제
+    for (File image in images) {
+      image.deleteSync();
+    }
+
+    // 이미지 리스트 초기화
+    images.clear();
+
+    // 선택된 이미지 인덱스 초기화
+    selectedImages.clear();
   }
 
   /// 카메라 로드
