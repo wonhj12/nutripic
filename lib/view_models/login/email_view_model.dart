@@ -20,6 +20,9 @@ class EmailViewModel with ChangeNotifier {
   /// 로그인 오류 텍스트
   String? errorText;
 
+  /// 로그인 버튼 활성화 여부
+  bool isLoginBtnEnabled = false;
+
   /// 로딩 여부
   bool isLoading = false;
 
@@ -109,6 +112,22 @@ class EmailViewModel with ChangeNotifier {
       }
 
       return null;
+    };
+  }
+
+  /// 이메일, 비밀번호를 입력하면 확인 후 로그인 버튼을 활성화하는 함수
+  void Function(String?) onTextFieldChanged() {
+    return (String? value) {
+      final emailValid = validateEmail()(email.text.trim());
+      final passwordValid = validatePassword()(password.text.trim());
+
+      if (emailValid == null && passwordValid == null) {
+        isLoginBtnEnabled = true;
+      } else {
+        isLoginBtnEnabled = false;
+      }
+
+      notifyListeners();
     };
   }
 }
