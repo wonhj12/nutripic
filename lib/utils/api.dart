@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -9,7 +8,7 @@ import 'package:nutripic/utils/custom_interceptor.dart';
 class API {
   static final dio = Dio(
     BaseOptions(
-      baseUrl: 'http://3.34.19.133:3000/',
+      baseUrl: dotenv.env['SERVER_API']!,
       connectTimeout: const Duration(milliseconds: 5000),
       receiveTimeout: const Duration(milliseconds: 3000),
       headers: {
@@ -226,9 +225,13 @@ class API {
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
+    dio.interceptors.clear();
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
-    return await dio.get(endPoint,
-        queryParameters: queryParameters, data: jsonData);
+    return await dio.get(
+      endPoint,
+      data: jsonData,
+      queryParameters: queryParameters,
+    );
   }
 
   /// ### API POST
@@ -242,6 +245,7 @@ class API {
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
+    dio.interceptors.clear();
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
     return await dio.post(endPoint, data: jsonData);
   }
@@ -257,6 +261,7 @@ class API {
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
+    dio.interceptors.clear();
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
     return await dio.patch(endPoint, data: jsonData);
   }
@@ -272,6 +277,7 @@ class API {
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
+    dio.interceptors.clear();
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
     return await dio.delete(endPoint, data: jsonData);
   }

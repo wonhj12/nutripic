@@ -32,7 +32,7 @@ class DiaryCalendarHeader extends StatelessWidget {
                 child: const Icon(
                   Icons.chevron_left,
                   size: 24,
-                  color: Palette.black,
+                  //color: Palette.black,
                 ),
               ),
             ),
@@ -50,7 +50,7 @@ class DiaryCalendarHeader extends StatelessWidget {
                 child: const Icon(
                   Icons.chevron_right,
                   size: 24,
-                  color: Palette.black,
+                  //color: Palette.black,
                 ),
               ),
             ),
@@ -61,7 +61,7 @@ class DiaryCalendarHeader extends StatelessWidget {
           icon: const Icon(
             Icons.add,
             size: 24,
-            color: Palette.black,
+            //color: Palette.black,
           ),
         ),
       ],

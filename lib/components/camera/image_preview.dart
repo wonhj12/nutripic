@@ -27,7 +27,7 @@ class ImagePreview extends StatelessWidget {
                 )
               : const Icon(
                   Icons.camera_alt_outlined,
-                  color: Palette.white,
+                  color: Palette.gray00,
                 ),
         ),
 
@@ -41,13 +41,13 @@ class ImagePreview extends StatelessWidget {
               height: 20,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Palette.secondary,
+                color: Palette.green500,
               ),
               child: Center(
                 child: Text(
                   '$length',
-                  style: Palette.body.copyWith(
-                      color: Palette.white, fontWeight: FontWeight.w600),
+                  style: Palette.body1.copyWith(
+                      color: Palette.gray00, fontWeight: FontWeight.w600),
                 ),
               ),
             ),

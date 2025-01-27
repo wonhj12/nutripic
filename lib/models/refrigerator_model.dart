@@ -32,26 +32,30 @@ class RefrigeratorModel with ChangeNotifier {
 
     final response = await API.getFoods();
 
-    for (var storage in response) {
-      String storageType = storage['storage'];
-      List<dynamic> foodList = storage['foods'];
+    if (response.isNotEmpty) {
+      for (var storage in response) {
+        String storageType = storage['storage'];
+        List<dynamic> foodList = storage['foods'];
 
-      if (foodList.isNotEmpty) {
-        List<Food> parsedFoods =
-            foodList.map((food) => Food.fromJson(food)).toList();
+        if (foodList.isNotEmpty) {
+          List<Food> parsedFoods =
+              foodList.map((food) => Food.fromJson(food)).toList();
 
-        switch (storageType) {
-          case 'fridge':
-            foods[0].addAll(parsedFoods);
-            break;
-          case 'freezer':
-            foods[1].addAll(parsedFoods);
-            break;
-          case 'room':
-            foods[2].addAll(parsedFoods);
-            break;
+          switch (storageType) {
+            case 'fridge':
+              foods[0].addAll(parsedFoods);
+              break;
+            case 'freezer':
+              foods[1].addAll(parsedFoods);
+              break;
+            case 'room':
+              foods[2].addAll(parsedFoods);
+              break;
+          }
         }
       }
+    } else {
+      debugPrint('Storage is empty');
     }
   }
 }

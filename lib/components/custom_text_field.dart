@@ -101,7 +101,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: const TextStyle(color: Palette.black),
+        labelStyle: const TextStyle(color: Palette.gray900),
         // 선택되지 않았을 때 border
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -110,7 +110,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         // Focus 상태 border
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(width: 1, color: Palette.sub),
+          borderSide: const BorderSide(width: 1, color: Palette.green600),
         ),
         // 선택되지 않았을 때 validation 에러 border
         errorBorder: OutlineInputBorder(
@@ -128,8 +128,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         suffixIcon: suffixIcon(),
       ),
-      cursorColor: Palette.sub,
-      style: Palette.body.copyWith(color: Palette.black),
+      cursorColor: Palette.green500,
+      style: Palette.body1.copyWith(color: Palette.gray900),
       obscureText:
           widget.textFieldType == TextFieldType.password ? _isObscure : false,
       textInputAction: widget.textInputAction,

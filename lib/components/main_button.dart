@@ -33,7 +33,7 @@ class MainButton extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: Palette.title.copyWith(color: type.textColor),
+          style: Palette.title1Medium.copyWith(color: type.textColor),
         ),
       ),
     );

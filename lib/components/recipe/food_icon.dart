@@ -10,7 +10,7 @@ class FoodIcon extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 6),
       decoration: BoxDecoration(
-        color: Palette.white,
+        color: Palette.gray00,
         borderRadius: BorderRadius.circular(8),
         boxShadow: [Palette.shadow],
       ),

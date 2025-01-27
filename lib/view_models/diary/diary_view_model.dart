@@ -1,16 +1,15 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/objects/diary.dart';
 
 class DiaryViewModel extends ChangeNotifier {
   DiaryModel diaryModel;
   BuildContext context;
-  DiaryViewModel({required this.diaryModel, required this.context});
-
-  final ImagePicker _picker = ImagePicker();
+  DiaryViewModel({
+    required this.diaryModel,
+    required this.context,
+  });
 
   DateTime focusedDay = DateTime.now();
   DateTime? selectedDate;
@@ -19,6 +18,7 @@ class DiaryViewModel extends ChangeNotifier {
   int currentIndex = 0;
   bool isLoading = false;
 
+  /// 다이어리 업데이트
   Future<void> updateDiaries() async {
     isLoading = true;
     notifyListeners();
@@ -27,10 +27,10 @@ class DiaryViewModel extends ChangeNotifier {
       await diaryModel.getDiaries(DateTime.now().month - focusedDay.month);
     } catch (e) {
       debugPrint('Error fetching diaries: $e');
-    } finally {
-      isLoading = false;
-      notifyListeners();
     }
+
+    isLoading = false;
+    notifyListeners();
   }
 
   /// 이전달 이동 함수
@@ -42,6 +42,7 @@ class DiaryViewModel extends ChangeNotifier {
     }
 
     //updateDiaries();
+    notifyListeners();
   }
 
   /// 다음달 이동 함수
@@ -53,8 +54,10 @@ class DiaryViewModel extends ChangeNotifier {
     }
 
     //updateDiaries();
+    notifyListeners();
   }
 
+  /// 선택된 날짜 변경
   void updateFocusedDay(DateTime newFocusedDay) {
     focusedDay = newFocusedDay;
     notifyListeners();
@@ -63,13 +66,15 @@ class DiaryViewModel extends ChangeNotifier {
   /// 선택된 날짜의 일기 불러오기
   List<Diary> getDiariesForDay(DateTime date) {
     return diaryModel.diariesForMonth
-        .where((diary) => diary.date == date)
+        .where((diary) => diary.date?.day == date.day)
         .toList();
   }
 
   /// 다이어리 추가 화면으로 이동
   void navigateToDiaryPost(DateTime selectedDay) {
     context.go('/diary/post', extra: selectedDay);
+    //updateDiaries();
+    notifyListeners();
   }
 
   /// 다이어리 리스트 화면으로 이동
@@ -90,8 +95,8 @@ class DiaryViewModel extends ChangeNotifier {
 
   /// 이번 달 날짜수 반환
   int getTotalDaysInMonth() {
-    return DateTime(focusedDay.year, focusedDay.month + 1, 0)
-        .day; // 다음 달 0일로 설정해 해당 달의 마지막 날 계산
+    // 다음 달 0일로 설정해 해당 달의 마지막 날 계산
+    return DateTime(focusedDay.year, focusedDay.month + 1, 0).day;
   }
 
   /// 건강한 식사 비율 반환

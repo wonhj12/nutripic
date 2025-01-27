@@ -22,7 +22,7 @@ class Diary {
   factory Diary.fromJson(Map<String, dynamic> json) {
     return Diary(
       diaryId: json['id'],
-      content: json['body'] ?? null,
+      content: json['body'],
       imageUrl: json['url'],
       date: DateTime.parse(json['date']),
     );

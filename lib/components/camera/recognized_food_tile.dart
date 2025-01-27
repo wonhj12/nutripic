@@ -37,14 +37,14 @@ class RecognizedFoodTile extends StatelessWidget {
             // 유통기한
             Text(
               'D-5',
-              style: Palette.subbody.copyWith(
+              style: Palette.subbody1.copyWith(
                 color: Palette.delete,
                 fontWeight: FontWeight.w500,
               ),
             ),
 
             // 식재료 이름
-            Text(name, style: Palette.title),
+            Text(name, style: Palette.title1Medium),
           ],
         ),
 

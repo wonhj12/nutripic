@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nutripic/components/select_camera_modal.dart';
 import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/utils/api.dart';
 
@@ -23,7 +23,7 @@ class DiaryPostViewModel with ChangeNotifier {
   bool isCalendarVisible = false;
 
   // 시간 선택
-  static List<String> diary_time = ["아침", "점심", "저녁", "간식", "기타"]; // 버튼 리스트
+  static List<String> diaryTime = ["아침", "점심", "저녁", "간식", "기타"]; // 버튼 리스트
   String? selectedTime;
   bool timeSelected = true;
 
@@ -127,6 +127,8 @@ class DiaryPostViewModel with ChangeNotifier {
         selectedDate,
         imageUrl!,
       );
+
+      if (context.mounted) context.pop();
       //debugPrint("게시물 추가 성공: $response");
     } catch (e) {
       //debugPrint("게시물 추가 실패: $e");

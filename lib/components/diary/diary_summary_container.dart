@@ -3,8 +3,8 @@ import 'package:nutripic/utils/palette.dart';
 
 enum StatusType {
   //색 바꾸기
-  low(Palette.secondary),
-  normal(Palette.primary);
+  low(Palette.green700),
+  normal(Palette.green500);
 
   final Color color;
   const StatusType(this.color);

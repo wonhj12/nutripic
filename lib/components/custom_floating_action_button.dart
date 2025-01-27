@@ -3,7 +3,7 @@ import 'package:nutripic/utils/palette.dart';
 
 /// Custom Button 타입
 enum ButtonType {
-  green(Palette.primary),
+  green(Palette.green700),
   gray(Palette.gray200);
 
   final Color color;
@@ -45,7 +45,7 @@ class CustomFloatingActionButton extends StatelessWidget {
                 shape: const CircleBorder(),
                 child: Icon(
                   icon,
-                  color: Palette.white,
+                  color: Palette.gray00,
                 ),
               ),
             ),
@@ -60,7 +60,7 @@ class CustomFloatingActionButton extends StatelessWidget {
               shape: const CircleBorder(),
               child: Icon(
                 icon,
-                color: Palette.white,
+                color: Palette.gray00,
               ),
             ),
           );

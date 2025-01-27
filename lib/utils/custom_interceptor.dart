@@ -29,13 +29,13 @@ class CustomInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    super.onRequest(options, handler);
-
     // 헤더에 토큰 추가
     if (tokenRequired) {
       String? token = await _getToken();
       options.headers['Authorization'] = 'Bearer $token';
     }
+
+    super.onRequest(options, handler);
     debugPrint('${options.method} 요청: ${options.path}');
   }
 
@@ -45,7 +45,6 @@ class CustomInterceptor extends Interceptor {
     ResponseInterceptorHandler handler,
   ) async {
     super.onResponse(response, handler);
-
     debugPrint('${response.requestOptions.path} 성공(${response.statusCode})');
   }
 
@@ -53,6 +52,6 @@ class CustomInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     super.onError(err, handler);
     debugPrint(
-        '${err.requestOptions.path} 실패(${err.response?.statusCode}): $err');
+        '${err.requestOptions.path} 실패(${err.response?.statusCode}): ${err.response}');
   }
 }

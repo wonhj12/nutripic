@@ -232,8 +232,11 @@ class CameraViewModel with ChangeNotifier {
   void onTapComplete() async {
     // 인식한 식재료가 있을 때만 이동
     if (refrigeratorModel.recognizedFoods.isNotEmpty) {
+      controller.stopImageStream(); // 카메라 종료
+      controller.dispose(); // 카메라 dispose
+
       await GoRouter.of(context).push('/refrigerator/add');
-      context.pop();
+      if (context.mounted) context.pop();
     }
   }
 }

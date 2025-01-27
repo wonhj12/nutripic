@@ -20,7 +20,7 @@ class CameraShutter extends StatelessWidget {
               height: 80,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Palette.white,
+                color: Palette.gray00,
               ),
             ),
 
@@ -31,7 +31,7 @@ class CameraShutter extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 // color: Palette.black,
-                border: Border.all(color: Palette.black, width: 4),
+                border: Border.all(color: Palette.gray900, width: 4),
               ),
             )
           ],

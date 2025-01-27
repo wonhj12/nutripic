@@ -80,13 +80,13 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                                   height: 70,
                                   padding: const EdgeInsets.all(8.0),
                                   decoration: BoxDecoration(
-                                    color: Palette.gray150,
+                                    color: Palette.gray100,
                                     borderRadius: BorderRadius.circular(50),
                                   ),
                                   child: const Icon(
                                     Icons.photo_library_outlined,
                                     size: 40,
-                                    color: Palette.black,
+                                    color: Palette.gray900,
                                   ),
                                 ),
                                 const SizedBox(height: 15),
@@ -133,7 +133,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                   // 시간 선택
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: DiaryPostViewModel.diary_time.map((time) {
+                    children: DiaryPostViewModel.diaryTime.map((time) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 2),
                         child: GestureDetector(
@@ -146,12 +146,12 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: diaryPostViewModel.isSelected(time)
-                                  ? Palette.primary
+                                  ? Palette.green700
                                   : Colors.transparent, // 선택된 버튼 색상
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
                                 color: diaryPostViewModel.isSelected(time)
-                                    ? Palette.primary
+                                    ? Palette.green700
                                     : Palette.gray300, // 테두리 색상
                                 width: 1,
                               ),
@@ -212,16 +212,13 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                     height: 40,
                     child: ElevatedButton(
                       onPressed: diaryPostViewModel.isPostable
-                          ? () {
-                              diaryPostViewModel.submitPost(context);
-                              context.go('/diary');
-                            }
+                          ? () => diaryPostViewModel.submitPost(context)
                           : null,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        backgroundColor: Palette.primary,
+                        backgroundColor: Palette.green700,
                         disabledBackgroundColor: Palette.gray100,
                       ),
                       child: Text(
@@ -256,7 +253,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 height: 350,
                 decoration: const BoxDecoration(
-                  color: Palette.white,
+                  color: Palette.gray00,
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(20),
                   ),
@@ -290,7 +287,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                         weekendTextStyle: Palette.caption,
                         isTodayHighlighted: false,
                         selectedDecoration: BoxDecoration(
-                          color: Palette.primary,
+                          color: Palette.green700,
                           shape: BoxShape.circle,
                         ),
                         selectedTextStyle: Palette.caption,

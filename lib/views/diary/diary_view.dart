@@ -26,7 +26,7 @@ class _DiaryViewState extends State<DiaryView> {
         title: const Text(
           "식단 기록",
           style: TextStyle(
-            color: Palette.black,
+            color: Palette.gray700,
             fontSize: 15,
             fontWeight: FontWeight.normal,
           ),

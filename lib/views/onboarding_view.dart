@@ -32,7 +32,7 @@ class OnboardingView extends StatelessWidget {
                 right: 0,
                 child: Container(
                   height: 24,
-                  color: Palette.primary,
+                  color: Palette.green700,
                 ),
               ),
               // Text
@@ -53,7 +53,7 @@ class OnboardingView extends StatelessWidget {
                 right: 0,
                 child: Container(
                   height: 24,
-                  color: Palette.primary,
+                  color: Palette.green700,
                 ),
               ),
               // Text
@@ -94,14 +94,14 @@ class OnboardingView extends StatelessWidget {
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: isSelected ? Palette.secondary : Palette.gray200,
+                        color: isSelected ? Palette.green500 : Palette.gray200,
                         width: 2,
                       ),
                     ),
                     child: Text(
                       onboardingViewModel.allergies[index],
                       style: TextStyle(
-                        color: isSelected ? Palette.secondary : Palette.gray200,
+                        color: isSelected ? Palette.green500 : Palette.gray200,
                       ),
                     ),
                   ),
@@ -118,14 +118,14 @@ class OnboardingView extends StatelessWidget {
             context.go('/refrigerator');
           },
           style: TextButton.styleFrom(
-            backgroundColor: Palette.primary,
+            backgroundColor: Palette.green700,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.zero,
             ),
           ),
           child: const Text(
             "완료",
-            style: Palette.subtitle,
+            style: Palette.subtitle1Medium,
           ),
         ),
       ),

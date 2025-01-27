@@ -91,7 +91,7 @@ class DiaryRecordView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 height: 430,
                 decoration: const BoxDecoration(
-                  color: Palette.white,
+                  //color: Palette.white,
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(20),
                   ),
@@ -131,11 +131,11 @@ class DiaryRecordView extends StatelessWidget {
                         ),
                         isTodayHighlighted: false,
                         selectedDecoration: BoxDecoration(
-                          color: Palette.primary,
+                          //color: Palette.primary,
                           shape: BoxShape.circle,
                         ),
                         selectedTextStyle: TextStyle(
-                          color: Palette.white,
+                          //color: Palette.white,
                           fontSize: 9,
                         ),
                         todayDecoration: BoxDecoration(),
@@ -192,7 +192,7 @@ class DiaryRecordView extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              backgroundColor: Palette.primary,
+                              //backgroundColor: Palette.primary,
                               disabledBackgroundColor: Palette.gray100,
                             ),
                             child: const Text(

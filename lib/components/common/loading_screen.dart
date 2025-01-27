@@ -12,7 +12,7 @@ class LoadingScreen extends StatelessWidget {
         const ModalBarrier(dismissible: false),
         Center(
           child: CircularProgressIndicator(
-            color: Palette.sub,
+            color: Palette.green700,
             value: value,
           ),
         ),

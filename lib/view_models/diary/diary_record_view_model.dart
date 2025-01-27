@@ -13,10 +13,11 @@ class DiaryRecordViewModel extends ChangeNotifier {
   bool isLoading = false;
   bool isCalendarVisible = false;
 
-  DiaryRecordViewModel(
-      {required this.diaryModel,
-      required this.context,
-      required this.selectedDate});
+  DiaryRecordViewModel({
+    required this.diaryModel,
+    required this.context,
+    required this.selectedDate,
+  });
 
   List<Diary> todayDiaries = [
     Diary(
@@ -65,7 +66,6 @@ class DiaryRecordViewModel extends ChangeNotifier {
     // 서버에서 각 날짜별로 달라고 해야겠다...
     final response =
         await API.getDiariesForMonth(DateTime.now().month - selectedDate.month);
-    //print(response.data);
     final List<dynamic> data = response.data;
     final List<Diary> diariesForMonth =
         data.map((item) => Diary.fromJson(item)).toList();
@@ -87,21 +87,24 @@ class DiaryRecordViewModel extends ChangeNotifier {
         if (!todayDiaries
             .any((existingDiary) => existingDiary.diaryId == diary.diaryId)) {
           todayDiaries.add(diary);
-          // debugPrint('DiaryToday added: ${diary.diaryId}, ${diary.content}');
-          // debugPrint('Diary Details for ID $id: ${diaryResponse.data}');
+          debugPrint('DiaryToday added: ${diary.diaryId}, ${diary.content}');
+          debugPrint('Diary Details for ID $id: ${diaryResponse.data}');
         }
       } catch (e) {
-        // debugPrint('Error fetching diary with ID $id: $e');
+        debugPrint('Error fetching diary with ID $id: $e');
       }
     }
+
+    notifyListeners();
   }
 
   Future<void> deleteDiaryRecord(int diaryId) async {
     await deleteDiaryRecord(diaryId);
     await getDiaryRecord();
-    //debugPrint('Diary with ID $diaryId has been removed.');
+    debugPrint('Diary with ID $diaryId has been removed.');
   }
 
+  // TODO : 모달 컴포넌트 별도로 만들어서 뷰모델과 분리
   void showOptionModal(int diaryId) {
     showModalBottomSheet(
       context: context,

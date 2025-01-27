@@ -75,7 +75,7 @@ class _LoginViewState extends State<LoginView> {
                 onPressed: loginViewModel.emailLogin,
                 child: Text(
                   '이메일로 로그인',
-                  style: Palette.body.copyWith(color: Palette.black),
+                  style: Palette.body1.copyWith(color: Palette.gray900),
                 ),
               ),
 
@@ -83,7 +83,7 @@ class _LoginViewState extends State<LoginView> {
               const SizedBox(
                 height: 16,
                 child: VerticalDivider(
-                  color: Palette.black,
+                  color: Palette.gray900,
                   thickness: 0.5,
                   width: 14,
                 ),
@@ -94,7 +94,7 @@ class _LoginViewState extends State<LoginView> {
                 onPressed: loginViewModel.signup,
                 child: Text(
                   '이메일로 회원가입',
-                  style: Palette.body.copyWith(color: Palette.black),
+                  style: Palette.body1.copyWith(color: Palette.gray900),
                 ),
               ),
             ],

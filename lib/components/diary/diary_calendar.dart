@@ -31,24 +31,79 @@ class DiaryCalendar extends StatelessWidget {
         onPageChanged: onPageChanged,
         headerVisible: false,
         calendarStyle: const CalendarStyle(
-          isTodayHighlighted: false,
+          isTodayHighlighted: true,
           selectedDecoration: BoxDecoration(),
           selectedTextStyle: TextStyle(),
         ),
-        daysOfWeekHeight: 30.0,
-        rowHeight: 80,
+        daysOfWeekHeight: 40,
+        rowHeight: 70,
         calendarBuilders: CalendarBuilders(
           dowBuilder: (context, day) {
             final weekDays = ['월', '화', '수', '목', '금', '토', '일'];
             return Center(
               child: Text(
                 weekDays[day.weekday - 1], // day.weekday - 1로 요일 배열 접근
-                style: Palette.caption,
+                style: const TextStyle(
+                  color: Palette.gray900,
+                  fontSize: 9,
+                ),
               ),
             );
           },
           outsideBuilder: (context, day, focusedDay) {
-            return const SizedBox.shrink();
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 5,
+                ),
+                const CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Colors.transparent,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  day.day.toString(),
+                  style: const TextStyle(
+                      color: Palette.gray300,
+                      fontSize: 7,
+                      fontWeight: FontWeight.w500),
+                ),
+              ],
+            );
+          },
+          todayBuilder: (context, day, focusedDay) {
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 5,
+                ),
+                const CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Colors.transparent,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  width: 28,
+                  height: 16,
+                  decoration: BoxDecoration(
+                      color: Palette.green500,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                    child: Text(
+                      day.day.toString(),
+                      style: const TextStyle(
+                        color: Palette.gray00,
+                        fontSize: 7,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
           },
           defaultBuilder: (context, day, focusedDay) {
             final diariesForDay = getDiariesForDay(day);
@@ -56,11 +111,9 @@ class DiaryCalendar extends StatelessWidget {
             //해당 날짜에 일기가 있는 경우
             if (diariesForDay != null && diariesForDay.isNotEmpty) {
               return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    day.day.toString(),
-                    style: Palette.caption,
+                  const SizedBox(
+                    height: 5,
                   ),
                   Stack(
                     clipBehavior: Clip.none,
@@ -78,18 +131,21 @@ class DiaryCalendar extends StatelessWidget {
                           right: 0,
                           //컴포넌트화
                           child: Container(
-                            width: 13,
-                            height: 13,
-                            decoration: const BoxDecoration(
-                              //팔레트 추가
-                              color: Palette.secondary,
+                            width: 21,
+                            height: 15,
+                            decoration: BoxDecoration(
+                              color: Palette.gray00,
                               shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Palette.green500,
+                                width: 1.0,
+                              ),
                             ),
                             child: Center(
                               child: Text(
                                 diariesForDay.length.toString(),
                                 style: const TextStyle(
-                                  color: Colors.white,
+                                  color: Palette.green500,
                                   fontSize: 5,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -102,23 +158,35 @@ class DiaryCalendar extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
+                  Text(
+                    day.day.toString(),
+                    style: const TextStyle(
+                        color: Palette.gray900,
+                        fontSize: 7,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ],
               );
             } else {
               // 나머지 날짜들 처리
               return Column(
                 children: [
-                  Text(
-                    day.day.toString(),
-                    style: Palette.caption,
-                  ),
-                  //이건 디자인 봐서 할지말지
                   const SizedBox(
                     height: 5,
                   ),
                   const CircleAvatar(
                     radius: 20,
-                    backgroundColor: Palette.gray100,
+                    backgroundColor: Colors.transparent,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    day.day.toString(),
+                    style: const TextStyle(
+                        color: Palette.gray900,
+                        fontSize: 7,
+                        fontWeight: FontWeight.w500),
                   ),
                 ],
               );

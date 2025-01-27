@@ -11,13 +11,13 @@ import 'package:nutripic/utils/app_router.dart';
 import 'package:nutripic/utils/custom_theme_data.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
-  await Firebase.initializeApp();
-  KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']);
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await dotenv.load();
+  // await Firebase.initializeApp();
+  // KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']);
 
-  // 가능하다면 자동 로그인 진행
-  await autoLogin();
+  // // 가능하다면 자동 로그인 진행
+  // await autoLogin();
 
   runApp(const MainApp());
 }
