@@ -16,7 +16,7 @@ class FoodFilter extends StatelessWidget {
       width: double.infinity,
       height: 41,
       decoration: BoxDecoration(
-        color: Palette.background,
+        color: Palette.gray00,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [Palette.shadow],
       ),

@@ -7,7 +7,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
   final bool backButton;
   final List<Widget>? actions;
-  final Color? backgroundColor;
 
   /// ### AppBar에서 필요한 기능들을 적용한 위젯
   /// `title` : AppBar 타이틀
@@ -21,7 +20,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle = true,
     this.backButton = true,
     this.actions,
-    this.backgroundColor,
   });
 
   @override
@@ -32,7 +30,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: title != null ? Text(title!) : titleWidget,
         centerTitle: centerTitle,
         leadingWidth: 32,
-        backgroundColor: backgroundColor,
         leading: backButton
             ? IconButton(
                 onPressed: () => context.pop(),

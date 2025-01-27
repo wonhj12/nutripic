@@ -12,8 +12,8 @@ class MainButton extends StatelessWidget {
     super.key,
     required this.label,
     this.width = double.infinity,
-    this.height = 60,
-    this.type = MainButtonType.primary,
+    this.height = 50,
+    this.type = MainButtonType.enabled,
     required this.onPressed,
   });
 

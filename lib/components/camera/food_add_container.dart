@@ -29,7 +29,7 @@ class FoodAddContainer extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Palette.background,
+            color: Palette.gray00,
             border: Border.all(color: Palette.gray200),
             borderRadius: BorderRadius.circular(16),
           ),

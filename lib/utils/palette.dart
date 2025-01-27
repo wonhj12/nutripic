@@ -54,7 +54,7 @@ class Palette {
   static const Color green50 = Color(0xFFE4FBF3);
 
   /// #F1FAF9
-  static const Color background = Color(0xFFF9F9FA);
+  // static const Color background = Color(0xFFF9F9FA);
 
   /* Label colors */
   // /// #252525
