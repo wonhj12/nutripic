@@ -4,6 +4,7 @@ import 'package:nutripic/components/diary/diary_calendar.dart';
 import 'package:nutripic/components/diary/diary_calendar_header.dart';
 import 'package:nutripic/components/diary/diary_summary_container.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
+import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -21,31 +22,57 @@ class _DiaryViewState extends State<DiaryView> {
     DateTime? selectedDay;
 
     return CustomScaffold(
-      appBar: const CustomAppBar(backButton: false),
+      appBar: AppBar(
+        title: const Text(
+          "식단 기록",
+          style: TextStyle(
+            color: Palette.black,
+            fontSize: 15,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
+        centerTitle: false,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(
+            color: Palette.gray100,
+            height: 1.0,
+          ),
+        ),
+      ),
+
       body: Column(
         children: [
-          //커스텀 헤더
-          DiaryCalendarHeader(
-              onTapLeft: diaryViewModel.goToPreviousMonth,
-              month: diaryViewModel.focusedDay.month,
-              onTapRight: diaryViewModel.goToNextMonth),
           const SizedBox(
             height: 10,
           ),
 
-          //한 달 요약
-          DiarySummaryContainer(
-            percent: diaryViewModel.getProperMealPercentage(),
-            type: diaryViewModel.getProperMealPercentage() > 0.3
-                ? StatusType.normal
-                : StatusType.low,
-            totalDays: diaryViewModel.getTotalDaysInMonth(),
-            diaryDays: diaryViewModel.getDiariesForMonth(),
-            username: "권지용",
+          //커스텀 헤더
+          DiaryCalendarHeader(
+            onTapLeft: diaryViewModel.goToPreviousMonth,
+            month: diaryViewModel.focusedDay.month,
+            onTapRight: diaryViewModel.goToNextMonth,
+            onTapAdd: () {
+              diaryViewModel.navigateToDiaryPost(DateTime.now());
+            },
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
+
+          // //한 달 요약
+          // DiarySummaryContainer(
+          //   percent: diaryViewModel.getProperMealPercentage(),
+          //   type: diaryViewModel.getProperMealPercentage() > 0.3
+          //       ? StatusType.normal
+          //       : StatusType.low,
+          //   totalDays: diaryViewModel.getTotalDaysInMonth(),
+          //   diaryDays: diaryViewModel.getDiariesForMonth(),
+          //   username: "권지용",
+          // ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
 
           //캘린더
           DiaryCalendar(
@@ -54,11 +81,12 @@ class _DiaryViewState extends State<DiaryView> {
             onDaySelected: (selectedDay, focusedDay) {
               if (selectedDay.month == diaryViewModel.focusedDay.month) {
                 selectedDay = selectedDay;
-                if (diaryViewModel.getDiariesForDay(selectedDay).isEmpty) {
-                  diaryViewModel.navigateToDiaryPost(selectedDay);
-                } else {
-                  diaryViewModel.navigateToDiaryRecord(selectedDay);
-                }
+                // if (diaryViewModel.getDiariesForDay(selectedDay).isEmpty) {
+                //   diaryViewModel.navigateToDiaryPost(selectedDay);
+                // } else {
+                //   diaryViewModel.navigateToDiaryRecord(selectedDay);
+                // }
+                diaryViewModel.navigateToDiaryRecord(selectedDay);
               }
             },
             onPageChanged: (focusedDay) {

@@ -30,7 +30,7 @@ import 'package:nutripic/views/login/login_view.dart';
 import 'package:nutripic/views/recipe/recipe_detail_view.dart';
 import 'package:nutripic/views/recipe/recipe_view.dart';
 import 'package:nutripic/views/onboarding_view.dart';
-import 'package:nutripic/views/recipe_view.dart';
+// import 'package:nutripic/views/recipe_view.dart';
 import 'package:nutripic/views/refrigerator/refrigerator_view.dart';
 import 'package:nutripic/views/user_info/user_edit_view.dart';
 import 'package:nutripic/views/user_info/user_info_view.dart';

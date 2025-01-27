@@ -26,7 +26,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
             size: 20,
           ),
           onPressed: () {
-            context.go('/diary');
+            context.pop();
           },
         ),
         title: GestureDetector(
@@ -68,8 +68,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                              color: Palette
-                                  .gray100, // Background color of the container
+                              color: Palette.gray100,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Column(

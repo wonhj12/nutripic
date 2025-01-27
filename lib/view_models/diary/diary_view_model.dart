@@ -41,7 +41,7 @@ class DiaryViewModel extends ChangeNotifier {
       focusedDay = DateTime(focusedDay.year, focusedDay.month - 1);
     }
 
-    updateDiaries();
+    //updateDiaries();
   }
 
   /// 다음달 이동 함수
@@ -52,7 +52,7 @@ class DiaryViewModel extends ChangeNotifier {
       focusedDay = DateTime(focusedDay.year, focusedDay.month + 1);
     }
 
-    updateDiaries();
+    //updateDiaries();
   }
 
   void updateFocusedDay(DateTime newFocusedDay) {

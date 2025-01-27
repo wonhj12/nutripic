@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/objects/diary.dart';
 import 'package:nutripic/utils/api.dart';
@@ -8,14 +9,48 @@ class DiaryRecordViewModel extends ChangeNotifier {
   DiaryModel diaryModel;
   BuildContext context;
   DateTime selectedDate;
+  DateTime focusedDay = DateTime.now();
   bool isLoading = false;
+  bool isCalendarVisible = false;
 
   DiaryRecordViewModel(
       {required this.diaryModel,
       required this.context,
       required this.selectedDate});
 
-  List<Diary> todayDiaries = [];
+  List<Diary> todayDiaries = [
+    Diary(
+      diaryId: 1,
+      date: DateTime(2025, 1, 25),
+      content: "게시물1",
+      imageUrl:
+          "https://m.363sg.co.kr/web/product/medium/202008/2b96908838fe5b610b0b31c7fb752b47.jpg",
+    ),
+    Diary(
+      diaryId: 2,
+      date: DateTime(2025, 1, 24),
+      content: "게시물2",
+      imageUrl:
+          "https://m.363sg.co.kr/web/product/medium/202008/0b564c2db19eb7f7b363beab3a505add.jpg",
+    ),
+  ];
+
+  /// 캘린더 표시 함수
+  void onTapCalenderVisible() async {
+    isCalendarVisible = !isCalendarVisible;
+    notifyListeners();
+  }
+
+  ///게시글 추가 화면으로 이동
+  void navigateToDiaryPost() {
+    context.go('/diary/post', extra: selectedDate);
+  }
+
+  ///선택 날짜 변경 함수
+  void updateFocusedDay(DateTime newFocusedDay) {
+    focusedDay = newFocusedDay;
+    notifyListeners();
+  }
 
   String selectedDateString() {
     return '${selectedDate.month}월 ${selectedDate.day}일';
