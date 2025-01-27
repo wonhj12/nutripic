@@ -121,23 +121,24 @@ class DiaryCalendar extends StatelessWidget {
                       CircleAvatar(
                         radius: 20,
                         backgroundImage:
-                            FileImage(File(diariesForDay[0].imageUrl!)),
+                            NetworkImage(diariesForDay[0].imageUrl!),
+                        //FileImage(File(diariesForDay[0].imageUrl!)),
                       ),
 
                       // 일기 두 개 이상일때 알림
                       if (diariesForDay.length > 1)
                         Positioned(
                           top: -3,
-                          right: 0,
+                          right: -3,
                           //컴포넌트화
                           child: Container(
                             width: 21,
-                            height: 15,
+                            height: 19,
                             decoration: BoxDecoration(
                               color: Palette.gray00,
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: Palette.green500,
+                                color: Palette.green600,
                                 width: 1.0,
                               ),
                             ),
@@ -145,8 +146,8 @@ class DiaryCalendar extends StatelessWidget {
                               child: Text(
                                 diariesForDay.length.toString(),
                                 style: const TextStyle(
-                                  color: Palette.green500,
-                                  fontSize: 5,
+                                  color: Palette.green600,
+                                  fontSize: 7,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

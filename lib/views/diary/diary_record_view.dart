@@ -19,21 +19,17 @@ class DiaryRecordView extends StatelessWidget {
     //   diaryRecordViewModel.getDiaryRecord();
     // }
     return CalendarScaffold(
-      body: Stack(
-        children: [
-          //게시글 리스트
-          ListView.builder(
-            itemCount: diaryRecordViewModel.todayDiaries.length,
-            itemBuilder: (context, index) {
-              final diary = diaryRecordViewModel.todayDiaries[index];
-              return DiaryCard(
-                diary: diary,
-                onPressed: () =>
-                    diaryRecordViewModel.showOptionModal(diary.diaryId!),
-              );
-            },
-          ),
-        ],
+      body: ListView.builder(
+        itemCount: diaryRecordViewModel.todayDiaries.length,
+        itemBuilder: (context, index) {
+          final diary = diaryRecordViewModel.todayDiaries[index];
+          return DiaryCard(
+            diary: diary,
+            onPressed: () =>
+                diaryRecordViewModel.showOptionModal(diary.diaryId!),
+            getTime: diaryRecordViewModel.getTime(diary.date!),
+          );
+        },
       ),
       isCalendarVisible: diaryRecordViewModel.isCalendarVisible,
       selectedDateString: diaryRecordViewModel.selectedDateString(),

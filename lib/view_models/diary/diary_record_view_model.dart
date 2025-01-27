@@ -22,17 +22,17 @@ class DiaryRecordViewModel extends ChangeNotifier {
   List<Diary> todayDiaries = [
     Diary(
       diaryId: 1,
-      date: DateTime(2025, 1, 1),
-      content: "게시물1",
-      imageUrl:
-          "https://i.namu.wiki/i/HDx7Y8WXmam9g0G1AmUfOgV_Jn0CbHC5RjRX1Ccya4eSld6z_fvemYRET4DrKplQaELHgxDaiU9T1sWGz8LCRFksG5FG3mazXs6nLPuYubo125mZiblRODSeV2WB5Mq111hjEAHg_tSXRaDxvLB29A.webp",
-    ),
-    Diary(
-      diaryId: 2,
-      date: DateTime(2025, 1, 2),
-      content: "게시물2",
+      date: DateTime(2025, 1, 1, 17, 20),
+      content: "크게 될 친구.",
       imageUrl:
           "https://i.namu.wiki/i/VXD_sPrS1UvRN-_77YUHxRI0B6NTksSrIaV9bHBRkWUT3IN4ARAvKSOhti-1TtTFB6f7uqVd2ho33ZguUjmyRCCWnFJm8IdlxR8R1jbTOKz7baqApgxWracUIxRSLmJIATvZglVFDMTRZe2yZ6aO3A.webp",
+    ),
+    Diary(
+      diaryId: 1,
+      date: DateTime(2025, 1, 1, 20, 30),
+      content: "졸리다",
+      imageUrl:
+          "https://i.namu.wiki/i/HDx7Y8WXmam9g0G1AmUfOgV_Jn0CbHC5RjRX1Ccya4eSld6z_fvemYRET4DrKplQaELHgxDaiU9T1sWGz8LCRFksG5FG3mazXs6nLPuYubo125mZiblRODSeV2WB5Mq111hjEAHg_tSXRaDxvLB29A.webp",
     ),
   ];
 
@@ -58,8 +58,12 @@ class DiaryRecordViewModel extends ChangeNotifier {
     return '${selectedDate.month}월 ${selectedDate.day}일';
   }
 
-  static String getTime(DateTime time) {
-    return '${time.hour}시 ${time.minute}분';
+  String getTime(DateTime time) {
+    if (time.hour < 12) {
+      return '오전 ${time.hour.toString().padLeft(2, '0')} : ${time.minute.toString().padLeft(2, '0')}';
+    } else {
+      return '오후 ${(time.hour - 12).toString().padLeft(2, '0')} : ${time.minute.toString().padLeft(2, '0')}';
+    }
   }
 
   Future<void> getDiaryRecord() async {

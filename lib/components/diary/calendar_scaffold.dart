@@ -45,10 +45,10 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
           //나중에 통일해야댐
           backgroundColor: Palette.gray00,
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(1.0), // 선의 두께를 설정
+            preferredSize: const Size.fromHeight(1),
             child: Container(
               height: 1.0, // 선의 두께
-              color: Palette.gray100, // 선의 색상
+              color: Palette.gray100,
             ),
           ),
           leading: IconButton(
@@ -92,6 +92,7 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
                 ]
               : [],
         ),
+        backgroundColor: Palette.gray00,
         body: Stack(
           children: [
             // body
