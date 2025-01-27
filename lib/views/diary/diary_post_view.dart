@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/diary/calendar_scaffold.dart';
 import 'package:nutripic/utils/palette.dart';
@@ -24,7 +25,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
         children: [
           SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
                   // 사진
@@ -35,7 +36,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                              color: Palette.gray100,
+                              color: Palette.gray50,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Column(
@@ -50,16 +51,18 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                                     color: Palette.gray100,
                                     borderRadius: BorderRadius.circular(50),
                                   ),
-                                  child: const Icon(
-                                    Icons.photo_library_outlined,
-                                    size: 40,
-                                    color: Palette.gray900,
+                                  child: Center(
+                                    child: SvgPicture.asset(
+                                      'assets/icons/image.svg',
+                                      width: 30,
+                                      height: 30,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 15),
                                 const Text(
                                   "이미지 업로드",
-                                  style: Palette.caption,
+                                  style: TextStyle(fontSize: 8),
                                 ),
                               ],
                             ),
@@ -88,8 +91,11 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                                 child: IconButton(
                                   onPressed: () =>
                                       diaryPostViewModel.selectFromAlbum(),
-                                  icon:
-                                      const Icon(Icons.photo_library_outlined),
+                                  icon: SvgPicture.asset(
+                                    'assets/icons/image.svg',
+                                    width: 20,
+                                    height: 20,
+                                  ),
                                   iconSize: 20,
                                 ),
                               ),
@@ -113,13 +119,13 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: diaryPostViewModel.isSelected(time)
-                                  ? Palette.green700
+                                  ? Palette.green500
                                   : Colors.transparent, // 선택된 버튼 색상
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
                                 color: diaryPostViewModel.isSelected(time)
-                                    ? Palette.green700
-                                    : Palette.gray300, // 테두리 색상
+                                    ? Palette.green500
+                                    : Palette.gray200, // 테두리 색상
                                 width: 1,
                               ),
                             ),
@@ -127,8 +133,8 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                               time,
                               style: TextStyle(
                                 color: diaryPostViewModel.isSelected(time)
-                                    ? Colors.white
-                                    : Colors.grey[500],
+                                    ? Palette.gray00
+                                    : Palette.gray300,
                                 fontSize: 10,
                               ),
                             ),
@@ -142,26 +148,23 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                   // 게시글
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
-                    decoration: BoxDecoration(
-                      color: Palette.gray100,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
                         minHeight: MediaQuery.of(context).size.height -
                             MediaQuery.of(context).size.width -
-                            300, // 남은 화면 크기 계산
+                            330, // 남은 화면 크기 계산
                       ),
                       child: TextFormField(
                         maxLines: null,
                         decoration: const InputDecoration(
-                          hintText: '메모하기',
+                          hintText: '메모 작성하기..',
                           hintStyle: TextStyle(color: Palette.gray300),
                           border: InputBorder.none,
                           fillColor: Colors.transparent,
                           filled: true,
                         ),
-                        style: Palette.caption, // Text color inside the field
+                        style: const TextStyle(
+                            fontSize: 8), // Text color inside the field
                         textInputAction: TextInputAction.done,
                         onChanged: (text) {
                           diaryPostViewModel.updateInputText(text); // 입력값 동기화
@@ -176,7 +179,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                   // 게시 버튼
                   SizedBox(
                     width: double.infinity,
-                    height: 40,
+                    height: 50,
                     child: ElevatedButton(
                       onPressed: diaryPostViewModel.isPostable
                           ? () => diaryPostViewModel.submitPost(context)
@@ -185,13 +188,13 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        backgroundColor: Palette.green700,
+                        backgroundColor: Palette.green500,
                         disabledBackgroundColor: Palette.gray100,
                       ),
                       child: Text(
                         '등록',
                         style: TextStyle(
-                          fontSize: 8,
+                          fontSize: 10,
                           color: diaryPostViewModel.isPostable
                               ? Colors.white // 활성화된 색상
                               : Palette.gray400,
