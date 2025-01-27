@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nutripic/components/diary/calendar_scaffold.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
 import 'package:provider/provider.dart';
@@ -18,41 +19,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
   Widget build(BuildContext context) {
     DiaryPostViewModel diaryPostViewModel = context.watch<DiaryPostViewModel>();
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.close,
-            size: 20,
-          ),
-          onPressed: () {
-            context.pop();
-          },
-        ),
-        title: GestureDetector(
-          onTap: () => diaryPostViewModel.onTapCalenderVisible(),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(
-                width: 15,
-              ),
-              Text(
-                diaryPostViewModel.selectedDateString(),
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 13,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              Icon(diaryPostViewModel.isCalendarVisible
-                  ? Icons.arrow_drop_up
-                  : Icons.arrow_drop_down),
-            ],
-          ),
-        ),
-        centerTitle: true,
-      ),
+    return CalendarScaffold(
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -236,98 +203,14 @@ class _DiaryPostViewState extends State<DiaryPostView> {
               ),
             ),
           ),
-          if (diaryPostViewModel.isCalendarVisible)
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.8),
-              ),
-            ),
-          if (diaryPostViewModel.isCalendarVisible)
-            Positioned(
-              top: 0, // 캘린더를 최상단에서 시작
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                height: 350,
-                decoration: const BoxDecoration(
-                  color: Palette.gray00,
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(20),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    TableCalendar(
-                      focusedDay: diaryPostViewModel.focusedDay,
-                      firstDay: DateTime(2000),
-                      lastDay: DateTime(2100),
-                      daysOfWeekHeight: 30.0,
-                      rowHeight: 40,
-                      selectedDayPredicate: (day) =>
-                          isSameDay(diaryPostViewModel.selectedDate, day),
-                      onDaySelected: (selectedDay, focusedDay) {
-                        if (selectedDay.month ==
-                            diaryPostViewModel.focusedDay.month) {
-                          diaryPostViewModel.selectedDate = selectedDay;
-                          diaryPostViewModel.updateFocusedDay(focusedDay);
-                        }
-                      },
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        titleTextFormatter: (date, locale) {
-                          return ('${date.year}년 ${date.month}월');
-                        },
-                        titleTextStyle: Palette.caption,
-                      ),
-                      calendarStyle: const CalendarStyle(
-                        defaultTextStyle: Palette.caption,
-                        weekendTextStyle: Palette.caption,
-                        isTodayHighlighted: false,
-                        selectedDecoration: BoxDecoration(
-                          color: Palette.green700,
-                          shape: BoxShape.circle,
-                        ),
-                        selectedTextStyle: Palette.caption,
-                        todayDecoration: BoxDecoration(),
-                      ),
-                      calendarBuilders: CalendarBuilders(
-                        dowBuilder: (context, day) {
-                          final weekDays = ['월', '화', '수', '목', '금', '토', '일'];
-                          return Center(
-                            child: Text(
-                              weekDays[
-                                  day.weekday - 1], // day.weekday - 1로 요일 배열 접근
-                              style: Palette.caption,
-                            ),
-                          );
-                        },
-                        outsideBuilder: (context, day, focusedDay) {
-                          return const SizedBox.shrink();
-                        },
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () =>
-                              diaryPostViewModel.onTapCalenderVisible(),
-                          child: const Text(
-                            "확인",
-                            style: Palette.caption,
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
         ],
       ),
+      isCalendarVisible: diaryPostViewModel.isCalendarVisible,
+      selectedDateString: diaryPostViewModel.selectedDateString(),
+      onTapCalenderVisible: diaryPostViewModel.onTapCalenderVisible,
+      selectedDate: diaryPostViewModel.selectedDate,
+      focusedDay: diaryPostViewModel.focusedDay,
+      updateFocusedDay: diaryPostViewModel.updateFocusedDay,
     );
   }
 }

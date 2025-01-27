@@ -113,7 +113,8 @@ class DiaryPostViewModel with ChangeNotifier {
   }
 
   ///선택날짜 변경함수
-  void updateFocusedDay(DateTime newFocusedDay) {
+  void updateFocusedDay(DateTime newSelectedDate, DateTime newFocusedDay) {
+    selectedDate = newSelectedDate;
     focusedDay = newFocusedDay;
     notifyListeners();
   }

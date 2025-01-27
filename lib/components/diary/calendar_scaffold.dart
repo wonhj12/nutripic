@@ -27,7 +27,7 @@ class CalendarScaffold extends StatefulWidget {
     required this.isCalendarVisible,
     required this.selectedDateString,
     required this.onTapCalenderVisible,
-    required this.onPressedAdd,
+    this.onPressedAdd,
     required this.updateFocusedDay,
   });
 
@@ -42,6 +42,15 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
+          //나중에 통일해야댐
+          backgroundColor: Palette.gray00,
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(1.0), // 선의 두께를 설정
+            child: Container(
+              height: 1.0, // 선의 두께
+              color: Palette.gray100, // 선의 색상
+            ),
+          ),
           leading: IconButton(
             icon: const Icon(
               Icons.close,
@@ -62,7 +71,7 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
                 Text(
                   widget.selectedDateString!,
                   style: const TextStyle(
-                    color: Colors.black,
+                    color: Palette.gray900,
                     fontSize: 13,
                     fontWeight: FontWeight.normal,
                   ),
