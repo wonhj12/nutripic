@@ -7,9 +7,9 @@ class CustomThemeData {
     appBarTheme: AppBarTheme(
       titleTextStyle: Palette.heading.copyWith(color: Palette.green500),
       centerTitle: true,
-      backgroundColor: Palette.background, // Appbar BG
+      backgroundColor: Palette.gray00, // Appbar BG
     ),
-    scaffoldBackgroundColor: Palette.background, // Scaffold BG
+    scaffoldBackgroundColor: Palette.gray00, // Scaffold BG
     colorScheme: const ColorScheme.light(
       primary: Palette.green700,
       primaryContainer: Palette.green500,
