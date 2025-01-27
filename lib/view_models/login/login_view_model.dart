@@ -20,7 +20,7 @@ class LoginViewModel with ChangeNotifier {
 
   // 상단부터 로고까지 space 길이
   double topPadding() {
-    return 228 - MediaQuery.of(context).padding.top;
+    return 220 - MediaQuery.of(context).padding.top;
   }
 
   /// 로그인 선택 시 로그인 후 서버 인증 받는 함수
