@@ -4,8 +4,8 @@ import 'package:nutripic/utils/palette.dart';
 
 /// Main Button 타입
 enum MainButtonType {
-  primary(color: Palette.green50, textColor: Palette.gray00),
-  secondary(color: Palette.gray100, textColor: Palette.gray400);
+  primary(color: Palette.green500, textColor: Palette.gray00),
+  secondary(color: Palette.gray300, textColor: Palette.gray00);
 
   final Color color;
   final Color textColor;

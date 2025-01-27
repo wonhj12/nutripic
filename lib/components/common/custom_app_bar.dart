@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final Widget? titleWidget;
+  final bool centerTitle;
   final bool backButton;
+  final List<Widget>? actions;
   final Color? backgroundColor;
 
   /// ### AppBar에서 필요한 기능들을 적용한 위젯
@@ -16,22 +18,29 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     this.title,
     this.titleWidget,
+    this.centerTitle = true,
     this.backButton = true,
+    this.actions,
     this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: title != null ? Text(title!) : titleWidget,
-      centerTitle: true,
-      backgroundColor: backgroundColor,
-      leading: backButton
-          ? IconButton(
-              onPressed: () => context.pop(),
-              icon: const Icon(Icons.arrow_back_ios),
-            )
-          : null,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: AppBar(
+        title: title != null ? Text(title!) : titleWidget,
+        centerTitle: centerTitle,
+        leadingWidth: 32,
+        backgroundColor: backgroundColor,
+        leading: backButton
+            ? IconButton(
+                onPressed: () => context.pop(),
+                icon: const Icon(Icons.arrow_back_ios, size: 24),
+              )
+            : null,
+        actions: actions,
+      ),
     );
   }
 

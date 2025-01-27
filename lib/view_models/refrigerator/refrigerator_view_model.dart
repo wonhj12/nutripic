@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nutripic/models/camera_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/api.dart';
@@ -7,9 +8,11 @@ import 'package:nutripic/utils/enums/storage_type.dart';
 
 class RefrigeratorViewModel with ChangeNotifier {
   RefrigeratorModel refrigeratorModel;
+  CameraModel cameraModel;
   BuildContext context;
   RefrigeratorViewModel({
     required this.refrigeratorModel,
+    required this.cameraModel,
     required this.context,
   });
 
@@ -97,6 +100,9 @@ class RefrigeratorViewModel with ChangeNotifier {
 
   /// 카메라 호출 함수
   void onTapCamera() async {
+    // 카메라 초기화
+    cameraModel.reset();
+
     // 식재료 추가 후 냉장고 화면 업데이트를 위해서 비동기 처리
     await GoRouter.of(context).push('/refrigerator/camera');
 

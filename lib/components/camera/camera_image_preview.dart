@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nutripic/utils/palette.dart';
 
-class ImagePreview extends StatelessWidget {
+class CameraImagePreview extends StatelessWidget {
   final File? image;
   final int length;
-  const ImagePreview({super.key, required this.image, required this.length});
+  const CameraImagePreview(
+      {super.key, required this.image, required this.length});
 
   @override
   Widget build(BuildContext context) {
