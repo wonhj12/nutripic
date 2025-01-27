@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/common/bottom_navbar.dart';
+import 'package:nutripic/models/camera_model.dart';
 import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/camera/camera_add_view_model.dart';
+import 'package:nutripic/view_models/camera/camera_confirm_view_model.dart';
 import 'package:nutripic/view_models/camera/camera_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_record_view_model.dart';
@@ -20,6 +22,7 @@ import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:nutripic/views/camera/camera_add_view.dart';
+import 'package:nutripic/views/camera/camera_confirm_view.dart';
 import 'package:nutripic/views/diary/diary_record_view.dart';
 import 'package:nutripic/views/diary/diary_view.dart';
 import 'package:nutripic/views/login/email_view.dart';
@@ -36,24 +39,13 @@ import 'package:nutripic/views/user_info/user_info_view.dart';
 import 'package:provider/provider.dart';
 
 class AppRouter {
-  final UserModel userModel;
-  final RefrigeratorModel refrigeratorModel;
-  final DiaryModel diaryModel;
-  final RecipeModel recipeModel;
-
-  AppRouter({
-    required this.diaryModel,
-    required this.refrigeratorModel,
-    required this.userModel,
-    required this.recipeModel,
-  });
-
   static final GlobalKey<NavigatorState> _rootNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: 'root');
 
   static GoRouter getRouter(
     UserModel userModel,
     RefrigeratorModel refrigeratorModel,
+    CameraModel cameraModel,
     DiaryModel diaryModel,
     RecipeModel recipeModel,
   ) {
@@ -139,6 +131,7 @@ class AppRouter {
                   builder: (context, state) => ChangeNotifierProvider(
                     create: (context) => RefrigeratorViewModel(
                       refrigeratorModel: refrigeratorModel,
+                      cameraModel: cameraModel,
                       context: context,
                     ),
                     child: const RefrigeratorView(),
@@ -150,10 +143,24 @@ class AppRouter {
                       builder: (context, state) => ChangeNotifierProvider(
                         create: (context) => CameraViewModel(
                           refrigeratorModel: refrigeratorModel,
+                          cameraModel: cameraModel,
                           context: context,
                         ),
                         child: const CameraView(),
                       ),
+                      routes: [
+                        GoRoute(
+                          path: 'confirm',
+                          parentNavigatorKey: _rootNavigatorKey,
+                          builder: (context, state) => ChangeNotifierProvider(
+                            create: (context) => CameraConfirmViewModel(
+                              cameraModel: cameraModel,
+                              context: context,
+                            ),
+                            child: const CameraConfirmView(),
+                          ),
+                        )
+                      ],
                     ),
                     GoRoute(
                       path: 'add',
@@ -216,22 +223,6 @@ class AppRouter {
                 ),
               ],
             ),
-
-            // 카메라
-            // StatefulShellBranch(
-            //   routes: [
-            //     GoRoute(
-            //       path: '/camera',
-            //       builder: (context, state) => ChangeNotifierProvider(
-            //         create: (context) => CameraViewModel(
-            //           refrigeratorModel: refrigeratorModel,
-            //           context: context,
-            //         ),
-            //         child: const CameraView(),
-            //       ),
-            //     ),
-            //   ],
-            // ),
 
             // 레시피
             StatefulShellBranch(

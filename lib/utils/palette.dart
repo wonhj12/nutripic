@@ -101,7 +101,7 @@ class Palette {
   /// Font size: 24
   /// <br />Font weight: Bold
   static const TextStyle heading =
-      TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
+      TextStyle(fontSize: 24, fontWeight: FontWeight.w700, height: 1.4);
 
   /// Font size: 24
   /// <br />Font weight: Bold. Color: white
@@ -111,82 +111,112 @@ class Palette {
   /// Font size: 20
   /// <br />Font weight: Medium
   static const TextStyle title1Medium =
-      TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
+      TextStyle(fontSize: 20, fontWeight: FontWeight.w500, height: 1.4);
 
   /// Font size: 20
   /// <br />Font weight: Semi Bold
   static const TextStyle title1SemiBold =
-      TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+      TextStyle(fontSize: 20, fontWeight: FontWeight.w600, height: 1.4);
 
   /// Font size: 18
   /// <br />Font weight: Medium
   static const TextStyle title2Medium =
-      TextStyle(fontSize: 18, fontWeight: FontWeight.w500);
+      TextStyle(fontSize: 18, fontWeight: FontWeight.w500, height: 1.4);
 
   /// Font size: 18
   /// <br />Font weight: Semi Bold
   static const TextStyle title2SemiBold =
-      TextStyle(fontSize: 18, fontWeight: FontWeight.w600);
+      TextStyle(fontSize: 18, fontWeight: FontWeight.w600, height: 1.4);
 
   /// Font size: 16
   /// <br />Font weight: Medium
   static const TextStyle subtitle1Medium =
-      TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
+      TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.4);
 
   /// Font size: 16
   /// <br />Font weight: Semibold
   static const TextStyle subtitle1SemiBold =
-      TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+      TextStyle(fontSize: 16, fontWeight: FontWeight.w600, height: 1.4);
 
   /// Font size: 14
   /// <br />Font weight: Medium
   static const TextStyle subtitle2Medium =
-      TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+      TextStyle(fontSize: 14, fontWeight: FontWeight.w600, height: 1.4);
 
   /// Font size: 14
   /// <br />Font weight: Semibold
   static const TextStyle subtitle2SemiBold =
-      TextStyle(fontSize: 14, fontWeight: FontWeight.w600);
+      TextStyle(fontSize: 14, fontWeight: FontWeight.w600, height: 1.4);
 
   /// Font size: 16
   /// <br />Font weight: Regular
   static const TextStyle body1 =
-      TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1);
+      TextStyle(fontSize: 16, fontWeight: FontWeight.w400, height: 1.5);
 
   /// Font size: 14
   /// <br />Font weight: Regular
   static const TextStyle body2 =
-      TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1);
+      TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.5);
 
   /// Font size: 13
   /// <br />Font weight: Regular
   static const TextStyle subbody1 =
-      TextStyle(fontSize: 13, fontWeight: FontWeight.w400);
+      TextStyle(fontSize: 13, fontWeight: FontWeight.w400, height: 1.4);
 
   /// Font size: 13
   /// <br />Font weight: Medium
   static const TextStyle subbody1Medium =
-      TextStyle(fontSize: 13, fontWeight: FontWeight.w500);
+      TextStyle(fontSize: 13, fontWeight: FontWeight.w500, height: 1.4);
 
   /// Font size: 12
   /// <br />Font weight: Regular
   static const TextStyle subbody2 =
-      TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
+      TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 1.4);
 
   /// Font size: 12
   /// <br />Font weight: Medium
   static const TextStyle subbody2Medium =
-      TextStyle(fontSize: 12, fontWeight: FontWeight.w500);
+      TextStyle(fontSize: 12, fontWeight: FontWeight.w500, height: 1.4);
 
   /// Font size: 10
   /// <br />Font weight: Regular
   static const TextStyle caption5 =
-      TextStyle(fontSize: 10, fontWeight: FontWeight.w400);
+      TextStyle(fontSize: 10, fontWeight: FontWeight.w400, height: 1.5);
 
   /// Font size: 11
   /// <br />Font weight: Regular
   static const TextStyle caption4 =
-      TextStyle(fontSize: 11, fontWeight: FontWeight.w400);
+      TextStyle(fontSize: 11, fontWeight: FontWeight.w400, height: 1.5);
+
+  /// Font size: 12
+  /// <br />Font weight: Regular
+  static const TextStyle caption3 =
+      TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 1.5);
+
+  /// Font size: 12
+  /// <br />Font weight: Medium
+  static const TextStyle caption3Medium =
+      TextStyle(fontSize: 12, fontWeight: FontWeight.w500, height: 1.5);
+
+  /// Font size: 13
+  /// <br />Font weight: Regular
+  static const TextStyle caption2 =
+      TextStyle(fontSize: 13, fontWeight: FontWeight.w400, height: 1.5);
+
+  /// Font size: 13
+  /// <br />Font weight: Medium
+  static const TextStyle caption2Medium =
+      TextStyle(fontSize: 13, fontWeight: FontWeight.w500, height: 1.5);
+
+  /// Font size: 14
+  /// <br />Font weight: Regular
+  static const TextStyle caption1 =
+      TextStyle(fontSize: 14, fontWeight: FontWeight.w400, height: 1.5);
+
+  /// Font size: 14
+  /// <br />Font weight: Medium
+  static const TextStyle caption1medium =
+      TextStyle(fontSize: 14, fontWeight: FontWeight.w500, height: 1.5);
 
   /// 레시피 순서 번호
   /// <br />Font size: 40

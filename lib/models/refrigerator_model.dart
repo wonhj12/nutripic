@@ -6,23 +6,9 @@ class RefrigeratorModel with ChangeNotifier {
   /// 0 - fridge, 1 - freezer,  2 - room
   List<List<Food>> foods = [[], [], []];
 
-  /// YOLO에서 인식한 식재료 리스트
-  Set<String> recognizedFoods = {};
-
   /// 모델을 초기화하는 함수
   void reset() {
     foods = [[], [], []];
-    recognizedFoods.clear();
-  }
-
-  /// YOLO에서 인식한 식재료 초기화
-  void resetRecognition() {
-    recognizedFoods.clear();
-  }
-
-  /// 인식된 식재료 추가
-  void addRecognition(List<String> recognitions) {
-    recognizedFoods.addAll(recognitions);
   }
 
   /// 음식 정보 가져와서 리스트에 저장

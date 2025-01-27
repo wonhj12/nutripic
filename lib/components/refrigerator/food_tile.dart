@@ -14,17 +14,14 @@ class FoodTile extends StatelessWidget {
   /// 식재료 선택 가능 여부
   final bool isSelectable;
 
-  /// 유통기한 표시 여부
-  final bool showDday;
-
   /// 식재료 선택시 콜백 함수
   final Function(Food) select;
+
   const FoodTile({
     super.key,
     required this.food,
     required this.isSelected,
     required this.isSelectable,
-    this.showDday = false,
     required this.select,
   });
 

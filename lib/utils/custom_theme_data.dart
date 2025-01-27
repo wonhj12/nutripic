@@ -19,9 +19,6 @@ class CustomThemeData {
 
     // 앱 전체적인 테마
     colorScheme: const ColorScheme.light(
-      // primary: Palette.green700,
-      // primaryContainer: Palette.green500,
-      // secondary: Palette.green600,
       error: Palette.delete,
     ),
     highlightColor: Colors.transparent, // Modal highlight color

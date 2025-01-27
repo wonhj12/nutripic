@@ -21,10 +21,7 @@ class CameraAddView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             // 인식된 식재료 리스트
-            FoodAddContainer(
-              recognizedFoods:
-                  cameraAddViewModel.refrigeratorModel.recognizedFoods,
-            ),
+            const FoodAddContainer(recognizedFoods: {}),
             const SizedBox(height: 32),
 
             // 보관 버튼
