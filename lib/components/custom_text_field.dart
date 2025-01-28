@@ -5,7 +5,7 @@ import 'package:nutripic/utils/palette.dart';
 class CustomTextField extends StatefulWidget {
   final String? label;
   final String? hintText;
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final GlobalKey<FormState>? formKey;
   final String? Function(String?)? validator;
   final void Function(String?)? onChanged;
@@ -17,7 +17,7 @@ class CustomTextField extends StatefulWidget {
     super.key,
     this.label,
     this.hintText,
-    this.controller,
+    required this.controller,
     this.formKey,
     this.onChanged,
     this.validator,
@@ -65,34 +65,55 @@ class _CustomTextFieldState extends State<CustomTextField> {
   // suffix icon
   Widget? suffixIcon() {
     switch (widget.textFieldType) {
-      case TextFieldType.email:
-        return null;
       case TextFieldType.password:
         return ExcludeFocus(
-          child: IconButton(
-            onPressed: () {
-              setState(() => _isObscure = !_isObscure);
-            },
-            icon: Icon(
-              _isObscure
-                  ? Icons.visibility_off_outlined
-                  : Icons.visibility_outlined,
-              size: 24,
-              color: Palette.gray900,
-            ),
-          ),
-        );
-      case TextFieldType.text:
-        return ExcludeFocus(
-          child: IconButton(
-            onPressed: () {
-              setState(() => widget.controller?.clear());
-            },
-            icon: const Icon(Icons.cancel_outlined, size: 24),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Obscure 버튼
+              IconButton(
+                onPressed: () {
+                  setState(() => _isObscure = !_isObscure);
+                },
+                icon: Icon(
+                  _isObscure
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  size: 24,
+                  color: Palette.gray900,
+                ),
+              ),
+
+              if (widget.controller.text.isNotEmpty)
+                IconButton(
+                  onPressed: () {
+                    setState(() => widget.controller.clear());
+                  },
+                  icon: const Icon(
+                    Icons.cancel_rounded,
+                    color: Palette.gray400,
+                    size: 24,
+                  ),
+                ),
+            ],
           ),
         );
       default:
-        return null;
+        return widget.controller.text.isNotEmpty
+            ? ExcludeFocus(
+                child: IconButton(
+                  onPressed: () {
+                    setState(() => widget.controller.clear());
+                  },
+                  icon: const Icon(
+                    Icons.cancel_rounded,
+                    color: Palette.gray400,
+                    size: 24,
+                  ),
+                ),
+              )
+            : null;
     }
   }
 
@@ -131,7 +152,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             // Focus 상태 border
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(width: 1, color: Palette.green600),
+              borderSide: const BorderSide(width: 1, color: Palette.green400),
             ),
             // 선택되지 않았을 때 validation 에러 border
             errorBorder: OutlineInputBorder(
@@ -149,7 +170,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             suffixIcon: suffixIcon(),
           ),
-          cursorColor: Palette.green500,
+          cursorColor: Palette.green400,
           style: Palette.body1.copyWith(color: Palette.gray900),
           obscureText: widget.textFieldType == TextFieldType.password
               ? _isObscure
