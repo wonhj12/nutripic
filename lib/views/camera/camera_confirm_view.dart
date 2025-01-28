@@ -5,6 +5,7 @@ import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/main_button.dart';
 import 'package:nutripic/components/box_button.dart';
 import 'package:nutripic/utils/enums/box_button_type.dart';
+import 'package:nutripic/utils/enums/main_button_type.dart';
 import 'package:nutripic/view_models/camera/camera_confirm_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -57,6 +58,9 @@ class CameraConfirmView extends StatelessWidget {
           // 분석 버튼
           MainButton(
             label: '분석하기',
+            type: cameraConfirmViewModel.isAnalyzeBtnEnabled
+                ? MainButtonType.enabled
+                : MainButtonType.disabled,
             onPressed: cameraConfirmViewModel.onTapSend,
           ),
         ],
