@@ -7,14 +7,9 @@ import 'package:nutripic/utils/palette.dart';
 import 'package:provider/provider.dart';
 import 'package:nutripic/view_models/login/login_view_model.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
-  @override
-  State<LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     LoginViewModel loginViewModel = context.watch<LoginViewModel>();

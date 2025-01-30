@@ -3,14 +3,9 @@ import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/view_models/login/signup_view_model.dart';
 import 'package:provider/provider.dart';
 
-class SignupView extends StatefulWidget {
+class SignupView extends StatelessWidget {
   const SignupView({super.key});
 
-  @override
-  State<SignupView> createState() => _SignupViewState();
-}
-
-class _SignupViewState extends State<SignupView> {
   @override
   Widget build(BuildContext context) {
     SignupViewModel signupViewModel = context.watch<SignupViewModel>();
