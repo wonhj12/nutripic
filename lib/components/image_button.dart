@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ImageButton extends StatelessWidget {
-  final String img;
   final double width;
   final double height;
+  final double radius;
+  final String img;
   final Function()? onTap;
   const ImageButton({
     super.key,
-    required this.img,
     this.width = 300,
     this.height = 45,
+    this.radius = 8,
+    required this.img,
     required this.onTap,
   });
 
@@ -23,7 +25,7 @@ class ImageButton extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: onTap,
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(radius),
             child: SizedBox(
               width: width,
               height: height,
