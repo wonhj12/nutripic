@@ -31,6 +31,7 @@ Future<void> autoLogin() async {
   if (user != null) {
     // 사용자가 존재한다면 모델에 데이터 저장
     userModel.fromFirebaseUser(user);
+    debugPrint('Auto login to user ${userModel.name}');
 
     // 냉장고 불러오기
     await refrigeratorModel.getFoods();
