@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/utils/api.dart';
+import 'package:path/path.dart' as path;
 
 class DiaryPostViewModel with ChangeNotifier {
   DiaryModel diaryModel;
@@ -30,6 +31,7 @@ class DiaryPostViewModel with ChangeNotifier {
   // 게시글
   String inputText = "";
   bool isPostable = false;
+  String? fileName;
 
   /// 카메라/갤러리 선택 모달
   // void showCameraSelectModal() async {
@@ -79,6 +81,7 @@ class DiaryPostViewModel with ChangeNotifier {
       final image = File(pickedFile.path);
       //diaryModel.diary!.imageUrl = image.path;
       imageUrl = image.path;
+      fileName = path.basename(pickedFile.path);
       notifyListeners();
       checkPostable();
     }
@@ -126,7 +129,7 @@ class DiaryPostViewModel with ChangeNotifier {
   /// 게시물 전송
   Future<void> submitPost(BuildContext context) async {
     try {
-      String presignedUrl = await API.getImgPresignedURL(imageUrl!);
+      String presignedUrl = await API.getImgPresignedURL(fileName!);
 
       await API.addDiary(
         inputText,

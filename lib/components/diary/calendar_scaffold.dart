@@ -37,16 +37,49 @@ class CalendarScaffold extends StatefulWidget {
   State<CalendarScaffold> createState() => _CalendarScaffoldState();
 }
 
-class _CalendarScaffoldState extends State<CalendarScaffold> {
+class _CalendarScaffoldState extends State<CalendarScaffold>
+    with SingleTickerProviderStateMixin {
   DateTime? tempSelectedDate;
   DateTime? tempFocusedDay;
+  late AnimationController animationController;
+  late Animation<Offset> slideAnimation;
 
   @override
   void initState() {
     super.initState();
-    // Initialize temp variables to the current selected date and focused day
     tempSelectedDate = widget.selectedDate;
     tempFocusedDay = widget.focusedDay;
+
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
+
+    slideAnimation = Tween<Offset>(
+      begin: const Offset(0, -1),
+      end: Offset.zero,
+    ).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeInBack));
+
+    if (widget.isCalendarVisible) {
+      animationController.forward();
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant CalendarScaffold oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isCalendarVisible != oldWidget.isCalendarVisible) {
+      if (widget.isCalendarVisible) {
+        animationController.forward();
+      } else {
+        animationController.reverse();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -124,149 +157,154 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
                 ),
               ),
             if (widget.isCalendarVisible)
-              Positioned(
-                top: 0,
+              AnimatedPositioned(
                 left: 0,
                 right: 0,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  height: 400,
-                  decoration: const BoxDecoration(
-                    color: Palette.gray00,
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(20),
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                top: 0,
+                child: SlideTransition(
+                  position: slideAnimation,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    height: 400,
+                    decoration: const BoxDecoration(
+                      color: Palette.gray00,
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(20),
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      TableCalendar(
-                        focusedDay: widget.focusedDay,
-                        firstDay: DateTime(2000),
-                        lastDay: DateTime(2100),
-                        daysOfWeekHeight: 30.0,
-                        rowHeight: 40,
-                        selectedDayPredicate: (day) =>
-                            isSameDay(widget.selectedDate, day),
-                        onDaySelected: (selectedDate, focusedDay) {
-                          if (selectedDate.month == focusedDay.month) {
-                            widget.updateFocusedDay!(focusedDay);
-                            widget.updateSelectedDate!(selectedDate);
-                          }
-                        },
-                        headerStyle: HeaderStyle(
-                          formatButtonVisible: false,
-                          titleTextFormatter: (date, locale) {
-                            return ('${date.year}년 ${date.month}월');
+                    child: Column(
+                      children: [
+                        TableCalendar(
+                          focusedDay: widget.focusedDay,
+                          firstDay: DateTime(2000),
+                          lastDay: DateTime(2100),
+                          daysOfWeekHeight: 30.0,
+                          rowHeight: 40,
+                          selectedDayPredicate: (day) =>
+                              isSameDay(widget.selectedDate, day),
+                          onDaySelected: (selectedDate, focusedDay) {
+                            if (selectedDate.month == focusedDay.month) {
+                              widget.updateFocusedDay!(focusedDay);
+                              widget.updateSelectedDate!(selectedDate);
+                            }
                           },
-                          titleTextStyle: const TextStyle(
-                            fontSize: 10,
+                          headerStyle: HeaderStyle(
+                            formatButtonVisible: false,
+                            titleTextFormatter: (date, locale) {
+                              return ('${date.year}년 ${date.month}월');
+                            },
+                            titleTextStyle: const TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                          calendarStyle: const CalendarStyle(
+                            defaultTextStyle: TextStyle(
+                              color: Palette.gray300,
+                              fontSize: 7,
+                            ),
+                            weekendTextStyle: TextStyle(
+                              color: Palette.gray300,
+                              fontSize: 7,
+                            ),
+                            isTodayHighlighted: false,
+                            selectedDecoration: BoxDecoration(
+                              color: Palette.green500,
+                              shape: BoxShape.circle,
+                            ),
+                            selectedTextStyle: TextStyle(
+                              color: Palette.gray00,
+                              fontSize: 7,
+                            ),
+                            todayDecoration: BoxDecoration(),
+                          ),
+                          calendarBuilders: CalendarBuilders(
+                            dowBuilder: (context, day) {
+                              final weekDays = [
+                                '월',
+                                '화',
+                                '수',
+                                '목',
+                                '금',
+                                '토',
+                                '일'
+                              ];
+                              return Center(
+                                child: Text(
+                                  weekDays[day.weekday - 1],
+                                  style: const TextStyle(
+                                    fontSize: 8,
+                                  ),
+                                ),
+                              );
+                            },
+                            outsideBuilder: (context, day, focusedDay) {
+                              return const SizedBox.shrink();
+                            },
                           ),
                         ),
-                        calendarStyle: const CalendarStyle(
-                          defaultTextStyle: TextStyle(
-                            color: Palette.gray300,
-                            fontSize: 7,
-                          ),
-                          weekendTextStyle: TextStyle(
-                            color: Palette.gray300,
-                            fontSize: 7,
-                          ),
-                          isTodayHighlighted: false,
-                          selectedDecoration: BoxDecoration(
-                            color: Palette.green500,
-                            shape: BoxShape.circle,
-                          ),
-                          selectedTextStyle: TextStyle(
-                            color: Palette.gray00,
-                            fontSize: 7,
-                          ),
-                          todayDecoration: BoxDecoration(),
-                        ),
-                        calendarBuilders: CalendarBuilders(
-                          dowBuilder: (context, day) {
-                            final weekDays = [
-                              '월',
-                              '화',
-                              '수',
-                              '목',
-                              '금',
-                              '토',
-                              '일'
-                            ];
-                            return Center(
-                              child: Text(
-                                weekDays[day.weekday - 1],
-                                style: const TextStyle(
-                                  fontSize: 8,
+                        const Spacer(),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  widget.onTapCalenderVisible!();
+                                  widget.updateFocusedDay!(tempFocusedDay!);
+                                  widget.updateSelectedDate!(tempSelectedDate!);
+                                },
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  side: const BorderSide(
+                                    color: Palette.gray300,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                          outsideBuilder: (context, day, focusedDay) {
-                            return const SizedBox.shrink();
-                          },
-                        ),
-                      ),
-                      const Spacer(),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: OutlinedButton(
-                              onPressed: () {
-                                widget.onTapCalenderVisible!();
-                                widget.updateFocusedDay!(tempFocusedDay!);
-                                widget.updateSelectedDate!(tempSelectedDate!);
-                              },
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                side: const BorderSide(
-                                  color: Palette.gray300,
-                                ),
-                              ),
-                              child: const Text(
-                                '취소',
-                                style: TextStyle(
-                                  fontSize: 8,
-                                  color: Palette.gray300,
+                                child: const Text(
+                                  '취소',
+                                  style: TextStyle(
+                                    fontSize: 8,
+                                    color: Palette.gray300,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: TextButton(
-                              onPressed: () {
-                                widget.onTapCalenderVisible!();
-                                widget.updateFocusedDay!(widget.focusedDay!);
-                                widget
-                                    .updateSelectedDate!(widget.selectedDate!);
-                              },
-                              style: TextButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () {
+                                  widget.onTapCalenderVisible!();
+                                  widget.updateFocusedDay!(widget.focusedDay!);
+                                  widget.updateSelectedDate!(
+                                      widget.selectedDate!);
+                                },
+                                style: TextButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  backgroundColor: Palette.green500,
+                                  disabledBackgroundColor: Palette.gray100,
                                 ),
-                                backgroundColor: Palette.green500,
-                                disabledBackgroundColor: Palette.gray100,
-                              ),
-                              child: const Text(
-                                '확인',
-                                style: TextStyle(
-                                  fontSize: 8,
-                                  color: Colors.white,
+                                child: const Text(
+                                  '확인',
+                                  style: TextStyle(
+                                    fontSize: 8,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
