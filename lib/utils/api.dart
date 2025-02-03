@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/custom_interceptor.dart';
 
@@ -57,41 +58,62 @@ class API {
   }
 
   /* Storage */
-  /// 냉장고에 저장돼있는 식재료를 받아오는 함수
-  /// Freezer, Fridge, Room에 있는 foods를 반환
-  static Future<List<dynamic>> getFoods() async {
+  /// 냉장고에 저장돼있는 식재료를 받아오는 get 요청
+  /// Freezer, Fridge, Room에 있는 식재료(food)를 반환
+  static Future<List<List<Food>>> getFoods() async {
+    List<List<Food>> foods = [[], [], []];
+
     try {
       final response = await _getApi('/storage');
-      if (response != null) return response.data;
+      if (response != null) {
+        final data = response.data;
+        if (data.isNotEmpty) {
+          for (var storage in data) {
+            String storageType = storage['storage'];
+            List<dynamic> foodList = storage['foods'];
+
+            if (foodList.isNotEmpty) {
+              List<Food> parsedFoods =
+                  foodList.map((food) => Food.fromJson(food)).toList();
+
+              switch (storageType) {
+                case 'fridge':
+                  foods[0].addAll(parsedFoods);
+                  break;
+                case 'freezer':
+                  foods[1].addAll(parsedFoods);
+                  break;
+                case 'room':
+                  foods[2].addAll(parsedFoods);
+                  break;
+              }
+            }
+          }
+        }
+      }
     } catch (e) {
       debugPrint('Error in getFoods: $e');
       throw Error();
     }
 
-    return [];
+    return foods;
   }
 
-  /// 냉장고에 저장된 식재료를 삭제하는 함수
-  static Future<dynamic> deleteFood(int foodId) async {
+  /// 냉장고에 저장된 식재료를 삭제하는 delete 요청
+  static Future<void> deleteFood(int foodId) async {
     try {
-      final response = await _deleteApi(
-        '/storage/delete',
-        jsonData: jsonEncode({'id': foodId}),
-      );
-      return response;
+      await _deleteApi('/storage/delete', jsonData: jsonEncode({'id': foodId}));
     } catch (e) {
       // debugPrint('Error in deleteFood: $e');
       throw Error();
     }
   }
 
-  static Future<dynamic> postFoods(
+  /// 식재료를 DB에 등록하는 post 요청
+  static Future<void> postFoods(
       List<Map<String, dynamic>> recognizedFoods) async {
     try {
-      final response =
-          await _postApi('/storage/add', jsonData: jsonEncode(recognizedFoods));
-
-      return response;
+      await _postApi('/storage/add', jsonData: jsonEncode(recognizedFoods));
     } catch (e) {
       throw Error();
     }

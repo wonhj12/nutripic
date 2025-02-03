@@ -14,10 +14,10 @@ class FoodSelect extends StatelessWidget {
         width: 16,
         height: 16,
         decoration: BoxDecoration(
-          color: isSelected ? Palette.delete : Palette.gray00,
+          color: isSelected ? Palette.green400 : Palette.gray00,
           shape: BoxShape.circle,
           border: Border.all(
-            color: isSelected ? Palette.delete : Palette.gray100,
+            color: isSelected ? Palette.green400 : Palette.gray100,
             width: 1,
           ),
         ),
