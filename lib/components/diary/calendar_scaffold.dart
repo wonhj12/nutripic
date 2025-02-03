@@ -99,7 +99,7 @@ class _CalendarScaffoldState extends State<CalendarScaffold>
           ),
           leading: IconButton(
             icon: const Icon(
-              Icons.close,
+              Icons.arrow_back,
               size: 20,
             ),
             onPressed: () {
