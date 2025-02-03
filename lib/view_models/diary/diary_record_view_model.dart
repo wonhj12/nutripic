@@ -21,22 +21,7 @@ class DiaryRecordViewModel extends ChangeNotifier {
     getDiaries();
   }
 
-  List<Diary> todayDiaries = [
-    // Diary(
-    //   diaryId: 1,
-    //   date: DateTime(2025, 1, 1, 17, 20),
-    //   content: "크게 될 친구.",
-    //   imageUrl:
-    //       "https://i.namu.wiki/i/VXD_sPrS1UvRN-_77YUHxRI0B6NTksSrIaV9bHBRkWUT3IN4ARAvKSOhti-1TtTFB6f7uqVd2ho33ZguUjmyRCCWnFJm8IdlxR8R1jbTOKz7baqApgxWracUIxRSLmJIATvZglVFDMTRZe2yZ6aO3A.webp",
-    // ),
-    // Diary(
-    //   diaryId: 1,
-    //   date: DateTime(2025, 1, 1, 20, 30),
-    //   content: "졸리다",
-    //   imageUrl:
-    //       "https://i.namu.wiki/i/HDx7Y8WXmam9g0G1AmUfOgV_Jn0CbHC5RjRX1Ccya4eSld6z_fvemYRET4DrKplQaELHgxDaiU9T1sWGz8LCRFksG5FG3mazXs6nLPuYubo125mZiblRODSeV2WB5Mq111hjEAHg_tSXRaDxvLB29A.webp",
-    // ),
-  ];
+  List<Diary> todayDiaries = [];
 
   /// 캘린더 표시 함수
   void onTapCalenderVisible() async {

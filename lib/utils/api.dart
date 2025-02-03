@@ -172,7 +172,6 @@ class API {
       final response = await _getApi(
         '/diary/calendar/$idx/$day',
       );
-      print(response.data);
       return response;
     } catch (e) {
       debugPrint('Error in getDiariesForDay: $e');
@@ -195,6 +194,18 @@ class API {
       return response;
     } catch (e) {
       debugPrint('Error in addDiary: $e');
+      throw Error();
+    }
+  }
+
+  /// 다이어리 생성
+  static Future<dynamic> getImgPresignedURL(String fileName) async {
+    try {
+      final response = await _getApi('/diary/get-signed-url/$fileName');
+      print(response.data);
+      return response;
+    } catch (e) {
+      debugPrint('Error in getImgPresignedURL: $e');
       throw Error();
     }
   }
