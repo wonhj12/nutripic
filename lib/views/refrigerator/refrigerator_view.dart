@@ -23,10 +23,10 @@ class RefrigeratorView extends StatelessWidget {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          // 냉장고
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // 검색 바
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -35,6 +35,8 @@ class RefrigeratorView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 44),
+
+              // 보유 식재료, 선택 버튼
               Expanded(
                 child: Container(
                   color: Palette.gray00,
@@ -42,10 +44,14 @@ class RefrigeratorView extends StatelessWidget {
                   child: Column(
                     children: [
                       const SizedBox(height: 52),
-
                       Row(
                         children: [
-                          const Text('보유한 식재료', style: Palette.title2SemiBold),
+                          Text(
+                            '보유한 식재료',
+                            style: Palette.title2SemiBold.copyWith(
+                              color: Palette.gray900,
+                            ),
+                          ),
                           const Spacer(),
 
                           // 취소 버튼
@@ -72,11 +78,17 @@ class RefrigeratorView extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
 
-                      // 냉장고
+                      // 식재료 컨테이너
                       RefrigeratorContainer(
                         foods: refrigeratorViewModel.refrigeratorModel
                             .foods[refrigeratorViewModel.storage.rawValue],
-                        selectedFoods: refrigeratorViewModel.selectedFoods,
+                        expiredFoods: refrigeratorViewModel
+                                .refrigeratorModel.expiredFoods[
+                            refrigeratorViewModel.storage.rawValue],
+                        selectedFoods: refrigeratorViewModel
+                            .refrigeratorModel.selectedFoods,
+                        selectedExpiredFoods: refrigeratorViewModel
+                            .refrigeratorModel.selectedExpiredFoods,
                         isSelectable: refrigeratorViewModel.isSelectable,
                         addFood: refrigeratorViewModel.onTapCamera,
                         selectFood: refrigeratorViewModel.selectFood,

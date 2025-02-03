@@ -45,7 +45,11 @@ class FoodTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: isSelected ? Palette.delete : Palette.gray100,
+                      color: isSelected
+                          ? Palette.green400
+                          : food.expired && !isSelectable
+                              ? Palette.delete
+                              : Palette.gray100,
                       width: 1,
                     ),
                   ),
