@@ -8,6 +8,7 @@ import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/camera/camera_add_view_model.dart';
 import 'package:nutripic/view_models/camera/camera_confirm_view_model.dart';
+import 'package:nutripic/view_models/camera/camera_loading_view_model.dart';
 import 'package:nutripic/view_models/camera/camera_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_record_view_model.dart';
@@ -23,6 +24,7 @@ import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:nutripic/views/camera/camera_add_view.dart';
 import 'package:nutripic/views/camera/camera_confirm_view.dart';
+import 'package:nutripic/views/camera/camera_loading_view.dart';
 import 'package:nutripic/views/diary/diary_record_view.dart';
 import 'package:nutripic/views/diary/diary_view.dart';
 import 'package:nutripic/views/login/email_view.dart';
@@ -137,6 +139,7 @@ class AppRouter {
                     child: const RefrigeratorView(),
                   ),
                   routes: [
+                    // 카메라 사진 촬영
                     GoRoute(
                       path: 'camera',
                       parentNavigatorKey: _rootNavigatorKey,
@@ -149,6 +152,7 @@ class AppRouter {
                         child: const CameraView(),
                       ),
                       routes: [
+                        // 사진 확인
                         GoRoute(
                           path: 'confirm',
                           parentNavigatorKey: _rootNavigatorKey,
@@ -162,6 +166,19 @@ class AppRouter {
                         )
                       ],
                     ),
+                    // 분석 중 로딩 화면
+                    GoRoute(
+                      path: 'loading',
+                      parentNavigatorKey: _rootNavigatorKey,
+                      builder: (context, state) => ChangeNotifierProvider(
+                        create: (context) => CameraLoadingViewModel(
+                          cameraModel: cameraModel,
+                          context: context,
+                        ),
+                        child: const CameraLoadingView(),
+                      ),
+                    ),
+                    // 식재료 추가
                     GoRoute(
                       path: 'add',
                       parentNavigatorKey: _rootNavigatorKey,

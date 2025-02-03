@@ -11,24 +11,23 @@ import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/login/email_view_model.dart';
 import 'package:provider/provider.dart';
 
-class EmailView extends StatefulWidget {
+class EmailView extends StatelessWidget {
   const EmailView({super.key});
 
-  @override
-  State<EmailView> createState() => _EmailViewState();
-}
-
-class _EmailViewState extends State<EmailView> {
   @override
   Widget build(BuildContext context) {
     EmailViewModel emailViewModel = context.watch<EmailViewModel>();
 
     return CustomScaffold(
-      appBar: const CustomAppBar(title: '다른 방법으로 로그인'),
+      appBar: const CustomAppBar(
+        title: '다른 방법으로 로그인',
+        centerTitle: false,
+      ),
       resizeToAvoidBottomInset: true,
       isLoading: emailViewModel.isLoading,
       body: Form(
         key: emailViewModel.formKey,
+        autovalidateMode: emailViewModel.validateMode,
         child: CustomSingleChildScrollView(
           children: [
             SizedBox(height: emailViewModel.topPadding()),

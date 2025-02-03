@@ -44,6 +44,7 @@ class _UserEditViewState extends State<UserEditView> {
             const SizedBox(height: 8),
             CustomTextField(
               initialValue: userModel.name,
+              controller: TextEditingController(),
             ),
             const SizedBox(height: 36),
 
