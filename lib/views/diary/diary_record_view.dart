@@ -19,18 +19,72 @@ class DiaryRecordView extends StatelessWidget {
     //   diaryRecordViewModel.getDiaryRecord();
     // }
     return CalendarScaffold(
-      body: ListView.builder(
-        itemCount: diaryRecordViewModel.diaryModel.diariesForDay.length,
-        itemBuilder: (context, index) {
-          final diary = diaryRecordViewModel.diaryModel.diariesForDay[index];
-          return DiaryCard(
-            diary: diary,
-            onPressed: () =>
-                diaryRecordViewModel.showOptionModal(diary.diaryId!),
-            getTime: diaryRecordViewModel.getTime(diary.date!),
-          );
-        },
-      ),
+      body: diaryRecordViewModel.diaryModel.diariesForDay.isEmpty
+          ? Center(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  const Text(
+                    '등록한 일지가 없어요.',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Palette
+                          .gray700, // You can choose the color to match your design
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const Text(
+                    '식단을 등록하고 기록해 보세요.',
+                    style: TextStyle(
+                      fontSize: 8,
+                      color: Palette
+                          .gray400, // You can choose the color to match your design
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  SizedBox(
+                    width: 72,
+                    height: 32,
+                    child: TextButton(
+                      onPressed: () =>
+                          diaryRecordViewModel.navigateToDiaryPost(),
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        backgroundColor: Palette.gray100,
+                      ),
+                      child: const Text(
+                        "등록하기",
+                        style: TextStyle(
+                          fontSize: 8,
+                          color: Palette.green600,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          : ListView.builder(
+              itemCount: diaryRecordViewModel.diaryModel.diariesForDay.length,
+              itemBuilder: (context, index) {
+                final diary =
+                    diaryRecordViewModel.diaryModel.diariesForDay[index];
+                return DiaryCard(
+                  diary: diary,
+                  onPressed: () =>
+                      diaryRecordViewModel.showOptionModal(diary.diaryId!),
+                  getTime: diaryRecordViewModel.getTime(diary.date!),
+                );
+              },
+            ),
       isCalendarVisible: diaryRecordViewModel.isCalendarVisible,
       selectedDateString: diaryRecordViewModel.selectedDateString(),
       onTapCalenderVisible: diaryRecordViewModel.onTapCalenderVisible,
@@ -39,7 +93,8 @@ class DiaryRecordView extends StatelessWidget {
       focusedDay: diaryRecordViewModel.focusedDay,
       updateSelectedDate: diaryRecordViewModel.updateSelectedDate,
       updateFocusedDay: diaryRecordViewModel.updateFocusedDay,
-      addButton: true,
+      addButton:
+          diaryRecordViewModel.diaryModel.diariesForDay.isEmpty ? false : true,
     );
   }
 }
