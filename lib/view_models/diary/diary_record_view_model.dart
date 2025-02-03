@@ -65,8 +65,6 @@ class DiaryRecordViewModel extends ChangeNotifier {
     try {
       await diaryModel.getDiariesForDay(
           DateTime.now().month - focusedDay.month, focusedDay.day);
-      debugPrint(
-          "📢 Diaries fetched successfully! Count: ${diaryModel.diariesForDay.length}");
     } catch (e) {
       debugPrint('Error fetching diaries: $e');
     }
@@ -76,8 +74,6 @@ class DiaryRecordViewModel extends ChangeNotifier {
   }
 
   List<Diary> getDiariesForDay() {
-    debugPrint(
-        "📢 getDiariesForDay() called. Diaries count: ${diaryModel.diariesForDay.length}");
     return diaryModel.diariesForDay.toList();
   }
 

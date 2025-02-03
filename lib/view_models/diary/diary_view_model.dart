@@ -9,7 +9,9 @@ class DiaryViewModel extends ChangeNotifier {
   DiaryViewModel({
     required this.diaryModel,
     required this.context,
-  });
+  }) {
+    updateDiaries();
+  }
 
   DateTime focusedDay = DateTime.now();
   DateTime? selectedDate;

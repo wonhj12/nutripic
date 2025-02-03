@@ -198,10 +198,15 @@ class API {
     }
   }
 
-  /// 다이어리 생성
+  /// URL
   static Future<dynamic> getImgPresignedURL(String fileName) async {
     try {
-      final response = await _getApi('/diary/get-signed-url/$fileName');
+      final response = await _getApi(
+        '/diary/get-signed-url',
+        queryParameters: {
+          'fileName': fileName,
+        },
+      );
       print(response.data);
       return response;
     } catch (e) {

@@ -114,14 +114,14 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                             diaryPostViewModel.selectTime(time);
                           },
                           child: Container(
-                            height: 35,
+                            height: 31,
                             width: 60,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: diaryPostViewModel.isSelected(time)
                                   ? Palette.green500
                                   : Colors.transparent, // 선택된 버튼 색상
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(8),
                               border: Border.all(
                                 color: diaryPostViewModel.isSelected(time)
                                     ? Palette.green500
