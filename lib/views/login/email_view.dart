@@ -55,7 +55,7 @@ class EmailView extends StatelessWidget {
             CustomTextField(
               label: '이메일',
               controller: emailViewModel.email,
-              validator: emailViewModel.validateEmail(),
+              validator: emailViewModel.validateEmail,
               onChanged: emailViewModel.onTextFieldChanged(),
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
@@ -67,7 +67,7 @@ class EmailView extends StatelessWidget {
             CustomTextField(
               label: '비밀번호',
               controller: emailViewModel.password,
-              validator: emailViewModel.validatePassword(),
+              validator: emailViewModel.validatePassword,
               onChanged: emailViewModel.onTextFieldChanged(),
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.done,
