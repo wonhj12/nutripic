@@ -19,8 +19,6 @@ class RecipeViewModel with ChangeNotifier {
   /// 레시피 상세 페이지로 이동
   void onTapDetail(Recipe recipe) async {
     try {
-      //dynamic specificRecipe = await API.getSpecificRecipes(recipe.id);
-
       recipeModel.saveSpecificRecipe(recipe);
       context.go('/recipe/detail');
     } catch (e) {
@@ -56,8 +54,6 @@ class RecipeViewModel with ChangeNotifier {
           }
           recipeIds.addAll(indices.toList());
         } else {
-          //recipeIds.addAll(reconmmendedRecipes[0]);
-          //recipeIds.addAll(reconmmendedRecipes[1]);
           final random = Random();
           final Set<int> indices = {};
 
@@ -67,7 +63,6 @@ class RecipeViewModel with ChangeNotifier {
           }
           recipeIds.addAll(indices.toList());
         }
-        print(recipeIds);
         final List<Recipe> recipes = await API.recipePreview(recipeIds);
         recipeModel.saveRecipes(recipes);
         notifyListeners();
@@ -96,11 +91,12 @@ class RecipeViewModel with ChangeNotifier {
     int index = recipeModel.recipes.indexOf(recipe);
     if (index != -1) {
       bool? currentFavorite = recipeModel.recipes[index].isFavorite;
-      print("Toggling favorite for ${recipe.name}: $currentFavorite");
+      debugPrint('Toggling favorite for ${recipe.name}: $currentFavorite');
 
       // `currentFavorite`이 null인지 확인
       recipeModel.recipes[index].isFavorite = !currentFavorite;
-      print("New favorite state: ${recipeModel.recipes[index].isFavorite}");
+      debugPrint(
+          'New favorite state: ${recipeModel.recipes[index].isFavorite}');
 
       notifyListeners();
     }
@@ -151,7 +147,7 @@ class RecipeViewModel with ChangeNotifier {
   }
 
   void applyFilters(BuildContext context) {
-    print('적용된 필터: $_selectedFilters');
+    debugPrint('적용된 필터: $_selectedFilters');
     Navigator.of(context).pop(); // 다이얼로그 닫기
     notifyListeners(); // 필터 적용 상태를 알림
   }

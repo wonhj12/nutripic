@@ -13,7 +13,7 @@ class BottomNavbar extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
         enableFeedback: false,
-        selectedItemColor: Palette.sub,
+        selectedItemColor: Palette.gray700,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           bottomNavbarItem(
@@ -24,17 +24,12 @@ class BottomNavbar extends StatelessWidget {
           bottomNavbarItem(
             src: 'assets/icons/record.svg',
             active: 'assets/icons/record_active.svg',
-            label: '기록',
+            label: '일지',
           ),
-          // bottomNavbarItem(
-          //   src: 'assets/icons/add.svg',
-          //   active: 'assets/icons/add_active.svg',
-          //   label: '식재료 추가',
-          // ),
           bottomNavbarItem(
             src: 'assets/icons/search.svg',
             active: 'assets/icons/search_active.svg',
-            label: '레시피 찾기',
+            label: '레시피',
           ),
           bottomNavbarItem(
             src: 'assets/icons/my.svg',

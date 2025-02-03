@@ -25,14 +25,14 @@ class RefrigeratorSelectContainer extends StatelessWidget {
     ];
 
     return Container(
-      width: 260,
-      height: 46,
+      width: 282,
+      height: 52,
       decoration: BoxDecoration(
-        color: Palette.gray100,
-        borderRadius: BorderRadius.circular(75),
+        color: Palette.gray00,
+        borderRadius: BorderRadius.circular(155),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(4),
+        padding: const EdgeInsets.all(6),
         child: Stack(
           children: [
             // 선택된 항목 배경
@@ -42,9 +42,9 @@ class RefrigeratorSelectContainer extends StatelessWidget {
               curve: Curves.fastOutSlowIn,
               child: Container(
                 width: 84,
-                height: 38,
+                height: 40,
                 decoration: BoxDecoration(
-                  color: Palette.gray700,
+                  color: Palette.green500,
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
@@ -52,7 +52,6 @@ class RefrigeratorSelectContainer extends StatelessWidget {
 
             // 텍스트
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // 냉장
                 RefrigeratorSelectText(
@@ -60,6 +59,7 @@ class RefrigeratorSelectContainer extends StatelessWidget {
                   selected: selected,
                   onTap: onTapRefrigerator,
                 ),
+                const SizedBox(width: 12),
 
                 // 냉동
                 RefrigeratorSelectText(
@@ -67,6 +67,7 @@ class RefrigeratorSelectContainer extends StatelessWidget {
                   selected: selected,
                   onTap: onTapFreezer,
                 ),
+                const SizedBox(width: 12),
 
                 // 실온
                 RefrigeratorSelectText(

@@ -24,7 +24,7 @@ class IngredientItem extends StatelessWidget {
         children: [
           Text(
             ingredient.ingredientName,
-            style: Palette.body,
+            style: Palette.body1,
           ),
           const SizedBox(width: 8),
           Text(

@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/custom_interceptor.dart';
 
@@ -41,7 +42,7 @@ class API {
     return token;
   }
 
-    /// 회원가입 후 db에 사용자 정보를 저장하는 함수
+  /// 회원가입 후 db에 사용자 정보를 저장하는 함수
   static Future<dynamic> postUser(String uid) async {
     try {
       final response = await _postApi(
@@ -51,25 +52,76 @@ class API {
 
       return response;
     } catch (e) {
+      debugPrint('Error in postUser: $e');
       throw Error();
     }
   }
 
   /* Storage */
-  /// 냉장고에 저장돼있는 식재료를 받아오는 함수
-  /// Freezer, Fridge, Room에 있는 foods를 반환
-  static Future<List<dynamic>> getFoods() async {
+  /// 냉장고에 저장돼있는 식재료를 받아오는 get 요청
+  /// Freezer, Fridge, Room에 있는 식재료(food)를 반환
+  static Future<List<List<Food>>> getFoods() async {
+    List<List<Food>> foods = [[], [], []];
+
     try {
       final response = await _getApi('/storage');
-      if (response != null) return response.data;
+      if (response != null) {
+        final data = response.data;
+        if (data.isNotEmpty) {
+          for (var storage in data) {
+            String storageType = storage['storage'];
+            List<dynamic> foodList = storage['foods'];
+
+            if (foodList.isNotEmpty) {
+              List<Food> parsedFoods =
+                  foodList.map((food) => Food.fromJson(food)).toList();
+
+              switch (storageType) {
+                case 'fridge':
+                  foods[0].addAll(parsedFoods);
+                  break;
+                case 'freezer':
+                  foods[1].addAll(parsedFoods);
+                  break;
+                case 'room':
+                  foods[2].addAll(parsedFoods);
+                  break;
+              }
+            }
+          }
+        }
+      }
     } catch (e) {
-      // debugPrint('Error in getFoods: $e');
+      debugPrint('Error in getFoods: $e');
       throw Error();
     }
 
-    return [];
+    return foods;
   }
 
+  /// 냉장고에 저장된 식재료를 삭제하는 delete 요청
+  static Future<void> deleteFood(int foodId) async {
+    try {
+      await _deleteApi('/storage/delete', jsonData: jsonEncode({'id': foodId}));
+    } catch (e) {
+      // debugPrint('Error in deleteFood: $e');
+      throw Error();
+    }
+  }
+
+  /// 식재료를 DB에 등록하는 post 요청
+  static Future<void> postFoods(
+      List<Map<String, dynamic>> recognizedFoods) async {
+    try {
+      await _postApi('/storage/add', jsonData: jsonEncode(recognizedFoods));
+    } catch (e) {
+      throw Error();
+    }
+  }
+
+  /* Recipes */
+
+  /// 레시피 가져오는 함수
   static Future<dynamic> getRecipes() async {
     try {
       final response = await _getApi('/recipe/recommended');
@@ -120,20 +172,68 @@ class API {
       throw Exception('Failed to load recipes: $e');
     }
   }
-  
-  static Future<dynamic> deleteFood(int foodId) async {
+
+  /* Diary */
+
+  /// 특정 유저의 모든 다이어리 조회
+  static Future<dynamic> getDiariesForMonth(int idx) async {
     try {
-      final response = await _deleteApi(
-        '/storage/delete',
-        jsonData: jsonEncode({'id': foodId}),
+      final response = await _getApi(
+        '/diary/calendar/$idx',
       );
       return response;
     } catch (e) {
-      // debugPrint('Error in deleteFood: $e');
+      debugPrint('Error in getDiary: $e');
       throw Error();
     }
   }
-  
+
+  /// 특정 다이어리 조회
+  static Future<dynamic> getDiariesForDay(int diaryId) async {
+    try {
+      final response = await _getApi(
+        '/diary/$diaryId',
+      );
+      return response;
+    } catch (e) {
+      debugPrint('Error in getDiariesForDay: $e');
+      throw Error();
+    }
+  }
+
+  /// 다이어리 생성
+  static Future<dynamic> addDiary(
+      String body, DateTime date, String url) async {
+    try {
+      final response = await _postApi(
+        '/diary/add',
+        jsonData: jsonEncode({
+          'body': body,
+          'date': date.toIso8601String(),
+          'url': url,
+        }),
+      );
+      return response;
+    } catch (e) {
+      debugPrint('Error in addDiary: $e');
+      throw Error();
+    }
+  }
+
+  /// 특정 다이어리 삭제
+  static Future<dynamic> deleteDiary(int diaryId) async {
+    try {
+      final response = await _deleteApi(
+        '/diary/delete/$diaryId',
+      );
+      debugPrint(response);
+      return response;
+    } catch (e) {
+      debugPrint('Error in deleteDiary: $e');
+      throw Error();
+    }
+  }
+
   /* BASE API (GET, POST, PATCH, DELETE) */
 
   /// ### API GET
@@ -147,9 +247,13 @@ class API {
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
+    dio.interceptors.clear();
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
-    return await dio.get(endPoint,
-        queryParameters: queryParameters, data: jsonData);
+    return await dio.get(
+      endPoint,
+      data: jsonData,
+      queryParameters: queryParameters,
+    );
   }
 
   /// ### API POST
@@ -163,6 +267,7 @@ class API {
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
+    dio.interceptors.clear();
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
     return await dio.post(endPoint, data: jsonData);
   }
@@ -178,6 +283,7 @@ class API {
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
+    dio.interceptors.clear();
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
     return await dio.patch(endPoint, data: jsonData);
   }
@@ -193,6 +299,7 @@ class API {
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
+    dio.interceptors.clear();
     dio.interceptors.add(CustomInterceptor(tokenRequired: tokenRequired));
     return await dio.delete(endPoint, data: jsonData);
   }

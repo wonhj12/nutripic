@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/models/user_model.dart';
+import 'package:nutripic/utils/validator.dart';
 
 class EmailViewModel with ChangeNotifier {
   UserModel userModel;
@@ -20,6 +21,12 @@ class EmailViewModel with ChangeNotifier {
   /// 로그인 오류 텍스트
   String? errorText;
 
+  /// 로그인 버튼 활성화 여부
+  bool isLoginBtnEnabled = false;
+
+  /// 유효성 검사 모드
+  AutovalidateMode validateMode = AutovalidateMode.disabled;
+
   /// 로딩 여부
   bool isLoading = false;
 
@@ -32,6 +39,9 @@ class EmailViewModel with ChangeNotifier {
   void emailLogin() async {
     isLoading = true;
     errorText = null; // 에러 텍스트 초기화
+    // validate 한번 한 후에는 검사 모드 변경
+    validateMode = AutovalidateMode.onUserInteraction;
+
     notifyListeners();
 
     if (formKey.currentState!.validate()) {
@@ -78,37 +88,24 @@ class EmailViewModel with ChangeNotifier {
   }
 
   /// 이메일 유효성 검사
-  String? Function(String?) validateEmail() {
-    return (String? value) {
-      final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
-
-      if (value == null || value.trim().isEmpty) {
-        return '이메일을 입력하세요.';
-      }
-
-      if (!emailRegex.hasMatch(value.trim())) {
-        return '유효하지 않은 이메일 주소입니다.';
-      }
-
-      return null;
-    };
-  }
+  String? Function(String?) get validateEmail => emailValidator();
 
   /// 비밀번호 유효성 검사
-  String? Function(String?) validatePassword() {
+  String? Function(String?) get validatePassword => passwordValidator();
+
+  /// 이메일, 비밀번호를 입력하면 확인 후 로그인 버튼을 활성화하는 함수
+  void Function(String?) onTextFieldChanged() {
     return (String? value) {
-      final passwordRegex = RegExp(
-          r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
+      final emailValid = validateEmail(email.text.trim());
+      final passwordValid = validatePassword(password.text.trim());
 
-      if (value == null || value.trim().isEmpty) {
-        return '비밀번호를 입력하세요.';
+      if (emailValid == null && passwordValid == null) {
+        isLoginBtnEnabled = true;
+      } else {
+        isLoginBtnEnabled = false;
       }
 
-      if (!passwordRegex.hasMatch(value.trim())) {
-        return '유효하지 않은 비밀번호입니다.';
-      }
-
-      return null;
+      notifyListeners();
     };
   }
 }

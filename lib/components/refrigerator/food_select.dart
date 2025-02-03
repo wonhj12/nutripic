@@ -14,15 +14,15 @@ class FoodSelect extends StatelessWidget {
         width: 16,
         height: 16,
         decoration: BoxDecoration(
-          color: isSelected ? Palette.delete : Palette.white,
+          color: isSelected ? Palette.green400 : Palette.gray00,
           shape: BoxShape.circle,
           border: Border.all(
-            color: isSelected ? Palette.delete : Palette.gray100,
+            color: isSelected ? Palette.green400 : Palette.gray100,
             width: 1,
           ),
         ),
         child: isSelected
-            ? const Icon(Icons.check_rounded, color: Palette.white, size: 12)
+            ? const Icon(Icons.check_rounded, color: Palette.gray00, size: 12)
             : Container(),
       ),
     );

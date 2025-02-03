@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nutripic/utils/palette.dart';
 
-class ImagePreview extends StatelessWidget {
+class CameraImagePreview extends StatelessWidget {
   final File? image;
   final int length;
-  const ImagePreview({super.key, required this.image, required this.length});
+  const CameraImagePreview(
+      {super.key, required this.image, required this.length});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ImagePreview extends StatelessWidget {
                 )
               : const Icon(
                   Icons.camera_alt_outlined,
-                  color: Palette.white,
+                  color: Palette.gray00,
                 ),
         ),
 
@@ -41,13 +42,13 @@ class ImagePreview extends StatelessWidget {
               height: 20,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Palette.secondary,
+                color: Palette.green500,
               ),
               child: Center(
                 child: Text(
                   '$length',
-                  style: Palette.body.copyWith(
-                      color: Palette.white, fontWeight: FontWeight.w600),
+                  style: Palette.body1.copyWith(
+                      color: Palette.gray00, fontWeight: FontWeight.w600),
                 ),
               ),
             ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/common/custom_app_bar.dart';
-import 'package:nutripic/components/select_button.dart';
+import 'package:nutripic/components/refrigerator/refrigerator_search_container.dart';
+import 'package:nutripic/components/box_button.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_container.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_select_container.dart';
-import 'package:nutripic/utils/enums/select_button_type.dart';
+import 'package:nutripic/utils/enums/box_button_type.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:provider/provider.dart';
@@ -18,77 +18,98 @@ class RefrigeratorView extends StatelessWidget {
         context.watch<RefrigeratorViewModel>();
 
     return CustomScaffold(
-      appBar: const CustomAppBar(backButton: false),
+      backgroundColor: Palette.green500,
+      padding: 0,
       body: Stack(
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.center,
         children: [
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 26),
+              // 검색 바
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: RefrigeratorSearchContainer(
+                  onPressedCamera: refrigeratorViewModel.onTapCamera,
+                ),
+              ),
+              const SizedBox(height: 44),
 
-              // 헤더
-              Row(
-                children: [
-                  const Text('나의 냉장고', style: Palette.heading),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: refrigeratorViewModel.onTapCamera,
-                    icon: const Icon(
-                      Icons.camera,
-                    ),
+              // 보유 식재료, 선택 버튼
+              Expanded(
+                child: Container(
+                  color: Palette.gray00,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 52),
+                      Row(
+                        children: [
+                          Text(
+                            '보유한 식재료',
+                            style: Palette.title2SemiBold.copyWith(
+                              color: Palette.gray900,
+                            ),
+                          ),
+                          const Spacer(),
+
+                          // 취소 버튼
+                          if (refrigeratorViewModel.isSelectable)
+                            BoxButton(
+                              label: '취소',
+                              onPressed: refrigeratorViewModel.onTapCancel,
+                            ),
+                          const SizedBox(width: 8),
+
+                          refrigeratorViewModel.isSelectable
+                              // 삭제 버튼
+                              ? BoxButton(
+                                  label: '삭제',
+                                  type: BoxButtonType.delete,
+                                  onPressed: refrigeratorViewModel.onTapDelete,
+                                )
+                              // 선택 버튼
+                              : BoxButton(
+                                  label: '편집',
+                                  onPressed: refrigeratorViewModel.onTapSelect,
+                                ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+
+                      // 식재료 컨테이너
+                      RefrigeratorContainer(
+                        foods: refrigeratorViewModel.refrigeratorModel
+                            .foods[refrigeratorViewModel.storage.rawValue],
+                        expiredFoods: refrigeratorViewModel
+                                .refrigeratorModel.expiredFoods[
+                            refrigeratorViewModel.storage.rawValue],
+                        selectedFoods: refrigeratorViewModel
+                            .refrigeratorModel.selectedFoods,
+                        selectedExpiredFoods: refrigeratorViewModel
+                            .refrigeratorModel.selectedExpiredFoods,
+                        isSelectable: refrigeratorViewModel.isSelectable,
+                        addFood: refrigeratorViewModel.onTapCamera,
+                        selectFood: refrigeratorViewModel.selectFood,
+                      ),
+                    ],
                   ),
-                  refrigeratorViewModel.isSelectable
-                      // 취소 버튼
-                      ? SelectButton(
-                          label: '취소',
-                          type: SelectButtonType.cancel,
-                          onPressed: refrigeratorViewModel.onTapCancel,
-                        )
-                      // 정렬
-                      : const Text('추가한 순', style: Palette.body),
-                  const SizedBox(width: 15),
-                  refrigeratorViewModel.isSelectable
-                      // 삭제 버튼
-                      ? SelectButton(
-                          label: '삭제',
-                          type: SelectButtonType.delete,
-                          onPressed: refrigeratorViewModel.onTapDelete,
-                        )
-                      // 선택 버튼
-                      : SelectButton(
-                          label: '선택',
-                          onPressed: refrigeratorViewModel.onTapSelect)
-                ],
+                ),
               ),
-              const SizedBox(height: 12),
-
-              // 냉장고
-              RefrigeratorContainer(
-                foods: refrigeratorViewModel.refrigeratorModel
-                    .foods[refrigeratorViewModel.storage.rawValue],
-                selectedFoods: refrigeratorViewModel.selectedFoods,
-                isSelectable: refrigeratorViewModel.isSelectable,
-                addFood: null,
-                selectFood: refrigeratorViewModel.selectFood,
-              ),
-              const SizedBox(height: 16),
             ],
           ),
 
-          // 냉장고 선택 버튼
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RefrigeratorSelectContainer(
-                selected: refrigeratorViewModel.storage,
-                onTapRefrigerator: refrigeratorViewModel.onTapRefrigerator,
-                onTapFreezer: refrigeratorViewModel.onTapFreezer,
-                onTapCabinet: refrigeratorViewModel.onTapCabinet,
-              ),
-              const SizedBox(height: 24),
-            ],
-          )
+          // 냉장고 선택
+          Positioned(
+            top: 90,
+            child: RefrigeratorSelectContainer(
+              selected: refrigeratorViewModel.storage,
+              onTapRefrigerator: refrigeratorViewModel.onTapRefrigerator,
+              onTapFreezer: refrigeratorViewModel.onTapFreezer,
+              onTapCabinet: refrigeratorViewModel.onTapCabinet,
+            ),
+          ),
         ],
       ),
     );

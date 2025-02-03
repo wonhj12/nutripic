@@ -34,16 +34,6 @@ class Food {
     required this.expired,
   });
 
-  /// 유통기한 표시 여부를 결정하는 함수
-  bool showDday() {
-    return dDay() <= 7;
-  }
-
-  /// 유통기한 마감 d-day를 반환하는 함수
-  int dDay() {
-    return expireDate.difference(DateTime.now()).inDays;
-  }
-
   /// jsonData에서 받아온 데이터를 Food로 변환 저장하는 함수
   factory Food.fromJson(Map<String, dynamic> json) {
     return Food(

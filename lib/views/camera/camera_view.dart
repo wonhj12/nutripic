@@ -1,10 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/camera/camera_shutter.dart';
-import 'package:nutripic/components/camera/image_preview.dart';
+import 'package:nutripic/components/camera/camera_image_preview.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
-import 'package:nutripic/components/select_button.dart';
-import 'package:nutripic/utils/enums/select_button_type.dart';
+import 'package:nutripic/components/box_button.dart';
+import 'package:nutripic/utils/enums/box_button_type.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/camera/camera_view_model.dart';
 import 'package:provider/provider.dart';
@@ -17,40 +17,27 @@ class CameraView extends StatelessWidget {
     CameraViewModel cameraViewModel = context.watch<CameraViewModel>();
 
     return CustomScaffold(
-      isLoading: cameraViewModel.isLoading || !cameraViewModel.isCameraLoaded,
+      isLoading: cameraViewModel.isLoading ||
+          !cameraViewModel.cameraModel.isCameraLoaded,
       padding: 0,
       useSafeArea: false,
+      canPop: false,
       body: Column(
         children: [
           // 상단
-          Expanded(
+          SizedBox(
+            height: 128,
             child: Container(
-              alignment: Alignment.bottomCenter,
-              padding: const EdgeInsets.fromLTRB(26, 0, 26, 30),
-              color: Palette.black, // 상단 검정 테두리
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // 닫기 버튼
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(
-                      Icons.close,
-                      size: 24,
-                      color: Palette.white,
-                    ),
-                  ),
-
-                  // 전환 버튼
-                  IconButton(
-                    onPressed: cameraViewModel.changeCameraDirection,
-                    icon: const Icon(
-                      Icons.restart_alt_rounded,
-                      size: 24,
-                      color: Palette.white,
-                    ),
-                  ),
-                ],
+              alignment: Alignment.bottomLeft,
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 18),
+              color: Palette.gray900, // 상단 검정 테두리
+              child: IconButton(
+                onPressed: cameraViewModel.onPressedClose,
+                icon: const Icon(
+                  Icons.close,
+                  size: 24,
+                  color: Palette.gray00,
+                ),
               ),
             ),
           ),
@@ -58,17 +45,10 @@ class CameraView extends StatelessWidget {
           // 카메라 화면 비율과 동일하게 설정
           // 카메라 화면 확보
           // 카메라 화면 표시
-          cameraViewModel.isCameraLoaded
-              ? Stack(
-                  children: [
-                    CameraPreview(cameraViewModel.controller),
-
-                    // 감지된 식재료가 있으면 테두리 표시
-                    ...cameraViewModel.drawDetectionBoxes(),
-                  ],
-                )
+          cameraViewModel.cameraModel.isCameraLoaded
+              ? CameraPreview(cameraViewModel.cameraModel.controller!)
               : Container(
-                  color: Palette.black,
+                  color: Palette.gray900,
                   child: const AspectRatio(aspectRatio: 3 / 4),
                 ),
 
@@ -76,26 +56,26 @@ class CameraView extends StatelessWidget {
           Expanded(
             child: Container(
               alignment: Alignment.topCenter,
-              padding: const EdgeInsets.fromLTRB(26, 28, 26, 0),
-              color: Palette.black,
+              padding: const EdgeInsets.fromLTRB(26, 30, 26, 0),
+              color: Palette.gray900,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // 사진 preview
-                  ImagePreview(
-                    image: cameraViewModel.images.lastOrNull,
-                    length: cameraViewModel.images.length,
+                  CameraImagePreview(
+                    image: cameraViewModel.cameraModel.images.lastOrNull,
+                    length: cameraViewModel.cameraModel.images.length,
                   ),
 
                   // 카메라 셔터
                   CameraShutter(onTap: cameraViewModel.takePicture),
 
                   // 완료 버튼
-                  SelectButton(
-                    label: '완료',
-                    type: SelectButtonType.delete,
-                    onPressed: () {},
+                  BoxButton(
+                    label: '다음',
+                    type: BoxButtonType.transparent,
+                    onPressed: cameraViewModel.onTapComplete,
                   )
                 ],
               ),
