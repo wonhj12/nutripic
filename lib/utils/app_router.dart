@@ -59,25 +59,25 @@ class AppRouter {
   ) {
     return GoRouter(
       navigatorKey: _rootNavigatorKey,
-      initialLocation: '/diary',
-      // redirect: (context, state) {
-      //   // 사용자 데이터가 있으면 firebase 로그인이 완료된 상태
-      //   // 사용자 데이터가 없으면 로그인 화면으로 이동, 있으면 홈 화면으로 이동
-      //   if (userModel.uid == null) {
-      //     // 회원가입, 이메일 로그인 페이지로 이동만 허용
-      //     if (state.fullPath == '/login/signup' ||
-      //         state.fullPath == '/login/email') {
-      //       return null;
-      //     }
+      initialLocation: '/login',
+      redirect: (context, state) {
+        // 사용자 데이터가 있으면 firebase 로그인이 완료된 상태
+        // 사용자 데이터가 없으면 로그인 화면으로 이동, 있으면 홈 화면으로 이동
+        if (userModel.uid == null) {
+          // 회원가입, 이메일 로그인 페이지로 이동만 허용
+          if (state.fullPath == '/login/signup' ||
+              state.fullPath == '/login/email') {
+            return null;
+          }
 
-      //     // 로그인이 되지 않은 상태에서 다른 페이지로 이동하려 하면 login 페이지로 리디렉팅
-      //     return '/login';
-      //   } else if (state.fullPath == '/login') {
-      //     return '/refrigerator';
-      //   } else {
-      //     return null;
-      //   }
-      // },
+          // 로그인이 되지 않은 상태에서 다른 페이지로 이동하려 하면 login 페이지로 리디렉팅
+          return '/login';
+        } else if (state.fullPath == '/login') {
+          return '/refrigerator';
+        } else {
+          return null;
+        }
+      },
       routes: [
         // 로그인
         GoRoute(

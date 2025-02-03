@@ -121,8 +121,7 @@ class DiaryCalendar extends StatelessWidget {
                       CircleAvatar(
                         radius: 20,
                         backgroundImage:
-                            NetworkImage(diariesForDay[0].imageUrl!),
-                        //FileImage(File(diariesForDay[0].imageUrl!)),
+                            FileImage(File(diariesForDay[0].imageUrl!)),
                       ),
 
                       // 일기 두 개 이상일때 알림

@@ -153,7 +153,7 @@ class API {
 
   /* Diary */
 
-  /// 특정 유저의 모든 다이어리 조회
+  /// 한 달달 다이어리 조회
   static Future<dynamic> getDiariesForMonth(int idx) async {
     try {
       final response = await _getApi(
@@ -161,17 +161,18 @@ class API {
       );
       return response;
     } catch (e) {
-      debugPrint('Error in getDiary: $e');
+      debugPrint('Error in getDiariesForMonth: $e');
       throw Error();
     }
   }
 
-  /// 특정 다이어리 조회
-  static Future<dynamic> getDiariesForDay(int diaryId) async {
+  /// 하루 다이어리 조회
+  static Future<dynamic> getDiariesForDay(int idx, int day) async {
     try {
       final response = await _getApi(
-        '/diary/$diaryId',
+        '/diary/calendar/$idx/$day',
       );
+      print(response.data);
       return response;
     } catch (e) {
       debugPrint('Error in getDiariesForDay: $e');

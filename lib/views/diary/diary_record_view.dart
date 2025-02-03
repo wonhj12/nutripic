@@ -20,9 +20,9 @@ class DiaryRecordView extends StatelessWidget {
     // }
     return CalendarScaffold(
       body: ListView.builder(
-        itemCount: diaryRecordViewModel.todayDiaries.length,
+        itemCount: diaryRecordViewModel.diaryModel.diariesForDay.length,
         itemBuilder: (context, index) {
-          final diary = diaryRecordViewModel.todayDiaries[index];
+          final diary = diaryRecordViewModel.diaryModel.diariesForDay[index];
           return DiaryCard(
             diary: diary,
             onPressed: () =>

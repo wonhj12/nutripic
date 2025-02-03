@@ -24,7 +24,8 @@ class DiaryViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await diaryModel.getDiaries(DateTime.now().month - focusedDay.month);
+      await diaryModel
+          .getDiariesForMonth(DateTime.now().month - focusedDay.month);
     } catch (e) {
       debugPrint('Error fetching diaries: $e');
     }
@@ -41,8 +42,8 @@ class DiaryViewModel extends ChangeNotifier {
       focusedDay = DateTime(focusedDay.year, focusedDay.month - 1);
     }
 
-    //updateDiaries();
-    notifyListeners();
+    updateDiaries();
+    //notifyListeners();
   }
 
   /// 다음달 이동 함수
@@ -53,8 +54,8 @@ class DiaryViewModel extends ChangeNotifier {
       focusedDay = DateTime(focusedDay.year, focusedDay.month + 1);
     }
 
-    //updateDiaries();
-    notifyListeners();
+    updateDiaries();
+    //notifyListeners();
   }
 
   /// 선택된 날짜 변경
@@ -66,15 +67,15 @@ class DiaryViewModel extends ChangeNotifier {
   /// 선택된 날짜의 일기 불러오기
   List<Diary> getDiariesForDay(DateTime date) {
     return diaryModel.diariesForMonth
-        .where((diary) => diary.date?.day == date.day)
+        .where((diary) => diary.date == date)
         .toList();
   }
 
   /// 다이어리 추가 화면으로 이동
   void navigateToDiaryPost(DateTime selectedDay) {
     context.go('/diary/post', extra: selectedDay);
-    //updateDiaries();
-    notifyListeners();
+    updateDiaries();
+    //notifyListeners();
   }
 
   /// 다이어리 리스트 화면으로 이동

@@ -17,23 +17,25 @@ class DiaryRecordViewModel extends ChangeNotifier {
     required this.diaryModel,
     required this.context,
     required this.selectedDate,
-  });
+  }) {
+    getDiaries();
+  }
 
   List<Diary> todayDiaries = [
-    Diary(
-      diaryId: 1,
-      date: DateTime(2025, 1, 1, 17, 20),
-      content: "크게 될 친구.",
-      imageUrl:
-          "https://i.namu.wiki/i/VXD_sPrS1UvRN-_77YUHxRI0B6NTksSrIaV9bHBRkWUT3IN4ARAvKSOhti-1TtTFB6f7uqVd2ho33ZguUjmyRCCWnFJm8IdlxR8R1jbTOKz7baqApgxWracUIxRSLmJIATvZglVFDMTRZe2yZ6aO3A.webp",
-    ),
-    Diary(
-      diaryId: 1,
-      date: DateTime(2025, 1, 1, 20, 30),
-      content: "졸리다",
-      imageUrl:
-          "https://i.namu.wiki/i/HDx7Y8WXmam9g0G1AmUfOgV_Jn0CbHC5RjRX1Ccya4eSld6z_fvemYRET4DrKplQaELHgxDaiU9T1sWGz8LCRFksG5FG3mazXs6nLPuYubo125mZiblRODSeV2WB5Mq111hjEAHg_tSXRaDxvLB29A.webp",
-    ),
+    // Diary(
+    //   diaryId: 1,
+    //   date: DateTime(2025, 1, 1, 17, 20),
+    //   content: "크게 될 친구.",
+    //   imageUrl:
+    //       "https://i.namu.wiki/i/VXD_sPrS1UvRN-_77YUHxRI0B6NTksSrIaV9bHBRkWUT3IN4ARAvKSOhti-1TtTFB6f7uqVd2ho33ZguUjmyRCCWnFJm8IdlxR8R1jbTOKz7baqApgxWracUIxRSLmJIATvZglVFDMTRZe2yZ6aO3A.webp",
+    // ),
+    // Diary(
+    //   diaryId: 1,
+    //   date: DateTime(2025, 1, 1, 20, 30),
+    //   content: "졸리다",
+    //   imageUrl:
+    //       "https://i.namu.wiki/i/HDx7Y8WXmam9g0G1AmUfOgV_Jn0CbHC5RjRX1Ccya4eSld6z_fvemYRET4DrKplQaELHgxDaiU9T1sWGz8LCRFksG5FG3mazXs6nLPuYubo125mZiblRODSeV2WB5Mq111hjEAHg_tSXRaDxvLB29A.webp",
+    // ),
   ];
 
   /// 캘린더 표시 함수
@@ -66,48 +68,72 @@ class DiaryRecordViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> getDiaryRecord() async {
+  /// 다이어리 업데이트
+  Future<void> getDiaries() async {
     isLoading = true;
-    // 서버에서 각 날짜별로 달라고 해야겠다...
-    final response =
-        await API.getDiariesForMonth(DateTime.now().month - selectedDate.month);
-    final List<dynamic> data = response.data;
-    final List<Diary> diariesForMonth =
-        data.map((item) => Diary.fromJson(item)).toList();
+    notifyListeners();
 
-    final List<int?> diaryIdsForSelectedDate = diariesForMonth
-        .where((diary) =>
-            diary.date?.year == selectedDate.year &&
-            diary.date?.month == selectedDate.month &&
-            diary.date?.day == selectedDate.day)
-        .map((diary) => diary.diaryId)
-        .toList();
-
-    for (final id in diaryIdsForSelectedDate) {
-      if (id == null) continue; // ID가 null인 경우 건너뜀
-
-      try {
-        final diaryResponse = await API.getDiariesForDay(id);
-        final Diary diary = Diary.fromJson(diaryResponse.data);
-        if (!todayDiaries
-            .any((existingDiary) => existingDiary.diaryId == diary.diaryId)) {
-          todayDiaries.add(diary);
-          debugPrint('DiaryToday added: ${diary.diaryId}, ${diary.content}');
-          debugPrint('Diary Details for ID $id: ${diaryResponse.data}');
-        }
-      } catch (e) {
-        debugPrint('Error fetching diary with ID $id: $e');
-      }
+    try {
+      await diaryModel.getDiariesForDay(
+          DateTime.now().month - focusedDay.month, focusedDay.day);
+      debugPrint(
+          "📢 Diaries fetched successfully! Count: ${diaryModel.diariesForDay.length}");
+    } catch (e) {
+      debugPrint('Error fetching diaries: $e');
     }
 
+    isLoading = false;
     notifyListeners();
   }
 
-  Future<void> deleteDiaryRecord(int diaryId) async {
-    await deleteDiaryRecord(diaryId);
-    await getDiaryRecord();
-    debugPrint('Diary with ID $diaryId has been removed.');
+  List<Diary> getDiariesForDay() {
+    debugPrint(
+        "📢 getDiariesForDay() called. Diaries count: ${diaryModel.diariesForDay.length}");
+    return diaryModel.diariesForDay.toList();
   }
+
+  // Future<void> getDiaryRecord() async {
+  //   isLoading = true;
+  //   // 서버에서 각 날짜별로 달라고 해야겠다...
+  //   final response =
+  //       await API.getDiariesForMonth(DateTime.now().month - selectedDate.month);
+  //   final List<dynamic> data = response.data;
+  //   final List<Diary> diariesForMonth =
+  //       data.map((item) => Diary.fromJson(item)).toList();
+
+  //   final List<int?> diaryIdsForSelectedDate = diariesForMonth
+  //       .where((diary) =>
+  //           diary.date?.year == selectedDate.year &&
+  //           diary.date?.month == selectedDate.month &&
+  //           diary.date?.day == selectedDate.day)
+  //       .map((diary) => diary.diaryId)
+  //       .toList();
+
+  //   for (final id in diaryIdsForSelectedDate) {
+  //     if (id == null) continue; // ID가 null인 경우 건너뜀
+
+  //     try {
+  //       final diaryResponse = await API.getDiariesForDay(id,day);
+  //       final Diary diary = Diary.fromJson(diaryResponse.data);
+  //       if (!todayDiaries
+  //           .any((existingDiary) => existingDiary.diaryId == diary.diaryId)) {
+  //         todayDiaries.add(diary);
+  //         debugPrint('DiaryToday added: ${diary.diaryId}, ${diary.content}');
+  //         debugPrint('Diary Details for ID $id: ${diaryResponse.data}');
+  //       }
+  //     } catch (e) {
+  //       debugPrint('Error fetching diary with ID $id: $e');
+  //     }
+  //   }
+
+  //   notifyListeners();
+  // }
+
+  // Future<void> deleteDiaryRecord(int diaryId) async {
+  //   await deleteDiaryRecord(diaryId);
+  //   await getDiaryRecord();
+  //   debugPrint('Diary with ID $diaryId has been removed.');
+  // }
 
   // TODO : 모달 컴포넌트 별도로 만들어서 뷰모델과 분리
   void showOptionModal(int diaryId) {

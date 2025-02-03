@@ -163,8 +163,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                           fillColor: Colors.transparent,
                           filled: true,
                         ),
-                        style: const TextStyle(
-                            fontSize: 8), // Text color inside the field
+                        style: const TextStyle(fontSize: 8),
                         textInputAction: TextInputAction.done,
                         onChanged: (text) {
                           diaryPostViewModel.updateInputText(text); // 입력값 동기화
