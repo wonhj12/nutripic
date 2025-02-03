@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nutripic/models/camera_model.dart';
 
 class CameraConfirmViewModel with ChangeNotifier {
@@ -11,6 +12,9 @@ class CameraConfirmViewModel with ChangeNotifier {
 
   /// 이미지 선택 활성화
   bool isSelectable = false;
+
+  /// 분석하기 버튼 활성화
+  bool isAnalyzeBtnEnabled = true;
 
   /// 선택 버튼 클릭
   void onTapSelect() {
@@ -34,6 +38,8 @@ class CameraConfirmViewModel with ChangeNotifier {
     cameraModel.removeImages();
 
     // 선택 종료
+    // 이미지를 모두 지웠다면 버튼 비활성화
+    isAnalyzeBtnEnabled = cameraModel.images.isNotEmpty;
     isSelectable = false;
     notifyListeners();
   }
@@ -58,7 +64,12 @@ class CameraConfirmViewModel with ChangeNotifier {
 
   /// 이미지 분석
   void onTapSend() {
-    // 카메라 컨트롤러 제거
-    cameraModel.controller?.dispose();
+    // 분석할 이미지가 있을 때만 작동
+    if (cameraModel.images.isNotEmpty) {
+      // 카메라 컨트롤러 제거
+      cameraModel.controller?.dispose();
+
+      context.go('/refrigerator/loading');
+    }
   }
 }
