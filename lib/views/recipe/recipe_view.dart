@@ -19,6 +19,23 @@ class RecipeView extends StatelessWidget {
       );
     }
     return Scaffold(
+      extendBodyBehindAppBar: true, // Body를 AppBar 뒤로 확장
+      appBar: AppBar(
+        backgroundColor: Colors.transparent, // 배경 투명
+        elevation: 0, // 그림자 제거
+        title: const Text(
+          "Recipes",
+          style: TextStyle(color: Colors.white), // 텍스트 색상 변경 (필요 시)
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search, color: Colors.white), // 아이콘 색상 변경
+            onPressed: () {
+              recipeViewModel.onRecipeSearch();
+            },
+          ),
+        ],
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           recipeViewModel.updateRecipes();
