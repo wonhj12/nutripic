@@ -2,106 +2,161 @@ import 'package:flutter/material.dart';
 import 'package:nutripic/components/button_tile.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
-import 'package:nutripic/components/custom_text_field.dart';
-import 'package:nutripic/components/user_info/profile_image.dart';
-import 'package:nutripic/main.dart';
+import 'package:nutripic/components/user_info/linked_providers.dart';
+import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:provider/provider.dart';
 
-class UserEditView extends StatefulWidget {
+class UserEditView extends StatelessWidget {
   const UserEditView({super.key});
 
   @override
-  State<UserEditView> createState() => _UserEditViewState();
-}
-
-class _UserEditViewState extends State<UserEditView> {
-  @override
   Widget build(BuildContext context) {
     UserEditViewModel userEditViewModel = context.watch<UserEditViewModel>();
+
     return CustomScaffold(
       appBar: const CustomAppBar(title: '프로필 수정'),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 60),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 36),
 
-            /* 프로필 사진 */
-            Center(
-              child: ProfileImage(
-                src: userEditViewModel.userModel.profileUrl,
-                radius: 102,
-              ),
-            ),
-            const SizedBox(height: 55),
+          /* 연결된 계정 */
+          Text(
+            '연결된 계정',
+            style: Palette.subtitle1SemiBold.copyWith(color: Palette.gray900),
+          ),
+          const SizedBox(height: 12),
 
-            /* 닉네임 */
-            const Text(
-              '닉네임',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            CustomTextField(
-              initialValue: userModel.name,
-              controller: TextEditingController(),
-            ),
-            const SizedBox(height: 36),
+          LinkedProviders(loginType: userEditViewModel.userModel.loginType!),
+          const SizedBox(height: 48),
 
-            /* 이메일 로그인시 이메일,비밀번호 변경 탭 추가 */
-            const Text(
-              '내 정보',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            const ButtonTile(title: '이메일'),
-            const SizedBox(height: 8),
-            const ButtonTile(title: '비밀번호 변경'),
-            const SizedBox(height: 36),
+          /* 닉네임 */
+          // const Text(
+          //   '닉네임',
+          //   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          // ),
+          // const SizedBox(height: 8),
+          // CustomTextField(
+          //   initialValue: userModel.name,
+          // ),
+          // const SizedBox(height: 36),
 
-            /* 내 상태 수정하기 */
-            const Text(
-              '내 상태 수정하기',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            const ButtonTile(title: '화구 사용 환경'),
-            const SizedBox(height: 8),
-            const ButtonTile(title: '내 요리 실력'),
-            const SizedBox(height: 8),
-            const ButtonTile(title: '알레르기 유발 식재료'),
-            const SizedBox(height: 44),
+          /* 이메일, 비밀번호 변경 탭 */
+          Text(
+            '내 정보',
+            style: Palette.subtitle1SemiBold.copyWith(color: Palette.gray900),
+          ),
+          const SizedBox(height: 12),
 
-            /* 로그아웃, 회원탈ㄹ퇴 */
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+          Container(
+            width: double.infinity,
+            height: 108,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              border: Border.all(width: 0.5, color: Palette.gray200),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                // 로그아웃
-                TextButton(
-                  onPressed: () => userEditViewModel.logout(),
-                  child: const Text('로그아웃'),
-                ),
+                // 이메일
+                SizedBox(
+                  height: 52,
+                  child: Row(
+                    children: [
+                      Text(
+                        '이메일',
+                        style: Palette.body2.copyWith(color: Palette.gray900),
+                      ),
+                      const Spacer(),
 
-                // Divider
-                const SizedBox(
-                  height: 16,
-                  child: VerticalDivider(
-                    color: Color(0xFFB5B5B5),
-                    thickness: 0.5,
-                    width: 40,
+                      // 이메일
+                      Text(
+                        userEditViewModel.userModel.email ?? '',
+                        style: Palette.body2.copyWith(color: Palette.gray400),
+                      ),
+                      const SizedBox(width: 32),
+                    ],
                   ),
                 ),
 
-                // 회원탈퇴
-                TextButton(
-                  onPressed: () => {},
-                  child: const Text('회원탈퇴'),
+                const Divider(
+                  color: Palette.gray200,
+                  thickness: 0.5,
+                  height: 3,
+                ),
+
+                // 비밀번호 변경
+                SizedBox(
+                  height: 52,
+                  child: Row(
+                    children: [
+                      Text('비밀번호 변경',
+                          style:
+                              Palette.body2.copyWith(color: Palette.gray900)),
+                      const Spacer(),
+
+                      Text(
+                        '새로운 비밀번호로 변경하기',
+                        style: Palette.body2.copyWith(color: Palette.gray400),
+                      ),
+                      const SizedBox(width: 20),
+
+                      // 화살표 아이콘
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12,
+                        color: Palette.gray900,
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-          ],
-        ),
+          ),
+          const SizedBox(height: 48),
+
+          /* 내 상태 수정하기 */
+          Text(
+            '내 상태 수정하기',
+            style: Palette.subtitle1SemiBold.copyWith(color: Palette.gray900),
+          ),
+          const SizedBox(height: 12),
+
+          const ButtonTile(title: '알레르기 유발 식품'),
+          const Spacer(),
+
+          /* 로그아웃, 회원탈퇴 */
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // 로그아웃
+              TextButton(
+                onPressed: userEditViewModel.logout,
+                child: const Text('로그아웃'),
+              ),
+
+              // Divider
+              const SizedBox(
+                height: 12,
+                child: VerticalDivider(
+                  color: Palette.gray200,
+                  thickness: 0.5,
+                  width: 12,
+                ),
+              ),
+
+              // 회원탈퇴
+              TextButton(
+                onPressed: () => {},
+                child: const Text('회원탈퇴'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 32),
+        ],
       ),
     );
   }
