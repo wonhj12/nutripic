@@ -17,6 +17,7 @@ class DiaryViewModel extends ChangeNotifier {
   bool clicked = false;
   int currentIndex = 0;
   bool isLoading = false;
+  int idx = 0;
 
   /// 다이어리 업데이트
   Future<void> updateDiaries() async {
@@ -24,8 +25,10 @@ class DiaryViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await diaryModel
-          .getDiariesForMonth(DateTime.now().month - focusedDay.month);
+      await diaryModel.getDiariesForMonth(
+          (DateTime.now().year - focusedDay.year) * 12 +
+              DateTime.now().month -
+              focusedDay.month);
     } catch (e) {
       debugPrint('Error fetching diaries: $e');
     }
@@ -48,7 +51,7 @@ class DiaryViewModel extends ChangeNotifier {
 
   /// 다음달 이동 함수
   Future<void> goToNextMonth() async {
-    if (focusedDay.month > 11) {
+    if (focusedDay.month == 12) {
       focusedDay = DateTime(focusedDay.year + 1, 1);
     } else {
       focusedDay = DateTime(focusedDay.year, focusedDay.month + 1);

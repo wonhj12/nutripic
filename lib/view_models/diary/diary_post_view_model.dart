@@ -51,7 +51,7 @@ class DiaryPostViewModel with ChangeNotifier {
   //   }
   // }
 
-  /// 시간이 선택되었는지 확인하는 함수수
+  /// 시간이 선택되었는지 확인하는 함수
   bool isSelected(String time) {
     return selectedTime == time;
   }
@@ -122,17 +122,17 @@ class DiaryPostViewModel with ChangeNotifier {
   /// 게시물 전송
   Future<void> submitPost(BuildContext context) async {
     try {
-      // API 호출
+      String presignedUrl = await API.getImgPresignedURL(imageUrl!);
+
       await API.addDiary(
         inputText,
         selectedDate,
-        imageUrl!,
+        presignedUrl,
       );
 
       if (context.mounted) context.pop();
-      //debugPrint("게시물 추가 성공: $response");
     } catch (e) {
-      //debugPrint("게시물 추가 실패: $e");
+      debugPrint("게시물 추가 실패: $e");
     }
   }
 }
