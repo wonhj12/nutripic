@@ -213,6 +213,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
       selectedDate: diaryPostViewModel.selectedDate,
       focusedDay: diaryPostViewModel.focusedDay,
       updateFocusedDay: diaryPostViewModel.updateFocusedDay,
+      updateSelectedDate: diaryPostViewModel.updateSelectedDate,
     );
   }
 }

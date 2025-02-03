@@ -35,8 +35,12 @@ class DiaryRecordViewModel extends ChangeNotifier {
   }
 
   ///선택 날짜 변경 함수
-  void updateFocusedDay(DateTime newSelectedDate, DateTime newFocusedDay) {
+  void updateSelectedDate(DateTime newSelectedDate) {
     selectedDate = newSelectedDate;
+    notifyListeners();
+  }
+
+  void updateFocusedDay(DateTime newFocusedDay) {
     focusedDay = newFocusedDay;
     notifyListeners();
   }

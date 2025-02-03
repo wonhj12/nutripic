@@ -56,9 +56,21 @@ class _DiaryViewState extends State<DiaryView> {
               diaryViewModel.navigateToDiaryPost(DateTime.now());
             },
           ),
+
+          //한 달 요약
+          DiarySummaryContainer(
+            percent: diaryViewModel.getProperMealPercentage(),
+            type: diaryViewModel.getProperMealPercentage() > 0.3
+                ? StatusType.normal
+                : StatusType.low,
+            totalDays: diaryViewModel.getTotalDaysInMonth(),
+            diaryDays: diaryViewModel.getDiariesForMonth(),
+            username: "권지용",
+          ),
           const SizedBox(
             height: 10,
           ),
+
           //캘린더
           DiaryCalendar(
             focusedDay: diaryViewModel.focusedDay,
@@ -78,19 +90,6 @@ class _DiaryViewState extends State<DiaryView> {
               diaryViewModel.updateFocusedDay(focusedDay);
             },
             getDiariesForDay: diaryViewModel.getDiariesForDay,
-          ),
-          //한 달 요약
-          DiarySummaryContainer(
-            percent: diaryViewModel.getProperMealPercentage(),
-            type: diaryViewModel.getProperMealPercentage() > 0.3
-                ? StatusType.normal
-                : StatusType.low,
-            totalDays: diaryViewModel.getTotalDaysInMonth(),
-            diaryDays: diaryViewModel.getDiariesForMonth(),
-            username: "권지용",
-          ),
-          const SizedBox(
-            height: 60,
           ),
         ],
       ),

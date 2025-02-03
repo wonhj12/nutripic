@@ -37,6 +37,7 @@ class DiaryRecordView extends StatelessWidget {
       onPressedAdd: diaryRecordViewModel.navigateToDiaryPost,
       selectedDate: diaryRecordViewModel.selectedDate,
       focusedDay: diaryRecordViewModel.focusedDay,
+      updateSelectedDate: diaryRecordViewModel.updateSelectedDate,
       updateFocusedDay: diaryRecordViewModel.updateFocusedDay,
       addButton: true,
     );

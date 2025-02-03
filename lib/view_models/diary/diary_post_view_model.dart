@@ -112,9 +112,13 @@ class DiaryPostViewModel with ChangeNotifier {
     return '${selectedDate.month}월 ${selectedDate.day}일';
   }
 
-  ///선택날짜 변경함수
-  void updateFocusedDay(DateTime newSelectedDate, DateTime newFocusedDay) {
+  ///선택 날짜 변경 함수
+  void updateSelectedDate(DateTime newSelectedDate) {
     selectedDate = newSelectedDate;
+    notifyListeners();
+  }
+
+  void updateFocusedDay(DateTime newFocusedDay) {
     focusedDay = newFocusedDay;
     notifyListeners();
   }

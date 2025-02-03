@@ -15,6 +15,7 @@ class CalendarScaffold extends StatefulWidget {
   final Function? onTapCalenderVisible;
   final Function? onPressedAdd;
   final Function? updateFocusedDay;
+  final Function? updateSelectedDate;
 
   /// ### 위에 캘린더 모달이 적용된 Scaffold
   CalendarScaffold({
@@ -29,6 +30,7 @@ class CalendarScaffold extends StatefulWidget {
     required this.onTapCalenderVisible,
     this.onPressedAdd,
     required this.updateFocusedDay,
+    required this.updateSelectedDate,
   });
 
   @override
@@ -36,6 +38,17 @@ class CalendarScaffold extends StatefulWidget {
 }
 
 class _CalendarScaffoldState extends State<CalendarScaffold> {
+  DateTime? tempSelectedDate;
+  DateTime? tempFocusedDay;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize temp variables to the current selected date and focused day
+    tempSelectedDate = widget.selectedDate;
+    tempFocusedDay = widget.focusedDay;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -134,9 +147,10 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
                         rowHeight: 40,
                         selectedDayPredicate: (day) =>
                             isSameDay(widget.selectedDate, day),
-                        onDaySelected: (selectedDay, focusedDay) {
-                          if (selectedDay.month == focusedDay.month) {
-                            widget.updateFocusedDay!(selectedDay, focusedDay);
+                        onDaySelected: (selectedDate, focusedDay) {
+                          if (selectedDate.month == focusedDay.month) {
+                            widget.updateFocusedDay!(focusedDay);
+                            widget.updateSelectedDate!(selectedDate);
                           }
                         },
                         headerStyle: HeaderStyle(
@@ -200,8 +214,8 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
                             child: OutlinedButton(
                               onPressed: () {
                                 widget.onTapCalenderVisible!();
-                                widget.updateFocusedDay!(
-                                    DateTime.now(), DateTime.now());
+                                widget.updateFocusedDay!(tempFocusedDay!);
+                                widget.updateSelectedDate!(tempSelectedDate!);
                               },
                               style: OutlinedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -225,7 +239,12 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
                           ),
                           Expanded(
                             child: TextButton(
-                              onPressed: () => widget.onTapCalenderVisible!(),
+                              onPressed: () {
+                                widget.onTapCalenderVisible!();
+                                widget.updateFocusedDay!(widget.focusedDay!);
+                                widget
+                                    .updateSelectedDate!(widget.selectedDate!);
+                              },
                               style: TextButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
