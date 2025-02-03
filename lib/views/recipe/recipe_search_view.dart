@@ -32,6 +32,16 @@ class RecipeSearchView extends StatelessWidget {
               ),
             ),
           ),
+          Column(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.filter_alt_sharp),
+                onPressed: () {
+                  recipeViewModel.onFilter();
+                },
+              ),
+            ],
+          ),
           Expanded(
             child: filteredRecipes.isEmpty
                 ? const Center(
