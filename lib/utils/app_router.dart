@@ -281,7 +281,7 @@ class AppRouter {
                     GoRoute(
                       path: 'filter',
                       builder: (context, state) => ChangeNotifierProvider(
-                        create: (context) => RefrigeratorViewModel(
+                        create: (context) => RecipeFilterViewModel(
                           refrigeratorModel: refrigeratorModel,
                           cameraModel: cameraModel,
                           context: context,

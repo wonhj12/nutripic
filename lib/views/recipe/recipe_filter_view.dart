@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
-import 'package:nutripic/components/select_button.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_container.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_select_container.dart';
-import 'package:nutripic/utils/enums/select_button_type.dart';
 import 'package:nutripic/utils/palette.dart';
+import 'package:nutripic/view_models/recipe/recipe_filter_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -14,11 +13,8 @@ class RecipeFilterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RefrigeratorViewModel refrigeratorViewModel =
-        context.watch<RefrigeratorViewModel>();
-
-    // 선택 가능 모드 활성화
-    refrigeratorViewModel.isSelectable = true;
+    RecipeFilterViewModel recipeFilterViewModel =
+        context.watch<RecipeFilterViewModel>();
 
     return CustomScaffold(
       appBar: const CustomAppBar(backButton: false),
@@ -32,13 +28,19 @@ class RecipeFilterView extends StatelessWidget {
 
               // 냉장고
               RefrigeratorContainer(
-                foods: refrigeratorViewModel.refrigeratorModel
-                    .foods[refrigeratorViewModel.storage.rawValue],
-                selectedFoods: refrigeratorViewModel.selectedFoods,
-                isSelectable: refrigeratorViewModel.isSelectable,
-                addFood: null,
-                selectFood: refrigeratorViewModel.selectFood,
+                foods: recipeFilterViewModel.refrigeratorModel
+                    .foods[recipeFilterViewModel.storage.rawValue],
+                expiredFoods: recipeFilterViewModel.refrigeratorModel
+                    .expiredFoods[recipeFilterViewModel.storage.rawValue],
+                selectedFoods:
+                    recipeFilterViewModel.refrigeratorModel.selectedFoods,
+                selectedExpiredFoods: recipeFilterViewModel
+                    .refrigeratorModel.selectedExpiredFoods,
+                isSelectable: true,
+                addFood: recipeFilterViewModel.onTapCamera,
+                selectFood: recipeFilterViewModel.selectFood,
               ),
+
               const SizedBox(height: 16),
             ],
           ),
@@ -47,17 +49,17 @@ class RecipeFilterView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               RefrigeratorSelectContainer(
-                selected: refrigeratorViewModel.storage,
-                onTapRefrigerator: refrigeratorViewModel.onTapRefrigerator,
-                onTapFreezer: refrigeratorViewModel.onTapFreezer,
-                onTapCabinet: refrigeratorViewModel.onTapCabinet,
+                selected: recipeFilterViewModel.storage,
+                onTapRefrigerator: recipeFilterViewModel.onTapRefrigerator,
+                onTapFreezer: recipeFilterViewModel.onTapFreezer,
+                onTapCabinet: recipeFilterViewModel.onTapCabinet,
               ),
               const SizedBox(height: 24),
             ],
           ),
 
           // 선택된 식재료 및 "적용하기" 버튼
-          if (refrigeratorViewModel.selectedFoods.isNotEmpty)
+          if (recipeFilterViewModel.refrigeratorModel.selectedFoods.isNotEmpty)
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -68,14 +70,16 @@ class RecipeFilterView extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: refrigeratorViewModel.selectedFoods.length,
+                    itemCount: recipeFilterViewModel
+                        .refrigeratorModel.selectedFoods.length,
                     itemBuilder: (context, index) {
-                      final food =
-                          refrigeratorViewModel.selectedFoods.elementAt(index);
+                      final food = recipeFilterViewModel
+                          .refrigeratorModel.selectedFoods
+                          .elementAt(index);
                       return Chip(
                         label: Text(food.name),
                         onDeleted: () {
-                          refrigeratorViewModel.selectFood(food);
+                          recipeFilterViewModel.selectFood(food);
                         },
                       );
                     },
@@ -87,7 +91,9 @@ class RecipeFilterView extends StatelessWidget {
                   onPressed: () {
                     // 선택된 식재료 반환
                     Navigator.pop(
-                        context, refrigeratorViewModel.selectedFoods.toList());
+                        context,
+                        recipeFilterViewModel.refrigeratorModel.selectedFoods
+                            .toList());
                   },
                   child: const Text('적용하기'),
                 ),
