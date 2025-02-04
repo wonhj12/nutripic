@@ -104,7 +104,7 @@ class RecipeViewModel with ChangeNotifier {
 
 // 필터 화면 이동
   void onFilter() {
-    context.go('/recipe/filter');
+    context.go('/recipe/search/filter');
   }
 
 // 다이얼로그 표시 메서드

@@ -259,15 +259,27 @@ class AppRouter {
                   routes: [
                     // 검색 화면 경로 추가
                     GoRoute(
-                      path: 'search',
-                      builder: (context, state) => ChangeNotifierProvider(
-                        create: (context) => RecipeViewModel(
-                          recipeModel: recipeModel,
-                          context: context,
-                        ),
-                        child: RecipeSearchView(),
-                      ),
-                    ),
+                        path: 'search',
+                        builder: (context, state) => ChangeNotifierProvider(
+                              create: (context) => RecipeViewModel(
+                                recipeModel: recipeModel,
+                                context: context,
+                              ),
+                              child: RecipeSearchView(),
+                            ),
+                        routes: [
+                          GoRoute(
+                            path: 'filter',
+                            builder: (context, state) => ChangeNotifierProvider(
+                              create: (context) => RecipeFilterViewModel(
+                                refrigeratorModel: refrigeratorModel,
+                                cameraModel: cameraModel,
+                                context: context,
+                              ),
+                              child: const RecipeFilterView(),
+                            ),
+                          ),
+                        ]),
                     GoRoute(
                       path: 'detail',
                       builder: (context, state) => ChangeNotifierProvider(
@@ -276,17 +288,6 @@ class AppRouter {
                           context: context,
                         ),
                         child: const RecipeDetailView(),
-                      ),
-                    ),
-                    GoRoute(
-                      path: 'filter',
-                      builder: (context, state) => ChangeNotifierProvider(
-                        create: (context) => RecipeFilterViewModel(
-                          refrigeratorModel: refrigeratorModel,
-                          cameraModel: cameraModel,
-                          context: context,
-                        ),
-                        child: const RecipeFilterView(),
                       ),
                     ),
                   ],

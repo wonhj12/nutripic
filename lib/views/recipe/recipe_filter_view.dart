@@ -25,6 +25,20 @@ class RecipeFilterView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 26),
+              // 냉장고 선택 버튼
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  RefrigeratorSelectContainer(
+                    selected: recipeFilterViewModel.storage,
+                    onTapRefrigerator: recipeFilterViewModel.onTapRefrigerator,
+                    onTapFreezer: recipeFilterViewModel.onTapFreezer,
+                    onTapCabinet: recipeFilterViewModel.onTapCabinet,
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
+              const SizedBox(height: 26),
 
               // 냉장고
               RefrigeratorContainer(
@@ -42,19 +56,6 @@ class RecipeFilterView extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-            ],
-          ),
-          // 냉장고 선택 버튼
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RefrigeratorSelectContainer(
-                selected: recipeFilterViewModel.storage,
-                onTapRefrigerator: recipeFilterViewModel.onTapRefrigerator,
-                onTapFreezer: recipeFilterViewModel.onTapFreezer,
-                onTapCabinet: recipeFilterViewModel.onTapCabinet,
-              ),
-              const SizedBox(height: 24),
             ],
           ),
 
