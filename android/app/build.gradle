@@ -19,7 +19,7 @@ if (envFile.exists()) {
 
 android {
     namespace = "com.devkor.nutripic"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 34 //flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
