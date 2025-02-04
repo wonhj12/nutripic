@@ -16,9 +16,6 @@ class RecipeFilterView extends StatelessWidget {
     RecipeFilterViewModel recipeFilterViewModel =
         context.watch<RecipeFilterViewModel>();
 
-    // 선택 가능 모드 활성화
-    recipeFilterViewModel.isSelectable = true;
-
     return CustomScaffold(
       appBar: const CustomAppBar(backButton: false),
       body: Stack(
@@ -39,7 +36,7 @@ class RecipeFilterView extends StatelessWidget {
                     recipeFilterViewModel.refrigeratorModel.selectedFoods,
                 selectedExpiredFoods: recipeFilterViewModel
                     .refrigeratorModel.selectedExpiredFoods,
-                isSelectable: recipeFilterViewModel.isSelectable,
+                isSelectable: true,
                 addFood: recipeFilterViewModel.onTapCamera,
                 selectFood: recipeFilterViewModel.selectFood,
               ),
