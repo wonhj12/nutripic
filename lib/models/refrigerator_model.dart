@@ -57,12 +57,19 @@ class RefrigeratorModel with ChangeNotifier {
   /// 선택된 식재료 삭제
   Future<void> deleteFoods() async {
     try {
+      // 삭제할 식재료 아이디 API로 전달
+      final List<int> foodIds = selectedFoods.map((e) => e.id).toList() +
+          selectedExpiredFoods.map((e) => e.id).toList();
       // Optimistic Update를 위해서 API 요청은 후처리로 진행
-      await API.deleteFood(selectedFoods.first.id);
+      await API.deleteFood(foodIds);
 
       // selectedFoods에 있는 식재료를 리스트에서 삭제
       foods[storage.rawValue]
           .removeWhere((food) => selectedFoods.contains(food));
+
+      // selectedExpiredFoods에 있는 식재료를 리스트에서 삭제
+      expiredFoods[storage.rawValue]
+          .removeWhere((food) => selectedExpiredFoods.contains(food));
 
       // 삭제 후 선택된 식재료 초기화
       clearSelectedFoods();
