@@ -3,9 +3,7 @@ import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_container.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_select_container.dart';
-import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/recipe/recipe_filter_view_model.dart';
-import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:provider/provider.dart';
 
 class RecipeFilterView extends StatelessWidget {
@@ -25,7 +23,6 @@ class RecipeFilterView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 26),
-              // 냉장고 선택 버튼
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -39,8 +36,6 @@ class RecipeFilterView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 26),
-
-              // 냉장고
               RefrigeratorContainer(
                 foods: recipeFilterViewModel.refrigeratorModel
                     .foods[recipeFilterViewModel.storage.rawValue],
@@ -54,7 +49,6 @@ class RecipeFilterView extends StatelessWidget {
                 addFood: recipeFilterViewModel.onTapCamera,
                 selectFood: recipeFilterViewModel.selectFood,
               ),
-
               const SizedBox(height: 16),
             ],
           ),
@@ -64,7 +58,6 @@ class RecipeFilterView extends StatelessWidget {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // 선택된 식재료 표시
                 Container(
                   height: 60,
                   margin:
@@ -86,15 +79,13 @@ class RecipeFilterView extends StatelessWidget {
                     },
                   ),
                 ),
-
-                // "적용하기" 버튼
                 ElevatedButton(
                   onPressed: () {
-                    // 선택된 식재료 반환
                     Navigator.pop(
-                        context,
-                        recipeFilterViewModel.refrigeratorModel.selectedFoods
-                            .toList());
+                      context,
+                      recipeFilterViewModel.refrigeratorModel.selectedFoods
+                          .toList(),
+                    );
                   },
                   child: const Text('적용하기'),
                 ),

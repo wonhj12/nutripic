@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/models/camera_model.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/enums/storage_type.dart';
