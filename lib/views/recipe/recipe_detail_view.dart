@@ -120,12 +120,7 @@ class RecipeDetailView extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        // 레시피 완료 시 처리 (예: SnackBar 표시)
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('레시피를 완료했습니다!'),
-                          ),
-                        );
+                        recipeDetailViewModel.onRecipeFinish();
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(

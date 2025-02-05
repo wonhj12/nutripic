@@ -18,6 +18,7 @@ import 'package:nutripic/view_models/login/login_view_model.dart';
 import 'package:nutripic/view_models/login/signup_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_detail_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_filter_view_model.dart';
+import 'package:nutripic/view_models/recipe/recipe_finish_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
 import 'package:nutripic/view_models/onboarding_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
@@ -35,6 +36,7 @@ import 'package:nutripic/views/diary/diary_post_view.dart';
 import 'package:nutripic/views/login/login_view.dart';
 import 'package:nutripic/views/recipe/recipe_detail_view.dart';
 import 'package:nutripic/views/recipe/recipe_filter_view.dart';
+import 'package:nutripic/views/recipe/recipe_finish_view.dart';
 import 'package:nutripic/views/recipe/recipe_search_view.dart';
 import 'package:nutripic/views/recipe/recipe_view.dart';
 import 'package:nutripic/views/onboarding_view.dart';
@@ -265,7 +267,7 @@ class AppRouter {
                                 recipeModel: recipeModel,
                                 context: context,
                               ),
-                              child: RecipeSearchView(),
+                              child: const RecipeSearchView(),
                             ),
                         routes: [
                           GoRoute(
@@ -288,6 +290,17 @@ class AppRouter {
                           context: context,
                         ),
                         child: const RecipeDetailView(),
+                      ),
+                    ),
+                    GoRoute(
+                      path: 'finish',
+                      builder: (context, state) => ChangeNotifierProvider(
+                        create: (context) => RecipeFinishViewModel(
+                          refrigeratorModel: refrigeratorModel,
+                          cameraModel: cameraModel,
+                          context: context,
+                        ),
+                        child: const RecipeFinishView(),
                       ),
                     ),
                   ],
