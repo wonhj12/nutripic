@@ -80,8 +80,7 @@ class RecipeFilterView extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(
                       context,
-                      recipeFilterViewModel.refrigeratorModel.selectedFoods
-                          .toList(),
+                      recipeFilterViewModel.filterSelectedFoods.toList(),
                     );
                   },
                   child: const Text('적용하기'),
