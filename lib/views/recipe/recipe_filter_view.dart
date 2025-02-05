@@ -32,7 +32,7 @@ class RecipeFilterView extends StatelessWidget {
                     onTapFreezer: recipeFilterViewModel.onTapFreezer,
                     onTapCabinet: recipeFilterViewModel.onTapCabinet,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 4),
                 ],
               ),
               const SizedBox(height: 26),
@@ -41,10 +41,9 @@ class RecipeFilterView extends StatelessWidget {
                     .foods[recipeFilterViewModel.storage.rawValue],
                 expiredFoods: recipeFilterViewModel.refrigeratorModel
                     .expiredFoods[recipeFilterViewModel.storage.rawValue],
-                selectedFoods:
-                    recipeFilterViewModel.refrigeratorModel.selectedFoods,
-                selectedExpiredFoods: recipeFilterViewModel
-                    .refrigeratorModel.selectedExpiredFoods,
+                selectedFoods: recipeFilterViewModel.filterSelectedFoods,
+                selectedExpiredFoods:
+                    recipeFilterViewModel.filterSelectedExpiredFoods,
                 isSelectable: recipeFilterViewModel.isSelectable = true,
                 addFood: () {},
                 selectFood: recipeFilterViewModel.selectFood,
@@ -54,7 +53,7 @@ class RecipeFilterView extends StatelessWidget {
           ),
 
           // 선택된 식재료 및 "적용하기" 버튼
-          if (recipeFilterViewModel.refrigeratorModel.selectedFoods.isNotEmpty)
+          if (recipeFilterViewModel.filterSelectedFoods.isNotEmpty)
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -64,11 +63,9 @@ class RecipeFilterView extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: recipeFilterViewModel
-                        .refrigeratorModel.selectedFoods.length,
+                    itemCount: recipeFilterViewModel.filterSelectedFoods.length,
                     itemBuilder: (context, index) {
-                      final food = recipeFilterViewModel
-                          .refrigeratorModel.selectedFoods
+                      final food = recipeFilterViewModel.filterSelectedFoods
                           .elementAt(index);
                       return Chip(
                         label: Text(food.name),

@@ -15,18 +15,15 @@ class RecipeFilterViewModel extends ChangeNotifier {
     required this.context,
   });
 
+  /// 기존 `selectedFoods` 대신 별도 리스트 생성
+  Set<Food> filterSelectedFoods = <Food>{};
+  Set<Food> filterSelectedExpiredFoods = <Food>{};
+
   /// 식재료 선택 가능 여부
   bool isSelectable = false;
 
   /// 현재 선택된 냉장고 index
   StorageType get storage => refrigeratorModel.storage;
-
-  /// 선택 버튼 클릭시 호출되는 함수
-  /// <br /> 식재료 선택
-  void onTapSelect() {
-    isSelectable = true;
-    notifyListeners();
-  }
 
   /// 취소 버튼 클릭시 호출되는 함수
   /// <br /> 식재료 선택 취소
@@ -39,39 +36,23 @@ class RecipeFilterViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// 삭제 버튼 클릭시 호출되는 함수
-  /// <br /> 식재료 삭제
-  void onTapDelete() async {
-    refrigeratorModel.deleteFoods();
-
-    // 선택 모드 종료
-    isSelectable = false;
-    notifyListeners();
-  }
-
-  /// 식재료 선택 함수
+  /// 필터 전용 식재료 선택 함수 (냉장고 데이터에 영향 X)
   void selectFood(Food food) {
-    if (isSelectable) {
-      if (food.expired) {
-        if (!refrigeratorModel.selectedExpiredFoods.contains(food)) {
-          // selectedFoods에 없으면 새로 추가
-          refrigeratorModel.selectedExpiredFoods.add(food);
-        } else {
-          // selectedFoods에 이미 추가 돼있으면 제거
-          refrigeratorModel.selectedExpiredFoods.remove(food);
-        }
+    if (food.expired) {
+      if (!filterSelectedExpiredFoods.contains(food)) {
+        filterSelectedExpiredFoods.add(food);
       } else {
-        if (!refrigeratorModel.selectedFoods.contains(food)) {
-          // selectedFoods에 없으면 새로 추가
-          refrigeratorModel.selectedFoods.add(food);
-        } else {
-          // selectedFoods에 이미 추가 돼있으면 제거
-          refrigeratorModel.selectedFoods.remove(food);
-        }
+        filterSelectedExpiredFoods.remove(food);
       }
-
-      notifyListeners();
+    } else {
+      if (!filterSelectedFoods.contains(food)) {
+        filterSelectedFoods.add(food);
+      } else {
+        filterSelectedFoods.remove(food);
+      }
     }
+
+    notifyListeners();
   }
 
   /// 냉장 버튼 클릭시 호출되는 함수
