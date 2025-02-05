@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/utils/palette.dart';
+import 'package:nutripic/view_models/camera/camera_loading_view_model.dart';
+import 'package:provider/provider.dart';
 
 class CameraLoadingView extends StatelessWidget {
   const CameraLoadingView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    context.watch<CameraLoadingViewModel>();
+
     return CustomScaffold(
       canPop: false,
       body: Center(
