@@ -46,7 +46,7 @@ class RecipeFilterView extends StatelessWidget {
                 selectedExpiredFoods: recipeFilterViewModel
                     .refrigeratorModel.selectedExpiredFoods,
                 isSelectable: recipeFilterViewModel.isSelectable = true,
-                addFood: recipeFilterViewModel.onTapCamera,
+                addFood: () {},
                 selectFood: recipeFilterViewModel.selectFood,
               ),
               const SizedBox(height: 16),
