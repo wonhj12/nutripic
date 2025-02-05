@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,7 +12,7 @@ class API {
     BaseOptions(
       baseUrl: dotenv.env['SERVER_API']!,
       connectTimeout: const Duration(milliseconds: 5000),
-      receiveTimeout: const Duration(milliseconds: 3000),
+      receiveTimeout: const Duration(milliseconds: 10000),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -35,13 +36,14 @@ class API {
         return response.data['firebaseToken'];
       }
     } catch (e) {
-      // debugPrint('Error in postKakaoCustomToken: $e');
+      debugPrint('Error in postKakaoCustomToken: $e');
       throw Error();
     }
 
     return token;
   }
 
+  // TODO : User 반환하도록 리팩토링
   /// 회원가입 후 db에 사용자 정보를 저장하는 함수
   static Future<dynamic> postUser(String uid) async {
     try {
@@ -58,6 +60,7 @@ class API {
   }
 
   /* Storage */
+
   /// 냉장고에 저장돼있는 식재료를 받아오는 get 요청
   /// Freezer, Fridge, Room에 있는 식재료(food)를 반환
   static Future<List<List<Food>>> getFoods() async {
@@ -104,9 +107,38 @@ class API {
     try {
       await _deleteApi('/storage/delete', jsonData: jsonEncode({'id': foodId}));
     } catch (e) {
-      // debugPrint('Error in deleteFood: $e');
+      debugPrint('Error in deleteFood: $e');
       throw Error();
     }
+  }
+
+  /// 촬영한 식재료 사진을 서버에 전송하는 함수
+  /// <br /> GPT 인식 후 인식된 식재료를 받음
+  static Future<List<List<Food>>> postImageToFood(File image) async {
+    try {
+      final response = await _postApi(
+        '/image-to-food/analyze',
+        jsonData: FormData.fromMap(
+          {'image': await MultipartFile.fromFile(image.path)},
+        ),
+      );
+
+      if (response != null) {
+        final data = response.data;
+        if (data.isNotEmpty) {
+          return data.map<List<Food>>((foods) {
+            return (foods as List<dynamic>)
+                .map<Food>((food) => Food.fromJson(food))
+                .toList();
+          }).toList();
+        }
+      }
+    } catch (e) {
+      debugPrint('Error in postImageToFood: $e');
+      throw Error();
+    }
+
+    return [[], [], []];
   }
 
   /// 식재료를 DB에 등록하는 post 요청
@@ -115,6 +147,7 @@ class API {
     try {
       await _postApi('/storage/add', jsonData: jsonEncode(recognizedFoods));
     } catch (e) {
+      debugPrint('Error in postFoods: $e');
       throw Error();
     }
   }
@@ -263,7 +296,7 @@ class API {
   /// <br /> `tokenRequired`를 `false`로 설정하면 API 요청시 토큰을 헤더에 포함시키지 않음.
   static Future<dynamic> _postApi(
     String endPoint, {
-    String? jsonData,
+    Object? jsonData,
     bool tokenRequired = true,
   }) async {
     // dio interceptor을 사용해 에러 핸들링
