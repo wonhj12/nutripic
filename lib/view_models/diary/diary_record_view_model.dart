@@ -75,6 +75,105 @@ class DiaryRecordViewModel extends ChangeNotifier {
     return diaryModel.diariesForDay.toList();
   }
 
+  Future<void> onTapPatch() async {}
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          content: SizedBox(
+            height: 181,
+            width: double.infinity,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                const Icon(
+                  Icons.error_outline_rounded,
+                  size: 50,
+                  color: Palette.gray700,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  "게시물을 삭제하시겠어요?",
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Palette.gray700,
+                  ),
+                ),
+                const Text(
+                  "삭제한 게시물은 복구할 수 없습니다.",
+                  style: TextStyle(
+                    fontSize: 8,
+                    color: Palette.gray500,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          side: const BorderSide(
+                            color: Palette.gray300,
+                          ),
+                        ),
+                        child: const Text(
+                          '취소',
+                          style: TextStyle(
+                            fontSize: 8,
+                            color: Palette.gray300,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          backgroundColor: Palette.green500,
+                          disabledBackgroundColor: Palette.gray100,
+                        ),
+                        child: const Text(
+                          '확인',
+                          style: TextStyle(
+                            fontSize: 8,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> onTapDelete() async {}
+
   // Future<void> getDiaryRecord() async {
   //   isLoading = true;
   //   // 서버에서 각 날짜별로 달라고 해야겠다...
@@ -117,95 +216,4 @@ class DiaryRecordViewModel extends ChangeNotifier {
   //   await getDiaryRecord();
   //   debugPrint('Diary with ID $diaryId has been removed.');
   // }
-
-  // TODO : 모달 컴포넌트 별도로 만들어서 뷰모델과 분리
-  // void showOptionModal(int diaryId) {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return SizedBox(
-  //         width: double.infinity,
-  //         child: Container(
-  //           margin: const EdgeInsets.all(20),
-  //           decoration: BoxDecoration(
-  //             color: Palette.gray100.withOpacity(0.5),
-  //             borderRadius: BorderRadius.circular(20),
-  //           ),
-  //           child: Column(
-  //             mainAxisSize: MainAxisSize.min, // 내용에 맞게 높이 조정
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               const SizedBox(
-  //                 height: 15,
-  //               ),
-  //               GestureDetector(
-  //                 onTap: () {
-  //                   //deleteDiaryRecord(diaryId);
-  //                 },
-  //                 child: const Row(
-  //                   mainAxisAlignment: MainAxisAlignment.start,
-  //                   children: [
-  //                     SizedBox(
-  //                       width: 20,
-  //                     ),
-  //                     Icon(Icons.edit),
-  //                     SizedBox(
-  //                       width: 20,
-  //                     ),
-  //                     Text(
-  //                       "수정은 나중에 만들어볼게요...",
-  //                       style: Palette.caption,
-  //                     )
-  //                   ],
-  //                 ),
-  //               ),
-  //               const SizedBox(
-  //                 height: 10,
-  //               ),
-  //               Divider(
-  //                 thickness: 1, // 선의 두께
-  //                 color: Palette.gray100.withOpacity(0.7), // 선 색상
-  //                 // 끝 위치 들여쓰기
-  //               ),
-  //               const SizedBox(
-  //                 height: 10,
-  //               ),
-  //               GestureDetector(
-  //                 behavior: HitTestBehavior.opaque,
-  //                 onTap: () {
-  //                   //deleteDiaryRecord(diaryId);
-  //                   Navigator.pop(context);
-  //                 },
-  //                 child: const Row(
-  //                   mainAxisAlignment: MainAxisAlignment.start,
-  //                   children: [
-  //                     SizedBox(
-  //                       width: 20,
-  //                     ),
-  //                     Icon(Icons.delete_outline),
-  //                     SizedBox(
-  //                       width: 20,
-  //                     ),
-  //                     Text(
-  //                       "삭제",
-  //                       style: Palette.caption,
-  //                     )
-  //                   ],
-  //                 ),
-  //               ),
-  //               const SizedBox(
-  //                 height: 15,
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //     shape: const RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.vertical(
-  //         top: Radius.circular(20),
-  //       ),
-  //     ),
-  //   );
-  //}
 }

@@ -3,10 +3,14 @@ import 'package:nutripic/utils/palette.dart';
 
 class DiaryOptionModal extends StatelessWidget {
   final int diaryId;
+  final Function? onTapPatch;
+  final Function? onTapDelete;
 
   const DiaryOptionModal({
     super.key,
     required this.diaryId,
+    required this.onTapPatch,
+    required this.onTapDelete,
   });
 
   @override
@@ -26,7 +30,7 @@ class DiaryOptionModal extends StatelessWidget {
             const SizedBox(height: 15),
             GestureDetector(
               onTap: () {
-                // 수정 기능 추가 예정
+                onTapPatch!();
               },
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -39,16 +43,16 @@ class DiaryOptionModal extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Divider(
+            const Divider(
               thickness: 1,
-              color: Palette.gray100.withOpacity(0.7),
+              color: Palette.gray100,
             ),
             const SizedBox(height: 10),
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                // deleteDiaryRecord(diaryId);
                 Navigator.pop(context);
+                onTapDelete!();
               },
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.start,

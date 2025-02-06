@@ -82,8 +82,14 @@ class DiaryRecordView extends StatelessWidget {
                   diary: diary,
                   onPressed: () => showModalBottomSheet(
                       context: context,
-                      builder: (context) =>
-                          DiaryOptionModal(diaryId: diary.diaryId!)),
+                      builder: (context) => DiaryOptionModal(
+                            diaryId: diary.diaryId!,
+                            onTapPatch: diaryRecordViewModel.onTapPatch,
+                            onTapDelete: () {
+                              diaryRecordViewModel.showAlertDialog(context);
+                              diaryRecordViewModel.onTapDelete();
+                            },
+                          )),
                   getTime: diaryRecordViewModel.getTime(diary.date!),
                 );
               },
