@@ -100,11 +100,11 @@ class API {
   }
 
   /// 냉장고에 저장된 식재료를 삭제하는 delete 요청
-  static Future<void> deleteFood(int foodId) async {
+  static Future<void> deleteFood(List<int> foodIds) async {
     try {
-      await _deleteApi('/storage/delete', jsonData: jsonEncode({'id': foodId}));
+      await _deleteApi('/storage/delete', jsonData: jsonEncode(foodIds));
     } catch (e) {
-      // debugPrint('Error in deleteFood: $e');
+      debugPrint('Error in deleteFood: $e');
       throw Error();
     }
   }

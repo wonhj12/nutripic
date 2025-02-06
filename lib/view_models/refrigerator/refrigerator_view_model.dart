@@ -42,7 +42,7 @@ class RefrigeratorViewModel with ChangeNotifier {
   /// 삭제 버튼 클릭시 호출되는 함수
   /// <br /> 식재료 삭제
   void onTapDelete() async {
-    refrigeratorModel.deleteFoods();
+    await refrigeratorModel.deleteFoods();
 
     // 선택 모드 종료
     isSelectable = false;
