@@ -37,9 +37,9 @@ class Food {
   /// jsonData에서 받아온 데이터를 Food로 변환 저장하는 함수
   factory Food.fromJson(Map<String, dynamic> json) {
     return Food(
-      id: json['id'],
+      id: json['id'] ?? 0,
       name: json['name'],
-      icon: json['icon'],
+      icon: json['icon'] ?? 'carrot',
       class1: json['class1'],
       class2: json['class2'],
       addedDate: DateTime.parse(json['addedDate']),

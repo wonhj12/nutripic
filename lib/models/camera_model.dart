@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:nutripic/objects/food.dart';
+import 'package:nutripic/utils/api.dart';
 
 class CameraModel with ChangeNotifier {
   /// 카메라 촬영을 위한 컨트롤러
@@ -15,6 +17,9 @@ class CameraModel with ChangeNotifier {
 
   /// 선택된 이미지
   List<int> selectedImages = [];
+
+  /// GPT 인식한 식재료
+  List<List<Food>> analyzedFoods = [[], [], []];
 
   CameraModel({this.controller});
 
@@ -36,6 +41,9 @@ class CameraModel with ChangeNotifier {
 
     // 선택된 이미지 인덱스 초기화
     selectedImages.clear();
+
+    // 인식한 식재료 초기화
+    analyzedFoods = [[], [], []];
   }
 
   /// 카메라 로드
@@ -100,5 +108,10 @@ class CameraModel with ChangeNotifier {
 
     // 선택된 이미지 초기화
     selectedImages.clear();
+  }
+
+  /// 사진 전송 후 GPT 인식한 식재료 가져오는 함수
+  Future<void> getAnalyzedImages() async {
+    analyzedFoods = await API.postImageToFood(images.first);
   }
 }

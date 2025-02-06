@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/utils/palette.dart';
+import 'package:nutripic/components/refrigerator/icon_selection.dart';
+import 'package:nutripic/utils/enums/icon_selection_type.dart';
 
 class ImageConfirmSelect extends StatelessWidget {
   final bool isSelected;
@@ -10,20 +11,9 @@ class ImageConfirmSelect extends StatelessWidget {
     return Positioned(
       top: 6,
       right: 6,
-      child: Container(
-        width: 24,
-        height: 24,
-        decoration: BoxDecoration(
-          color: isSelected ? Palette.green400 : Palette.gray100,
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: Palette.gray00,
-            width: 2,
-          ),
-        ),
-        child: isSelected
-            ? const Icon(Icons.check_rounded, color: Palette.gray00, size: 14)
-            : Container(),
+      child: IconSelection(
+        isSelected: isSelected,
+        type: IconSelectionType.large,
       ),
     );
   }

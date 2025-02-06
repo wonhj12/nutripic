@@ -49,7 +49,7 @@ class FoodTile extends StatelessWidget {
                           ? Palette.green400
                           : food.expired && !isSelectable
                               ? Palette.delete
-                              : Palette.gray100,
+                              : Palette.gray200,
                       width: 1,
                     ),
                   ),
