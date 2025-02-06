@@ -188,6 +188,7 @@ class AppRouter {
                       builder: (context, state) => ChangeNotifierProvider(
                         create: (context) => CameraAddViewModel(
                           refrigeratorModel: refrigeratorModel,
+                          cameraModel: cameraModel,
                           context: context,
                         ),
                         child: const CameraAddView(),
