@@ -63,67 +63,70 @@ class RefrigeratorContainer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 유통기한 임박
-                  Row(
-                    children: [
-                      Text(
-                        '유통기한 임박',
-                        style: Palette.subtitle1Medium
-                            .copyWith(color: Palette.gray900),
-                      ),
-                      const SizedBox(width: 8),
+                  if (expiredFoods.isNotEmpty)
+                    // 유통기한 임박
+                    Row(
+                      children: [
+                        Text(
+                          '유통기한 임박',
+                          style: Palette.subtitle1Medium
+                              .copyWith(color: Palette.gray900),
+                        ),
+                        const SizedBox(width: 8),
 
-                      // Tooltip
-                      Tooltip(
-                        message:
-                            '유통기한이 3일 미만으로 남은 식재료에요.\n탭해서 권장 유통기한을 확인해보세요.',
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Palette.gray900,
-                        ),
-                        height: 56,
-                        padding: const EdgeInsets.all(8),
-                        textStyle:
-                            Palette.caption2.copyWith(color: Palette.gray00),
-                        showDuration: const Duration(seconds: 2),
-                        waitDuration: const Duration(seconds: 1),
-                        preferBelow: false,
-                        verticalOffset: 16,
-                        triggerMode: TooltipTriggerMode.tap,
-                        child: const Icon(
-                          Icons.error_rounded,
-                          size: 14,
-                          color: Palette.gray300,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 12),
+                        // Tooltip
+                        Tooltip(
+                          message:
+                              '유통기한이 3일 미만으로 남은 식재료에요.\n탭해서 권장 유통기한을 확인해보세요.',
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Palette.gray900,
+                          ),
+                          height: 56,
+                          padding: const EdgeInsets.all(8),
+                          textStyle:
+                              Palette.caption2.copyWith(color: Palette.gray00),
+                          showDuration: const Duration(seconds: 2),
+                          waitDuration: const Duration(seconds: 1),
+                          preferBelow: false,
+                          verticalOffset: 16,
+                          triggerMode: TooltipTriggerMode.tap,
+                          child: const Icon(
+                            Icons.error_rounded,
+                            size: 14,
+                            color: Palette.gray300,
+                          ),
+                        )
+                      ],
+                    ),
+                  if (expiredFoods.isNotEmpty) const SizedBox(height: 12),
 
                   // 유통기한 임박 식재료 좌우 스크롤 컨테이너
-                  SizedBox(
-                    height: 98,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: expiredFoods.length,
-                      separatorBuilder: (_, __) => const SizedBox(width: 16),
-                      itemBuilder: (context, index) => FoodTile(
-                        food: expiredFoods[index],
-                        isSelected:
-                            selectedExpiredFoods.contains(expiredFoods[index]),
-                        isSelectable: isSelectable,
-                        select: selectFood,
+                  if (expiredFoods.isNotEmpty)
+                    SizedBox(
+                      height: 98,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: expiredFoods.length,
+                        separatorBuilder: (_, __) => const SizedBox(width: 16),
+                        itemBuilder: (context, index) => FoodTile(
+                          food: expiredFoods[index],
+                          isSelected: selectedExpiredFoods
+                              .contains(expiredFoods[index]),
+                          isSelectable: isSelectable,
+                          select: selectFood,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 30),
+                  if (expiredFoods.isNotEmpty) const SizedBox(height: 30),
 
                   // 보유 식재료
-                  Text(
-                    '보유 식재료',
-                    style: Palette.subtitle1Medium
-                        .copyWith(color: Palette.gray900),
-                  ),
+                  if (expiredFoods.isNotEmpty)
+                    Text(
+                      '보유 식재료',
+                      style: Palette.subtitle1Medium
+                          .copyWith(color: Palette.gray900),
+                    ),
 
                   GridView.builder(
                     shrinkWrap: true,
