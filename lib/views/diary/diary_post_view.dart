@@ -78,28 +78,29 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                                 fit: BoxFit.cover, // 이미지를 컨테이너에 맞춤
                               ),
                             ),
-                            Positioned(
-                              top: 8,
-                              right: 8,
-                              child: Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: Palette.gray100.withOpacity(0.7),
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: IconButton(
-                                  onPressed: () =>
-                                      diaryPostViewModel.selectFromAlbum(),
-                                  icon: SvgPicture.asset(
-                                    'assets/icons/image.svg',
-                                    width: 20,
-                                    height: 20,
+                            if (!diaryPostViewModel.isPatch)
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Palette.gray100.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
-                                  iconSize: 20,
+                                  child: IconButton(
+                                    onPressed: () =>
+                                        diaryPostViewModel.selectFromAlbum(),
+                                    icon: SvgPicture.asset(
+                                      'assets/icons/image.svg',
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                    iconSize: 20,
+                                  ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                   const SizedBox(height: 20),

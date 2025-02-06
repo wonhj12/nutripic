@@ -202,10 +202,7 @@ class API {
   static Future<dynamic> getImgPresignedURL(String fileName) async {
     try {
       final response = await _getApi(
-        '/diary/get-signed-url',
-        queryParameters: {
-          'fileName': fileName,
-        },
+        '/diary/get-signed-url/$fileName',
       );
       print(response.data);
       return response;

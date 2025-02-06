@@ -25,15 +25,15 @@ class DiaryCard extends StatelessWidget {
         height: 460,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-            color: Colors.transparent,
+            color: Palette.gray00,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
               color: Palette.gray100,
             ),
             boxShadow: const [
               BoxShadow(
-                color: Palette.gray00,
-                blurRadius: 0,
+                color: Palette.gray100,
+                blurRadius: 20,
               )
             ]),
         child: Column(
@@ -66,6 +66,7 @@ class DiaryCard extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
+                      //TODO 닉네임으로 바꾸기
                       getTime,
                       style: const TextStyle(
                         color: Palette.gray400,
@@ -89,9 +90,11 @@ class DiaryCard extends StatelessWidget {
             //사진
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.file(
-                //로 바꾸기 + File(diary.imageUrl!),
-                File(diary.imageUrl!),
+              child: //Image.file(
+                  //로 바꾸기 + File(diary.imageUrl!),
+                  //File(diary.imageUrl!),
+                  Image.network(
+                diary.imageUrl!,
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.width,
                 fit: BoxFit.cover, // 이미지를 컨테이너에 맞춤

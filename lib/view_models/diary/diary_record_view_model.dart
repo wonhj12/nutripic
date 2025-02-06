@@ -18,10 +18,8 @@ class DiaryRecordViewModel extends ChangeNotifier {
     required this.context,
     required this.selectedDate,
   }) {
-    getDiaries();
+    //getDiaries();
   }
-
-  List<Diary> todayDiaries = [];
 
   /// 캘린더 표시 함수
   void onTapCalenderVisible() async {
@@ -64,7 +62,7 @@ class DiaryRecordViewModel extends ChangeNotifier {
 
     try {
       await diaryModel.getDiariesForDay(
-          DateTime.now().month - focusedDay.month, focusedDay.day);
+          DateTime.now().month - focusedDay.month, selectedDate.day);
     } catch (e) {
       debugPrint('Error fetching diaries: $e');
     }
@@ -121,93 +119,93 @@ class DiaryRecordViewModel extends ChangeNotifier {
   // }
 
   // TODO : 모달 컴포넌트 별도로 만들어서 뷰모델과 분리
-  void showOptionModal(int diaryId) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          width: double.infinity,
-          child: Container(
-            margin: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Palette.gray100.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // 내용에 맞게 높이 조정
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 15,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    //deleteDiaryRecord(diaryId);
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Icon(Icons.edit),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "수정은 나중에 만들어볼게요...",
-                        style: Palette.caption,
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Divider(
-                  thickness: 1, // 선의 두께
-                  color: Palette.gray100.withOpacity(0.7), // 선 색상
-                  // 끝 위치 들여쓰기
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    //deleteDiaryRecord(diaryId);
-                    Navigator.pop(context);
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Icon(Icons.delete_outline),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "삭제",
-                        style: Palette.caption,
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-      ),
-    );
-  }
+  // void showOptionModal(int diaryId) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return SizedBox(
+  //         width: double.infinity,
+  //         child: Container(
+  //           margin: const EdgeInsets.all(20),
+  //           decoration: BoxDecoration(
+  //             color: Palette.gray100.withOpacity(0.5),
+  //             borderRadius: BorderRadius.circular(20),
+  //           ),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min, // 내용에 맞게 높이 조정
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               const SizedBox(
+  //                 height: 15,
+  //               ),
+  //               GestureDetector(
+  //                 onTap: () {
+  //                   //deleteDiaryRecord(diaryId);
+  //                 },
+  //                 child: const Row(
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   children: [
+  //                     SizedBox(
+  //                       width: 20,
+  //                     ),
+  //                     Icon(Icons.edit),
+  //                     SizedBox(
+  //                       width: 20,
+  //                     ),
+  //                     Text(
+  //                       "수정은 나중에 만들어볼게요...",
+  //                       style: Palette.caption,
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               const SizedBox(
+  //                 height: 10,
+  //               ),
+  //               Divider(
+  //                 thickness: 1, // 선의 두께
+  //                 color: Palette.gray100.withOpacity(0.7), // 선 색상
+  //                 // 끝 위치 들여쓰기
+  //               ),
+  //               const SizedBox(
+  //                 height: 10,
+  //               ),
+  //               GestureDetector(
+  //                 behavior: HitTestBehavior.opaque,
+  //                 onTap: () {
+  //                   //deleteDiaryRecord(diaryId);
+  //                   Navigator.pop(context);
+  //                 },
+  //                 child: const Row(
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   children: [
+  //                     SizedBox(
+  //                       width: 20,
+  //                     ),
+  //                     Icon(Icons.delete_outline),
+  //                     SizedBox(
+  //                       width: 20,
+  //                     ),
+  //                     Text(
+  //                       "삭제",
+  //                       style: Palette.caption,
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               const SizedBox(
+  //                 height: 15,
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.vertical(
+  //         top: Radius.circular(20),
+  //       ),
+  //     ),
+  //   );
+  //}
 }

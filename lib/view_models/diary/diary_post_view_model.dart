@@ -10,11 +10,15 @@ class DiaryPostViewModel with ChangeNotifier {
   DiaryModel diaryModel;
   BuildContext context;
   String? imageUrl;
+  bool isPatch;
 
-  DiaryPostViewModel(
-      {required this.diaryModel,
-      required this.context,
-      required this.selectedDate});
+  DiaryPostViewModel({
+    required this.diaryModel,
+    required this.context,
+    required this.selectedDate,
+    this.imageUrl,
+    this.isPatch = false,
+  });
 
   final ImagePicker _picker = ImagePicker();
 

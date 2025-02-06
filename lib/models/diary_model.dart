@@ -7,14 +7,22 @@ class DiaryModel with ChangeNotifier {
   List<Diary> diariesForMonth = [];
 
   //하루치 다이어리
-  List<Diary> diariesForDay = [];
+  List<Diary> diariesForDay = [
+    Diary(
+      diaryId: 1,
+      content: "크게될 친구",
+      date: DateTime(2025, 2, 3, 5, 12),
+      imageUrl:
+          "https://i.namu.wiki/i/kKfynGpkO0JAORFLsu0FHZ7TkIkpYeelP3sokPrfVGXR7iUtfcZZUplyr-Lb8w9ttfgYpNKM0PS-wEmaWZa_C8dmQQw0xDbZJC-m9G-Ip5tuhCIpgSE47nP5NLWHtS_eSFGq0mM4V_oI8PW1hEPggg.webp",
+    )
+  ];
 
   Diary? diary;
 
   /// 선택된 다이어리 데이터 리셋
   void reset() {
     diariesForMonth = [];
-    diariesForDay = [];
+    //diariesForDay = [];
   }
 
   /// 한달치 다이어리 로딩

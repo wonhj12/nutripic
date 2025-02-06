@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/diary/calendar_scaffold.dart';
 import 'package:nutripic/components/diary/diary_card.dart';
+import 'package:nutripic/components/diary/diary_option_modal.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/diary/diary_record_view_model.dart';
 import 'package:provider/provider.dart';
@@ -79,8 +80,10 @@ class DiaryRecordView extends StatelessWidget {
                     diaryRecordViewModel.diaryModel.diariesForDay[index];
                 return DiaryCard(
                   diary: diary,
-                  onPressed: () =>
-                      diaryRecordViewModel.showOptionModal(diary.diaryId!),
+                  onPressed: () => showModalBottomSheet(
+                      context: context,
+                      builder: (context) =>
+                          DiaryOptionModal(diaryId: diary.diaryId!)),
                   getTime: diaryRecordViewModel.getTime(diary.date!),
                 );
               },
