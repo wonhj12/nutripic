@@ -27,7 +27,7 @@ class BoxButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: s ? 56 : 64,
+      width: s ? 56 : 80,
       height: s ? 32 : 36,
       child: FilledButton(
         onPressed: onPressed,
