@@ -37,7 +37,7 @@ class Food {
   /// jsonData에서 받아온 데이터를 Food로 변환 저장하는 함수
   factory Food.fromJson(Map<String, dynamic> json) {
     return Food(
-      id: json['id'] ?? 0,
+      id: json['id'] ?? -1,
       name: json['name'],
       icon: json['icon'] ?? 'carrot',
       class1: json['class1'],
@@ -46,6 +46,19 @@ class Food {
       expireDate: DateTime.parse(json['expireDate']),
       expired: json['expired'],
     );
+  }
+
+  /// Food를 json으로 변환하는 함수
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'icon': icon,
+      'class1': class1,
+      'class2': class2,
+      'addedDate': addedDate.toIso8601String(),
+      'expireDate': expireDate.toIso8601String(),
+      'expired': expired,
+    };
   }
 
   @override
