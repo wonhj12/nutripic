@@ -16,6 +16,6 @@ class CameraLoadingViewModel with ChangeNotifier {
     await cameraModel.getAnalyzedImages();
 
     // 이미지 저장 후 최종 확인 페이지로 이동
-    if (context.mounted) context.go('/refrigerator/add');
+    if (context.mounted) context.pushReplacement('/refrigerator/add');
   }
 }
