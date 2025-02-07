@@ -21,6 +21,15 @@ class CameraModel with ChangeNotifier {
   /// GPT 인식한 식재료
   List<List<Food>> analyzedFoods = [[], [], []];
 
+  /// 선택된 냉장고 식재료
+  Set<Food> selectedRefrigerator = {};
+
+  /// 선택된 냉동고 식재료
+  Set<Food> selectedFreezer = {};
+
+  /// 선택된 실온 식재료
+  Set<Food> selectedRoom = {};
+
   CameraModel({this.controller});
 
   /// 모델 초기화
@@ -44,6 +53,16 @@ class CameraModel with ChangeNotifier {
 
     // 인식한 식재료 초기화
     analyzedFoods = [[], [], []];
+
+    // 선택된 식재료 초기화
+    clearSelections();
+  }
+
+  /// 선택된 식재료 초기화
+  void clearSelections() {
+    selectedRefrigerator.clear();
+    selectedFreezer.clear();
+    selectedRoom.clear();
   }
 
   /// 카메라 로드
@@ -113,5 +132,28 @@ class CameraModel with ChangeNotifier {
   /// 사진 전송 후 GPT 인식한 식재료 가져오는 함수
   Future<void> getAnalyzedImages() async {
     analyzedFoods = await API.postImageToFood(images.first);
+  }
+
+  /// 선택된 식재료 삭제
+  void deleteFoods() {
+    try {
+      if (selectedRefrigerator.length == analyzedFoods[0].length &&
+          selectedFreezer.length == analyzedFoods[1].length &&
+          selectedRoom.length == analyzedFoods[2].length) {
+        // 최소 한개의 식재료는 남겨놔야 함
+        debugPrint('최소 한개의 식재료는 남아 있어야 합니다.');
+      } else {
+        // analyzedFoods에서 선택된 식재료를 리스트에서 삭제
+        analyzedFoods[0]
+            .removeWhere((food) => selectedRefrigerator.contains(food));
+        analyzedFoods[1].removeWhere((food) => selectedFreezer.contains(food));
+        analyzedFoods[2].removeWhere((food) => selectedRoom.contains(food));
+
+        // 삭제 후 선택된 식재료 초기화
+        clearSelections();
+      }
+    } catch (e) {
+      debugPrint('Error on deleteFoods');
+    }
   }
 }
