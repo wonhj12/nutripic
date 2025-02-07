@@ -51,7 +51,6 @@ class DiaryOptionModal extends StatelessWidget {
             GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                Navigator.pop(context);
                 onTapDelete!();
               },
               child: const Row(

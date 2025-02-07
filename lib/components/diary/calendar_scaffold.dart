@@ -7,6 +7,7 @@ import 'package:table_calendar/table_calendar.dart';
 class CalendarScaffold extends StatefulWidget {
   final bool isLoading;
   final bool addButton;
+  final bool isPatch;
   DateTime focusedDay;
   DateTime selectedDate;
   final Widget? body;
@@ -23,6 +24,7 @@ class CalendarScaffold extends StatefulWidget {
     this.isLoading = false,
     this.body,
     this.addButton = false,
+    this.isPatch = false,
     required this.focusedDay,
     required this.selectedDate,
     required this.isCalendarVisible,
@@ -106,28 +108,47 @@ class _CalendarScaffoldState extends State<CalendarScaffold>
               context.pop();
             },
           ),
-          title: GestureDetector(
-            onTap: () => widget.onTapCalenderVisible!(),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  widget.selectedDateString!,
-                  style: const TextStyle(
-                    color: Palette.gray900,
-                    fontSize: 13,
-                    fontWeight: FontWeight.normal,
+          title: widget.isPatch
+              ? Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Text(
+                      widget.selectedDateString!,
+                      style: const TextStyle(
+                        color: Palette.gray900,
+                        fontSize: 13,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                )
+              : GestureDetector(
+                  onTap: () {
+                    widget.onTapCalenderVisible!();
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        widget.selectedDateString!,
+                        style: const TextStyle(
+                          color: Palette.gray900,
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      Icon(widget.isCalendarVisible
+                          ? Icons.arrow_drop_up
+                          : Icons.arrow_drop_down),
+                    ],
                   ),
                 ),
-                Icon(widget.isCalendarVisible
-                    ? Icons.arrow_drop_up
-                    : Icons.arrow_drop_down),
-              ],
-            ),
-          ),
           centerTitle: true,
           actions: widget.addButton
               ? [

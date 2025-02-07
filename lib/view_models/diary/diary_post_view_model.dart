@@ -10,15 +10,18 @@ class DiaryPostViewModel with ChangeNotifier {
   DiaryModel diaryModel;
   BuildContext context;
   String? imageUrl;
-  bool isPatch;
+  bool isPatch = false;
 
   DiaryPostViewModel({
     required this.diaryModel,
     required this.context,
     required this.selectedDate,
     this.imageUrl,
-    this.isPatch = false,
-  });
+    this.diaryId,
+    this.existingText,
+  }) {
+    getDiary();
+  }
 
   final ImagePicker _picker = ImagePicker();
 
@@ -36,6 +39,9 @@ class DiaryPostViewModel with ChangeNotifier {
   String inputText = "";
   bool isPostable = false;
   String? fileName;
+
+  final int? diaryId;
+  String? existingText = "";
 
   /// 카메라/갤러리 선택 모달
   // void showCameraSelectModal() async {
@@ -56,6 +62,22 @@ class DiaryPostViewModel with ChangeNotifier {
   //     }
   //   }
   // }
+
+  Future<void> getDiary() async {
+    if (diaryId == null) return;
+
+    try {
+      final response = await API.getDiaryById(diaryId!);
+      isPatch = true;
+      imageUrl = response['url'];
+      selectedDate = DateTime.parse(response['date']);
+      existingText = response['body'];
+      print(existingText);
+      notifyListeners();
+    } catch (e) {
+      print("다이어리 불러오기 실패: $e");
+    }
+  }
 
   /// 시간이 선택되었는지 확인하는 함수
   bool isSelected(String time) {
@@ -105,8 +127,8 @@ class DiaryPostViewModel with ChangeNotifier {
 
   /// 게시 가능 여부 함수
   void checkPostable() async {
-    bool newPostable =
-        imageUrl != null && timeSelected == true && inputText.isNotEmpty;
+    //글은 없이 올리고 싶을수도 있자나>
+    bool newPostable = imageUrl != null && timeSelected == true;
     if (isPostable != newPostable) {
       isPostable = newPostable;
       notifyListeners();
@@ -144,6 +166,22 @@ class DiaryPostViewModel with ChangeNotifier {
       if (context.mounted) context.pop();
     } catch (e) {
       debugPrint("게시물 추가 실패: $e");
+    }
+  }
+
+  /// 게시물 수정
+  Future<void> updatePost(BuildContext context) async {
+    try {
+      await API.updateDiary(
+        diaryId!,
+        inputText,
+        selectedDate,
+      );
+      debugPrint("게시물 수정 성공: " + inputText);
+
+      if (context.mounted) context.pop();
+    } catch (e) {
+      debugPrint("게시물 수정 실패: $e");
     }
   }
 }

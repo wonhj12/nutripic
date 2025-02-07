@@ -85,7 +85,8 @@ class DiaryRecordView extends StatelessWidget {
                       context: context,
                       builder: (context) => DiaryOptionModal(
                             diaryId: diary.diaryId!,
-                            onTapPatch: diaryRecordViewModel.onTapPatch,
+                            onTapPatch: () =>
+                                diaryRecordViewModel.onTapPatch(diary.diaryId!),
                             onTapDelete: () {
                               showDialog(
                                   context: context,
@@ -95,8 +96,7 @@ class DiaryRecordView extends StatelessWidget {
                                         },
                                         onPressedDelete: () {
                                           Navigator.pop(context);
-                                          diaryRecordViewModel
-                                              .onTapDelete(diary.diaryId!);
+                                          //diaryRecordViewModel.onTapDelete(diary.diaryId!);
                                         },
                                       ));
                             },

@@ -179,6 +179,20 @@ class API {
     }
   }
 
+  //특정 다이어리 조회
+  static Future<dynamic> getDiaryById(int idx) async {
+    try {
+      final response = await _getApi(
+        '/diary/$idx',
+      );
+      print(response.data);
+      return response.data;
+    } catch (e) {
+      debugPrint('Error in getDiaryById: $e');
+      throw Error();
+    }
+  }
+
   /// 다이어리 생성
   static Future<dynamic> addDiary(
       String body, DateTime date, String url) async {
@@ -198,14 +212,32 @@ class API {
     }
   }
 
+  /// 특정 다이어리 수정정
+  static Future<dynamic> updateDiary(
+      int diaryId, String body, DateTime date) async {
+    try {
+      final response = await _patchApi(
+        '/diary/update/$diaryId',
+        jsonData: jsonEncode({
+          'body': body,
+          'date': date.toIso8601String(),
+        }),
+      );
+      return response.data;
+    } catch (e) {
+      debugPrint('Error in deleteDiary: $e');
+      throw Error();
+    }
+  }
+
   /// URL
   static Future<dynamic> getImgPresignedURL(String fileName) async {
     try {
       final response = await _getApi(
         '/diary/get-signed-url/$fileName',
       );
-      print(response.data);
-      return response;
+
+      return response.data;
     } catch (e) {
       debugPrint('Error in getImgPresignedURL: $e');
       throw Error();

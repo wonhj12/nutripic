@@ -187,12 +187,15 @@ class AppRouter {
                     GoRoute(
                       path: 'post',
                       builder: (context, state) {
-                        final selectedDay = state.extra as DateTime;
+                        final extra = state.extra as Map<String, dynamic>?;
+                        final diaryId = extra?['diaryId'] as int?;
+                        final selectedDay = extra?['selectedDate'] as DateTime;
                         return ChangeNotifierProvider(
                           create: (context) => DiaryPostViewModel(
                             diaryModel: diaryModel,
                             context: context,
                             selectedDate: selectedDay,
+                            diaryId: diaryId,
                           ),
                           child: const DiaryPostView(),
                         );

@@ -29,7 +29,8 @@ class DiaryRecordViewModel extends ChangeNotifier {
 
   ///게시글 추가 화면으로 이동
   void navigateToDiaryPost() {
-    context.go('/diary/post', extra: selectedDate);
+    context.go('/diary/post',
+        extra: {'diaryId': null, 'selectedDate': selectedDate});
   }
 
   ///선택 날짜 변경 함수
@@ -75,7 +76,13 @@ class DiaryRecordViewModel extends ChangeNotifier {
     return diaryModel.diariesForDay.toList();
   }
 
-  Future<void> onTapPatch() async {}
+  Future<void> onTapPatch(int diaryId) async {
+    print(diaryId);
+    context.go('/diary/post', extra: {
+      "selectedDate": selectedDate,
+      "diaryId": 64,
+    });
+  }
 
   Future<void> onTapDelete(int diaryId) async {
     await API.deleteDiary(diaryId);

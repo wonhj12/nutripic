@@ -19,6 +19,8 @@ class _DiaryPostViewState extends State<DiaryPostView> {
   @override
   Widget build(BuildContext context) {
     DiaryPostViewModel diaryPostViewModel = context.watch<DiaryPostViewModel>();
+    TextEditingController _textcontroller =
+        TextEditingController(text: diaryPostViewModel.existingText);
 
     return CalendarScaffold(
       body: Stack(
@@ -153,10 +155,11 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                       constraints: BoxConstraints(
                         minHeight: MediaQuery.of(context).size.height -
                             MediaQuery.of(context).size.width -
-                            330, // 남은 화면 크기 계산
+                            330,
                       ),
                       child: TextFormField(
                         maxLines: null,
+                        controller: _textcontroller,
                         decoration: const InputDecoration(
                           hintText: '메모 작성하기..',
                           hintStyle: TextStyle(color: Palette.gray300),
@@ -182,7 +185,11 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: diaryPostViewModel.isPostable
-                          ? () => diaryPostViewModel.submitPost(context)
+                          ? () => {
+                                diaryPostViewModel.isPatch
+                                    ? diaryPostViewModel.updatePost(context)
+                                    : diaryPostViewModel.submitPost(context)
+                              }
                           : null,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -215,6 +222,7 @@ class _DiaryPostViewState extends State<DiaryPostView> {
       focusedDay: diaryPostViewModel.focusedDay,
       updateFocusedDay: diaryPostViewModel.updateFocusedDay,
       updateSelectedDate: diaryPostViewModel.updateSelectedDate,
+      isPatch: diaryPostViewModel.isPatch,
     );
   }
 }

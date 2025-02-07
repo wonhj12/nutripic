@@ -78,7 +78,10 @@ class DiaryViewModel extends ChangeNotifier {
 
   /// 다이어리 추가 화면으로 이동
   void navigateToDiaryPost(DateTime selectedDay) {
-    context.go('/diary/post', extra: selectedDay);
+    context.go(
+      '/diary/post',
+      extra: {'diaryId': null, 'selectedDate': selectedDay}, // String 변환
+    );
     updateDiaries();
     //notifyListeners();
   }
