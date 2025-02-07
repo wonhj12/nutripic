@@ -15,6 +15,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// 뒤로가기 버튼 표시 여부
   final bool backButton;
 
+  /// 닫기 버튼으로 표시 여부
+  final bool closeButton;
+
+  /// 뒤로가기 클릭시 호출 함수
+  final Function()? onPressedLeading;
+
   /// 하단 구분선 표시 여부
   final bool underLine;
 
@@ -30,8 +36,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// `centerTitle` : 타이틀 중앙 정렬 여부
   /// - `false`인 경우 우측에 표시
   ///
-  /// `backBtn` : 뒤로가기 버튼 표시 여부
+  /// `backButton` : 뒤로가기 버튼 표시 여부
   /// - 뒤로가기 버튼이 표시되는 경우가 더 많아서 기본 값은 `true`로 설정
+  ///
+  /// `closeButton` : 닫기 버튼 표시 여부
+  /// - `backButton`이 활성화 상태일때만 사용 가능
+  /// - 기본 값은 `false`로 설정 (뒤로가기 버튼이 더 우선 순위)
+  ///
+  /// `onPressedLeading` : 뒤로가기 또는 닫기 버튼을 클릭했을 때 호출되는 함수
+  /// - `null`이면 `context.pop()`이 기본으로 실행 됨
   ///
   /// `underLine` : 하단 구분선 표시 여부
   /// - 기본 값은 `true`로 설정
@@ -43,6 +56,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.titleWidget,
     this.centerTitle = true,
     this.backButton = true,
+    this.onPressedLeading,
+    this.closeButton = false,
     this.underLine = true,
     this.actions,
   });
@@ -52,15 +67,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: title != null ? Text(title!) : titleWidget,
       centerTitle: centerTitle,
-      leadingWidth: 32,
       leading: backButton
-          ? Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: IconButton(
-                onPressed: () => context.pop(),
-                icon: const Icon(Icons.arrow_back_ios, size: 24),
-              ),
-            )
+          ? closeButton
+              ? IconButton(
+                  onPressed: onPressedLeading ?? () => context.pop(),
+                  icon: const Icon(Icons.close_rounded, size: 24),
+                )
+              : IconButton(
+                  onPressed: onPressedLeading ?? () => context.pop(),
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 24),
+                )
           : null,
       actions: [
         ...?actions,
