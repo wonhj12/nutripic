@@ -225,7 +225,7 @@ class Palette {
   /// <br />Font weight: w500
   /// <br />Color: 0xFFBACBA1
   static const TextStyle recipeOrder = TextStyle(
-      fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xFFBACBA1));
+      fontSize: 40, fontWeight: FontWeight.w500, color: Color(0xFF50E8AF));
 
   /// 레시피 설명
   /// <br />Font size: 16
