@@ -20,6 +20,9 @@ class CameraAddViewModel with ChangeNotifier {
   bool isSelectState = false;
 
   void onPressClose() {
+    cameraModel.reset();
+
+    context.pop();
     context.pop();
     context.pop();
   }
@@ -102,6 +105,7 @@ class CameraAddViewModel with ChangeNotifier {
 
       // 냉장고 화면까지 pop 2번 해야됨
       // refrigerator/camera/add
+      if (context.mounted) context.pop();
       if (context.mounted) context.pop();
       if (context.mounted) context.pop();
     }

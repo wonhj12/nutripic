@@ -66,10 +66,7 @@ class CameraConfirmViewModel with ChangeNotifier {
   void onTapSend() {
     // 분석할 이미지가 있을 때만 작동
     if (cameraModel.images.isNotEmpty) {
-      // 카메라 컨트롤러 제거
-      cameraModel.controller?.dispose();
-
-      context.pushReplacement('/refrigerator/loading');
+      context.push('/refrigerator/loading');
     }
   }
 }
