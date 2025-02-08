@@ -36,7 +36,7 @@ class RecipeInfo extends StatelessWidget {
                 children: [
                   // 난이도 (별)
                   Row(
-                    children: List.generate(5, (starIndex) {
+                    children: List.generate(3, (starIndex) {
                       return Icon(
                         starIndex < recipe.difficulty
                             ? Icons.star

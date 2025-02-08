@@ -37,4 +37,8 @@ class RecipeSearchViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void onRecipeView() {
+    context.go('/recipe');
+  }
 }
