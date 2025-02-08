@@ -139,12 +139,25 @@ class _RecipeSearchViewState extends State<RecipeSearchView> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 4.0),
                                 child: Chip(
-                                  label: Text(food.name),
+                                  label: Text(
+                                    food.name,
+                                    style: Palette.caption3,
+                                  ),
                                   onDeleted: () {
-                                    setState(() {
-                                      selectedFoods.remove(food);
-                                    });
+                                    setState(
+                                      () {
+                                        selectedFoods.remove(food);
+                                      },
+                                    );
                                   },
+                                  backgroundColor: Palette.gray100,
+                                  side: BorderSide.none,
+                                  deleteIcon: SvgPicture.asset(
+                                    'assets/icons/close.svg',
+                                    width: 8,
+                                    height: 8,
+                                    fit: BoxFit.scaleDown,
+                                  ),
                                 ),
                               ))
                           .toList(),
