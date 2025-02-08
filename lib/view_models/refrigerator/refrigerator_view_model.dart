@@ -98,10 +98,7 @@ class RefrigeratorViewModel with ChangeNotifier {
     cameraModel.reset();
 
     // 식재료 추가 후 냉장고 화면 업데이트를 위해서 비동기 처리
-    await GoRouter.of(context).push('/refrigerator/camera');
-
-    // 업데이트된 식재료 다시 서버에서 불러오기
-    await refrigeratorModel.getFoods();
+    await context.push('/refrigerator/camera');
     notifyListeners();
   }
 }

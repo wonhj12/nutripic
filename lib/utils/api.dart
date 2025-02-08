@@ -142,10 +142,20 @@ class API {
   }
 
   /// 식재료를 DB에 등록하는 post 요청
-  static Future<void> postFoods(
-      List<Map<String, dynamic>> recognizedFoods) async {
+  static Future<void> postFoods(List<List<Food>> recognizedFoods) async {
     try {
-      await _postApi('/storage/add', jsonData: jsonEncode(recognizedFoods));
+      List<Map<String, dynamic>> data = [];
+      List<String> storageTypes = ['fridge', 'freezer', 'room'];
+
+      for (int i = 0; i < recognizedFoods.length; i++) {
+        for (Food food in recognizedFoods[i]) {
+          Map<String, dynamic> foodMap = food.toJson();
+          foodMap['storageType'] = storageTypes[i];
+          data.add(foodMap);
+        }
+      }
+
+      await _postApi('/storage/add', jsonData: jsonEncode(data));
     } catch (e) {
       debugPrint('Error in postFoods: $e');
       throw Error();

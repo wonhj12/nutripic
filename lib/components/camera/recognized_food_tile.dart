@@ -12,78 +12,91 @@ class RecognizedFoodTile extends StatelessWidget {
   /// 선택 모드
   final bool isSelectState;
 
+  /// 선택 됨 여부
+  final bool isSelected;
+
   /// 수정 버튼 클릭시 호출할 함수
   final Function()? onTapEdit;
+
+  /// 식재료 선택시 콜백 함수
+  final Function(Food) select;
 
   /// `name = filename.svg`
   const RecognizedFoodTile({
     super.key,
     required this.food,
     required this.isSelectState,
+    required this.isSelected,
     required this.onTapEdit,
+    required this.select,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // 선택 버튼
-        if (isSelectState) const IconSelection(isSelected: false),
-        if (isSelectState) const SizedBox(width: 8),
+    return GestureDetector(
+      onTap: () => select(food),
+      behavior: HitTestBehavior.opaque,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // 선택 버튼
+          if (isSelectState) IconSelection(isSelected: isSelected),
+          if (isSelectState) const SizedBox(width: 8),
 
-        // 식재료 이미지
-        Container(
-          width: 56,
-          height: 56,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Palette.gray200,
-              width: 1,
+          // 식재료 이미지
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: Palette.gray200,
+                width: 1,
+              ),
             ),
+            child: SvgPicture.asset('assets/foods/${food.icon}.svg'),
           ),
-          child: SvgPicture.asset('assets/foods/${food.icon}.svg'),
-        ),
-        const SizedBox(width: 16),
+          const SizedBox(width: 16),
 
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 유통기한
-            Container(
-              width: 45,
-              height: 22,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Palette.delete,
-                borderRadius: BorderRadius.circular(12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 유통기한
+              Container(
+                width: 45,
+                height: 22,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Palette.delete,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  'D-5',
+                  style: Palette.caption1.copyWith(color: Palette.gray00),
+                ),
               ),
-              child: Text(
-                'D-5',
-                style: Palette.caption1.copyWith(color: Palette.gray00),
+              const SizedBox(height: 6),
+
+              // 식재료 이름
+              Text(
+                food.name,
+                style: Palette.body1.copyWith(color: Palette.gray900),
               ),
+            ],
+          ),
+
+          const Spacer(),
+
+          // 수정 버튼
+          if (!isSelectState)
+            ImageButton(
+              img: '/edit.svg',
+              width: 24,
+              height: 24,
+              onTap: onTapEdit,
             ),
-            const SizedBox(height: 6),
-
-            // 식재료 이름
-            Text(
-              food.name,
-              style: Palette.body1.copyWith(color: Palette.gray900),
-            ),
-          ],
-        ),
-
-        const Spacer(),
-
-        // 수정 버튼
-        ImageButton(
-          img: '/edit.svg',
-          width: 24,
-          height: 24,
-          onTap: onTapEdit,
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

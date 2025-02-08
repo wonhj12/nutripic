@@ -69,7 +69,7 @@ class CameraConfirmViewModel with ChangeNotifier {
       // 카메라 컨트롤러 제거
       cameraModel.controller?.dispose();
 
-      context.go('/refrigerator/loading');
+      context.pushReplacement('/refrigerator/loading');
     }
   }
 }

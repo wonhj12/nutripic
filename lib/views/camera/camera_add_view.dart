@@ -20,12 +20,16 @@ class CameraAddView extends StatelessWidget {
     return CustomScaffold(
       appBar: CustomAppBar(
         title: '분석 결과',
+        closeButton: true,
+        onPressedLeading: cameraAddViewModel.onPressClose,
         actions: [
           BoxButton(
-              label: cameraAddViewModel.isSelectState ? '취소' : '선택',
-              onPressed: cameraAddViewModel.onPressSelect),
+            label: cameraAddViewModel.isSelectState ? '취소' : '선택',
+            onPressed: cameraAddViewModel.onPressSelect,
+          ),
         ],
       ),
+      canPop: false,
       isLoading: cameraAddViewModel.isLoading,
       body: CustomScrollView(
         shrinkWrap: true,
@@ -41,7 +45,10 @@ class CameraAddView extends StatelessWidget {
                   title: '냉장보관',
                   recognizedFoods:
                       cameraAddViewModel.cameraModel.analyzedFoods[0],
+                  selectedFoods:
+                      cameraAddViewModel.cameraModel.selectedRefrigerator,
                   isSelectState: cameraAddViewModel.isSelectState,
+                  select: cameraAddViewModel.selectRefrigeratorFood,
                 ),
 
                 // 인식된 식재료 리스트
@@ -49,7 +56,9 @@ class CameraAddView extends StatelessWidget {
                   title: '냉동보관',
                   recognizedFoods:
                       cameraAddViewModel.cameraModel.analyzedFoods[1],
+                  selectedFoods: cameraAddViewModel.cameraModel.selectedFreezer,
                   isSelectState: cameraAddViewModel.isSelectState,
+                  select: cameraAddViewModel.selectFreezerFood,
                 ),
 
                 // 인식된 식재료 리스트
@@ -57,7 +66,9 @@ class CameraAddView extends StatelessWidget {
                   title: '실온보관',
                   recognizedFoods:
                       cameraAddViewModel.cameraModel.analyzedFoods[2],
+                  selectedFoods: cameraAddViewModel.cameraModel.selectedRoom,
                   isSelectState: cameraAddViewModel.isSelectState,
+                  select: cameraAddViewModel.selectRoomFood,
                 ),
               ],
             ),
@@ -105,7 +116,6 @@ class CameraAddView extends StatelessWidget {
           ),
         ],
       ),
-      // ),
     );
   }
 }

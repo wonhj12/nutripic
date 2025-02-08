@@ -4,14 +4,28 @@ import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/palette.dart';
 
 class FoodAddContainer extends StatelessWidget {
+  /// 컨테이너 제목
   final String title;
+
+  /// 인식된 식재료 리스트
   final List<Food> recognizedFoods;
+
+  /// 선택된 식재료
+  final Set<Food> selectedFoods;
+
+  /// 선택 모드 여부
   final bool isSelectState;
+
+  /// 식재료 선택시 콜백 함수
+  final Function(Food) select;
+
   const FoodAddContainer({
     super.key,
     required this.title,
     required this.recognizedFoods,
+    required this.selectedFoods,
     required this.isSelectState,
+    required this.select,
   });
 
   @override
@@ -47,7 +61,9 @@ class FoodAddContainer extends StatelessWidget {
                       RecognizedFoodTile(
                     food: recognizedFoods.elementAt(index),
                     isSelectState: isSelectState,
+                    isSelected: selectedFoods.contains(recognizedFoods[index]),
                     onTapEdit: () {},
+                    select: select,
                   ),
                 ),
               ),
