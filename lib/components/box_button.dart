@@ -13,6 +13,9 @@ class BoxButton extends StatelessWidget {
   /// <br /> `true` = small
   final bool s;
 
+  /// 넓이
+  final double? width;
+
   /// 버튼 클릭
   final Function()? onPressed;
 
@@ -21,13 +24,14 @@ class BoxButton extends StatelessWidget {
     required this.label,
     this.type = BoxButtonType.normal,
     this.s = true,
+    this.width,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: s ? 56 : 80,
+      width: width ?? (s ? 56 : 80),
       height: s ? 32 : 36,
       child: FilledButton(
         onPressed: onPressed,
