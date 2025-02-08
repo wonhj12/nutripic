@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
+import 'package:nutripic/view_models/recipe/recipe_search_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/objects/food.dart';
@@ -17,10 +17,11 @@ class _RecipeSearchViewState extends State<RecipeSearchView> {
 
   @override
   Widget build(BuildContext context) {
-    RecipeViewModel recipeViewModel = context.watch<RecipeViewModel>();
+    RecipeSearchViewModel recipeSearchViewModel =
+        context.watch<RecipeSearchViewModel>();
 
     // 검색 결과 필터링
-    final filteredRecipes = recipeViewModel.recipeModel.recipes
+    final filteredRecipes = recipeSearchViewModel.recipeModel.recipes
         .where((recipe) => recipe.name.contains(query))
         .toList();
 
@@ -109,12 +110,13 @@ class _RecipeSearchViewState extends State<RecipeSearchView> {
                                 : Icons.favorite_border,
                           ),
                           onPressed: () {
-                            recipeViewModel
+                            recipeSearchViewModel
                                 .toggleFavorite(filteredRecipes[index]);
                           },
                         ),
                         onTap: () {
-                          recipeViewModel.onTapDetail(filteredRecipes[index]);
+                          recipeSearchViewModel
+                              .onTapDetail(filteredRecipes[index]);
                         },
                       );
                     },

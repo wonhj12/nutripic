@@ -19,6 +19,7 @@ import 'package:nutripic/view_models/login/signup_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_detail_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_filter_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_finish_view_model.dart';
+import 'package:nutripic/view_models/recipe/recipe_search_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
 import 'package:nutripic/view_models/onboarding_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
@@ -263,7 +264,7 @@ class AppRouter {
                     GoRoute(
                         path: 'search',
                         builder: (context, state) => ChangeNotifierProvider(
-                              create: (context) => RecipeViewModel(
+                              create: (context) => RecipeSearchViewModel(
                                 recipeModel: recipeModel,
                                 context: context,
                               ),
