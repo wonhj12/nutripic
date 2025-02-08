@@ -23,6 +23,7 @@ class RefrigeratorModel with ChangeNotifier {
 
   /// 모델을 초기화하는 함수
   void reset() {
+    storage = StorageType.fridge;
     foods = [[], [], []];
     expiredFoods = [[], [], []];
     selectedFoods.clear();
@@ -53,6 +54,10 @@ class RefrigeratorModel with ChangeNotifier {
       }
     });
   }
+
+  /// 현재 냉장고에 보유한 식재료가 있는지 여부
+  bool hasFoods() =>
+      foods[storage.index].isNotEmpty || expiredFoods[storage.index].isNotEmpty;
 
   /// 선택된 식재료 삭제
   Future<void> deleteFoods() async {
