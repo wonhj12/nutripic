@@ -16,7 +16,7 @@ class RecognizedFoodTile extends StatelessWidget {
   final bool isSelected;
 
   /// 수정 버튼 클릭시 호출할 함수
-  final Function()? onTapEdit;
+  final Function(Food) onTapEdit;
 
   /// 식재료 선택시 콜백 함수
   final Function(Food) select;
@@ -93,7 +93,7 @@ class RecognizedFoodTile extends StatelessWidget {
               img: '/edit.svg',
               width: 24,
               height: 24,
-              onTap: onTapEdit,
+              onTap: () => onTapEdit(food),
             ),
         ],
       ),

@@ -19,6 +19,9 @@ class FoodAddContainer extends StatelessWidget {
   /// 식재료 선택시 콜백 함수
   final Function(Food) select;
 
+  /// 식재료 수정 함수
+  final Function(Food) onTapEdit;
+
   const FoodAddContainer({
     super.key,
     required this.title,
@@ -26,6 +29,7 @@ class FoodAddContainer extends StatelessWidget {
     required this.selectedFoods,
     required this.isSelectState,
     required this.select,
+    required this.onTapEdit,
   });
 
   @override
@@ -62,7 +66,7 @@ class FoodAddContainer extends StatelessWidget {
                     food: recognizedFoods.elementAt(index),
                     isSelectState: isSelectState,
                     isSelected: selectedFoods.contains(recognizedFoods[index]),
-                    onTapEdit: () {},
+                    onTapEdit: onTapEdit,
                     select: select,
                   ),
                 ),
