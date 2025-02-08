@@ -96,6 +96,8 @@ class Palette {
   /// #FFFFFF
   static const Color gray00 = Color(0xFFFFFFFF);
 
+  /// #4078ED
+  static const Color success = Color(0xFF4078ED);
   /* Text Styles */
 
   /// Font size: 24
