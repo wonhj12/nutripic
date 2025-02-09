@@ -215,6 +215,31 @@ class RecipeFinishView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '식재료명',
+                    style:
+                        Palette.caption1.copyWith(fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    '날짜',
+                    style:
+                        Palette.caption1.copyWith(fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+              Container(
+                color: Palette.gray100, // 밑줄 색상
+                height: 1, // 밑줄 두께
+              ),
+              const SizedBox(
+                height: 4,
+              ),
               ...viewModel.filterSelectedFoods.map((food) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -222,7 +247,7 @@ class RecipeFinishView extends StatelessWidget {
                     Text(food.name),
                     Text(
                       food.expireDate.toString().substring(0, 10),
-                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                      style: Palette.caption1,
                     ),
                   ],
                 );
