@@ -45,11 +45,17 @@ class RefrigeratorView extends StatelessWidget {
                     children: [
                       const SizedBox(height: 52),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            '보유한 식재료',
-                            style: Palette.title2SemiBold.copyWith(
-                              color: Palette.gray900,
+                          SizedBox(
+                            height: 32,
+                            child: Center(
+                              child: Text(
+                                '보유한 식재료',
+                                style: Palette.title2SemiBold.copyWith(
+                                  color: Palette.gray900,
+                                ),
+                              ),
                             ),
                           ),
                           const Spacer(),
@@ -62,18 +68,22 @@ class RefrigeratorView extends StatelessWidget {
                             ),
                           const SizedBox(width: 8),
 
-                          refrigeratorViewModel.isSelectable
-                              // 삭제 버튼
-                              ? BoxButton(
-                                  label: '삭제',
-                                  type: BoxButtonType.delete,
-                                  onPressed: refrigeratorViewModel.onTapDelete,
-                                )
-                              // 선택 버튼
-                              : BoxButton(
-                                  label: '편집',
-                                  onPressed: refrigeratorViewModel.onTapSelect,
-                                ),
+                          if (refrigeratorViewModel.refrigeratorModel
+                              .hasFoods())
+                            refrigeratorViewModel.isSelectable
+                                // 삭제 버튼
+                                ? BoxButton(
+                                    label: '삭제',
+                                    type: BoxButtonType.delete,
+                                    onPressed:
+                                        refrigeratorViewModel.onTapDelete,
+                                  )
+                                // 선택 버튼
+                                : BoxButton(
+                                    label: '편집',
+                                    onPressed:
+                                        refrigeratorViewModel.onTapSelect,
+                                  ),
                         ],
                       ),
                       const SizedBox(height: 12),

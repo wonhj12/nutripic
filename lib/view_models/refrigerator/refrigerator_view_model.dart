@@ -13,13 +13,21 @@ class RefrigeratorViewModel with ChangeNotifier {
     required this.refrigeratorModel,
     required this.cameraModel,
     required this.context,
-  });
+  }) {
+    initialize();
+  }
 
   /// 식재료 선택 가능 여부
   bool isSelectable = false;
 
   /// 현재 선택된 냉장고 index
   StorageType get storage => refrigeratorModel.storage;
+
+  /// 초기화
+  void initialize() async {
+    await refrigeratorModel.getFoods();
+    notifyListeners();
+  }
 
   /// 선택 버튼 클릭시 호출되는 함수
   /// <br /> 식재료 선택
