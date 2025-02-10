@@ -18,7 +18,7 @@ class DiaryRecordViewModel extends ChangeNotifier {
     required this.context,
     required this.selectedDate,
   }) {
-    //getDiaries();
+    getDiaries();
   }
 
   /// 캘린더 표시 함수
@@ -80,13 +80,13 @@ class DiaryRecordViewModel extends ChangeNotifier {
     print(diaryId);
     context.go('/diary/post', extra: {
       "selectedDate": selectedDate,
-      "diaryId": 64,
+      "diaryId": diaryId,
     });
   }
 
   Future<void> onTapDelete(int diaryId) async {
     await API.deleteDiary(diaryId);
-    //getDiaries();
+    getDiaries();
     debugPrint('Diary with ID $diaryId has been removed.');
   }
 

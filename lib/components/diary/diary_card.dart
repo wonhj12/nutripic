@@ -51,11 +51,11 @@ class DiaryCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(22),
                         border: Border.all(color: Palette.gray200),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          //$time
-                          '아침',
-                          style: TextStyle(
+                          getTime,
+                          //'아침',
+                          style: const TextStyle(
                               color: Palette.gray600,
                               fontSize: 9,
                               fontWeight: FontWeight.w700),
@@ -65,9 +65,8 @@ class DiaryCard extends StatelessWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      //TODO 닉네임으로 바꾸기
-                      getTime,
+                    const Text(
+                      "Nutripic",
                       style: const TextStyle(
                         color: Palette.gray400,
                         fontSize: 7,
@@ -91,13 +90,12 @@ class DiaryCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: //Image.file(
-                  //로 바꾸기 + File(diary.imageUrl!),
                   //File(diary.imageUrl!),
                   Image.network(
-                diary.imageUrl!,
+                "https://cphoto.asiae.co.kr/listimglink/1/2020011513515297802_1579063912.jpg",
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.width,
-                fit: BoxFit.cover, // 이미지를 컨테이너에 맞춤
+                fit: BoxFit.cover,
               ),
             ),
 

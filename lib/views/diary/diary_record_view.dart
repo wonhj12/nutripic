@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/diary/calendar_scaffold.dart';
 import 'package:nutripic/components/diary/diary_card.dart';
-import 'package:nutripic/components/diary/diary_delete_dialog.dart';
+import 'package:nutripic/components/diary/diary_dialog.dart';
 import 'package:nutripic/components/diary/diary_option_modal.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/diary/diary_record_view_model.dart';
@@ -90,18 +90,19 @@ class DiaryRecordView extends StatelessWidget {
                             onTapDelete: () {
                               showDialog(
                                   context: context,
-                                  builder: (context) => DiaryDeleteDialog(
+                                  builder: (context) => DiaryDialog(
                                         onPressedCancel: () {
                                           Navigator.pop(context);
                                         },
                                         onPressedDelete: () {
                                           Navigator.pop(context);
-                                          //diaryRecordViewModel.onTapDelete(diary.diaryId!);
+                                          diaryRecordViewModel
+                                              .onTapDelete(diary.diaryId!);
                                         },
                                       ));
                             },
                           )),
-                  getTime: diaryRecordViewModel.getTime(diary.date!),
+                  getTime: diary.mealTime!,
                 );
               },
             ),

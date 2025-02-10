@@ -74,14 +74,52 @@ class DiaryCalendar extends StatelessWidget {
             );
           },
           todayBuilder: (context, day, focusedDay) {
+            final diariesForDay = getDiariesForDay(day);
+
             return Column(
               children: [
                 const SizedBox(
                   height: 5,
                 ),
-                const CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Colors.transparent,
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(
+                          "https://cphoto.asiae.co.kr/listimglink/1/2020011513515297802_1579063912.jpg"),
+                      //backgroundImage: FileImage(File(diariesForDay[0].imageUrl!)),
+                    ),
+
+                    // 일기 두 개 이상일때 알림
+                    if (diariesForDay.length > 1)
+                      Positioned(
+                        top: -3,
+                        right: -3,
+                        child: Container(
+                          width: 21,
+                          height: 19,
+                          decoration: BoxDecoration(
+                            color: Palette.gray00,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Palette.green600,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              diariesForDay.length.toString(),
+                              style: const TextStyle(
+                                color: Palette.green600,
+                                fontSize: 7,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
                 const SizedBox(
                   height: 5,
@@ -118,10 +156,11 @@ class DiaryCalendar extends StatelessWidget {
                   Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 20,
-                        backgroundImage:
-                            FileImage(File(diariesForDay[0].imageUrl!)),
+                        backgroundImage: NetworkImage(
+                            "https://cphoto.asiae.co.kr/listimglink/1/2020011513515297802_1579063912.jpg"),
+                        //backgroundImage: FileImage(File(diariesForDay[0].imageUrl!)),
                       ),
 
                       // 일기 두 개 이상일때 알림
@@ -129,7 +168,6 @@ class DiaryCalendar extends StatelessWidget {
                         Positioned(
                           top: -3,
                           right: -3,
-                          //컴포넌트화
                           child: Container(
                             width: 21,
                             height: 19,

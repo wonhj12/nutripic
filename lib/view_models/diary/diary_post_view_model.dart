@@ -15,11 +15,19 @@ class DiaryPostViewModel with ChangeNotifier {
   DiaryPostViewModel({
     required this.diaryModel,
     required this.context,
-    required this.selectedDate,
+    required DateTime selectedDate,
     this.imageUrl,
     this.diaryId,
     this.existingText,
-  }) {
+  })  : selectedDate = DateTime(
+          selectedDate.year,
+          selectedDate.month,
+          selectedDate.day,
+          DateTime.now().hour, // 현재 시간
+          DateTime.now().minute, // 현재 분
+          DateTime.now().second, // 현재 초
+        ),
+        super() {
     getDiary();
   }
 
@@ -36,7 +44,7 @@ class DiaryPostViewModel with ChangeNotifier {
   bool timeSelected = true;
 
   // 게시글
-  String inputText = "";
+  String inputText = " ";
   bool isPostable = false;
   String? fileName;
 
@@ -97,6 +105,10 @@ class DiaryPostViewModel with ChangeNotifier {
     checkPostable();
   }
 
+  int getSelectedTimeAsString() {
+    return diaryTime.indexOf(selectedTime!) + 1;
+  }
+
   /// 이미지 선택 함수
   Future<void> selectFromAlbum() async {
     // 모달 띄워서 사진 업로드 방식 선택 (카메라, 갤러리)
@@ -107,7 +119,7 @@ class DiaryPostViewModel with ChangeNotifier {
       final image = File(pickedFile.path);
       //diaryModel.diary!.imageUrl = image.path;
       imageUrl = image.path;
-      fileName = path.basename(pickedFile.path);
+      //fileName = path.basename(pickedFile.path);
       notifyListeners();
       checkPostable();
     }
@@ -155,15 +167,16 @@ class DiaryPostViewModel with ChangeNotifier {
   /// 게시물 전송
   Future<void> submitPost(BuildContext context) async {
     try {
-      String presignedUrl = await API.getImgPresignedURL(fileName!);
+      //String presignedUrl = await API.getImgPresignedURL(fileName!);
 
       await API.addDiary(
         inputText,
         selectedDate,
-        presignedUrl,
+        imageUrl!,
+        getSelectedTimeAsString(),
       );
 
-      if (context.mounted) context.pop();
+      context.go('/diary');
     } catch (e) {
       debugPrint("게시물 추가 실패: $e");
     }
@@ -176,6 +189,7 @@ class DiaryPostViewModel with ChangeNotifier {
         diaryId!,
         inputText,
         selectedDate,
+        getSelectedTimeAsString(),
       );
       debugPrint("게시물 수정 성공: " + inputText);
 

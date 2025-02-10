@@ -10,6 +10,7 @@ class DiaryViewModel extends ChangeNotifier {
     required this.diaryModel,
     required this.context,
   }) {
+    getProperMealPercentage();
     updateDiaries();
   }
 
@@ -71,9 +72,11 @@ class DiaryViewModel extends ChangeNotifier {
 
   /// 선택된 날짜의 일기 불러오기
   List<Diary> getDiariesForDay(DateTime date) {
-    return diaryModel.diariesForMonth
-        .where((diary) => diary.date == date)
-        .toList();
+    return diaryModel.diariesForMonth.where((diary) {
+      return diary.date?.year == date.year &&
+          diary.date?.month == date.month &&
+          diary.date?.day == date.day;
+    }).toList();
   }
 
   /// 다이어리 추가 화면으로 이동

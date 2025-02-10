@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/utils/palette.dart';
 
-class DiaryDeleteDialog extends StatelessWidget {
+class DiaryDialog extends StatelessWidget {
   final Function? onPressedCancel;
   final Function? onPressedDelete;
 
-  const DiaryDeleteDialog({
+  const DiaryDialog({
     super.key,
     required this.onPressedCancel,
     required this.onPressedDelete,

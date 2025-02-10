@@ -185,7 +185,6 @@ class API {
       final response = await _getApi(
         '/diary/$idx',
       );
-      print(response.data);
       return response.data;
     } catch (e) {
       debugPrint('Error in getDiaryById: $e');
@@ -195,17 +194,19 @@ class API {
 
   /// 다이어리 생성
   static Future<dynamic> addDiary(
-      String body, DateTime date, String url) async {
+      String body, DateTime date, String url, int selectedTimeAsString) async {
     try {
       final response = await _postApi(
         '/diary/add',
         jsonData: jsonEncode({
           'body': body,
-          'date': date.toIso8601String(),
+          'date': date.toUtc().toIso8601String(),
           'url': url,
+          'mealTime': selectedTimeAsString,
         }),
       );
-      return response;
+
+      return response.data;
     } catch (e) {
       debugPrint('Error in addDiary: $e');
       throw Error();
@@ -214,13 +215,14 @@ class API {
 
   /// 특정 다이어리 수정정
   static Future<dynamic> updateDiary(
-      int diaryId, String body, DateTime date) async {
+      int diaryId, String body, DateTime date, int selectedTimeAsString) async {
     try {
       final response = await _patchApi(
         '/diary/update/$diaryId',
         jsonData: jsonEncode({
           'body': body,
           'date': date.toIso8601String(),
+          'mealTime': selectedTimeAsString,
         }),
       );
       return response.data;
@@ -250,7 +252,7 @@ class API {
       final response = await _deleteApi(
         '/diary/delete/$diaryId',
       );
-      debugPrint(response);
+      //debugPrint(response);
       return response;
     } catch (e) {
       debugPrint('Error in deleteDiary: $e');

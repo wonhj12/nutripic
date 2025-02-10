@@ -8,13 +8,13 @@ class DiaryModel with ChangeNotifier {
 
   //하루치 다이어리
   List<Diary> diariesForDay = [
-    Diary(
-      diaryId: 1,
-      content: "크게될 친구",
-      date: DateTime(2025, 2, 3, 5, 12),
-      imageUrl:
-          "https://i.namu.wiki/i/kKfynGpkO0JAORFLsu0FHZ7TkIkpYeelP3sokPrfVGXR7iUtfcZZUplyr-Lb8w9ttfgYpNKM0PS-wEmaWZa_C8dmQQw0xDbZJC-m9G-Ip5tuhCIpgSE47nP5NLWHtS_eSFGq0mM4V_oI8PW1hEPggg.webp",
-    )
+    // Diary(
+    //   diaryId: 1,
+    //   content: "크게될 친구",
+    //   date: DateTime(2025, 2, 3, 5, 12),
+    //   imageUrl:
+    //       "https://i.namu.wiki/i/kKfynGpkO0JAORFLsu0FHZ7TkIkpYeelP3sokPrfVGXR7iUtfcZZUplyr-Lb8w9ttfgYpNKM0PS-wEmaWZa_C8dmQQw0xDbZJC-m9G-Ip5tuhCIpgSE47nP5NLWHtS_eSFGq0mM4V_oI8PW1hEPggg.webp",
+    // )
   ];
 
   Diary? diary;
@@ -47,7 +47,13 @@ class DiaryModel with ChangeNotifier {
     //print(response.data);
     final List<dynamic> data = response.data;
 
-    diariesForDay = data.map((item) => Diary.fromJson(item)).toList();
+    // 각 항목에서 id만 추출하여 리스트 생성->없애고픔픔
+    final List<int> diaryIds = data.map((diary) => diary['id'] as int).toList();
+    final List<Future<dynamic>> requests =
+        diaryIds.map((id) => API.getDiaryById(id)).toList();
+    final List<dynamic> diaryResponses = await Future.wait(requests);
+
+    diariesForDay = diaryResponses.map((item) => Diary.fromJson(item)).toList();
 
     for (var diary in diariesForDay) {
       debugPrint(
