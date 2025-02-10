@@ -10,6 +10,7 @@ import 'package:nutripic/view_models/camera/camera_add_view_model.dart';
 import 'package:nutripic/view_models/camera/camera_confirm_view_model.dart';
 import 'package:nutripic/view_models/camera/camera_loading_view_model.dart';
 import 'package:nutripic/view_models/camera/camera_view_model.dart';
+import 'package:nutripic/view_models/camera/food_edit_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_record_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
@@ -26,6 +27,7 @@ import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:nutripic/views/camera/camera_add_view.dart';
 import 'package:nutripic/views/camera/camera_confirm_view.dart';
 import 'package:nutripic/views/camera/camera_loading_view.dart';
+import 'package:nutripic/views/camera/food_edit_view.dart';
 import 'package:nutripic/views/diary/diary_record_view.dart';
 import 'package:nutripic/views/diary/diary_view.dart';
 import 'package:nutripic/views/login/email_view.dart';
@@ -193,6 +195,23 @@ class AppRouter {
                         ),
                         child: const CameraAddView(),
                       ),
+                      routes: [
+                        GoRoute(
+                          path: 'edit',
+                          parentNavigatorKey: _rootNavigatorKey,
+                          builder: (context, state) => ChangeNotifierProvider(
+                            create: (context) => FoodEditViewModel(
+                              cameraModel: cameraModel,
+                              food:
+                                  (state.extra as Map<String, dynamic>)['food'],
+                              storage: (state.extra
+                                  as Map<String, dynamic>)['storage'],
+                              context: context,
+                            ),
+                            child: const FoodEditView(),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 )
