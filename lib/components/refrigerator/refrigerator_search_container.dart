@@ -23,18 +23,17 @@ class RefrigeratorSearchContainer extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // 검색 텍스트 필드
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: '추가할 식재료를 검색해 보세요',
-                hintStyle: Palette.body1.copyWith(color: Palette.gray300),
-                border: InputBorder.none,
-              ),
-            ),
+          // 검색 텍스트
+          Text(
+            '추가할 식재료를 검색해 보세요',
+            style: Palette.body1.copyWith(color: Palette.gray300),
           ),
 
+          const Spacer(),
+
+          // 구분선
           const SizedBox(
             height: 12,
             child: VerticalDivider(color: Palette.gray500),

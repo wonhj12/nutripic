@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/utils/enums/select_button_type.dart';
+import 'package:nutripic/utils/enums/box_button_type.dart';
 import 'package:nutripic/utils/palette.dart';
 
-class SelectButton extends StatelessWidget {
+class BoxButton extends StatelessWidget {
+  /// 표시 레이블
   final String label;
+
+  /// 버튼 색 종류
+  final BoxButtonType type;
+
+  /// small, medium 크기 여부
+  /// <br /> `true` = small
+  final bool s;
+
+  /// 넓이
   final double? width;
-  final double? height;
-  final SelectButtonType type;
+
+  /// 버튼 클릭
   final Function()? onPressed;
-  const SelectButton({
+
+  const BoxButton({
     super.key,
     required this.label,
-    this.width = 56,
-    this.height = 28,
-    this.type = SelectButtonType.normal,
+    this.type = BoxButtonType.normal,
+    this.s = true,
+    this.width,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
-      height: height,
+      width: width ?? (s ? 56 : 80),
+      height: s ? 32 : 36,
       child: FilledButton(
         onPressed: onPressed,
         style: FilledButton.styleFrom(

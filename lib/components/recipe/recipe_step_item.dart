@@ -1,4 +1,3 @@
-// lib/components/recipe/recipe_step_item.dart
 import 'package:flutter/material.dart';
 import 'package:nutripic/utils/palette.dart';
 
@@ -14,28 +13,21 @@ class RecipeStepItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 화면 크기 정보 가져오기
-
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.only(bottom: 56),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // 단계 번호
-          SizedBox(
-            width: 50,
-            height: 50,
-            child: Text(
-              stepNumber.toString(),
-              style: Palette.recipeOrder,
-            ),
+          Text(
+            stepNumber.toString(),
+            style: Palette.recipeOrder,
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: 12), // 간격 추가
           // 단계 설명
           Expanded(
             child: Text(
               stepDescription,
-              style: Palette.recipeStep,
+              style: Palette.body1,
             ),
           ),
         ],

@@ -7,19 +7,15 @@ import 'package:nutripic/utils/palette.dart';
 import 'package:provider/provider.dart';
 import 'package:nutripic/view_models/login/login_view_model.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
-  @override
-  State<LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     LoginViewModel loginViewModel = context.watch<LoginViewModel>();
 
     return CustomScaffold(
+      backgroundColor: Palette.green500,
       isLoading: loginViewModel.isLoading,
       body: Column(
         mainAxisSize: MainAxisSize.min,
@@ -30,20 +26,20 @@ class _LoginViewState extends State<LoginView> {
           Container(
             margin: const EdgeInsets.all(20),
             child: SvgPicture.asset(
-              'assets/icons/logo_no_bg.svg',
-              width: 64,
-              height: 64,
+              'assets/icons/nutripic_logo_white.svg',
+              width: 90,
+              height: 90,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 26),
 
           // 뉴트리픽
           SvgPicture.asset(
-            'assets/icons/nutripic.svg',
-            width: 194,
-            height: 52,
+            'assets/icons/nutripic_text_white.svg',
+            width: 213,
+            height: 51,
           ),
-          const SizedBox(height: 154),
+          const SizedBox(height: 130),
 
           // 카카오 로그인
           ImageButton(

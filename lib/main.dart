@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:nutripic/models/camera_model.dart';
 import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
@@ -30,6 +31,7 @@ Future<void> autoLogin() async {
   if (user != null) {
     // 사용자가 존재한다면 모델에 데이터 저장
     userModel.fromFirebaseUser(user);
+    debugPrint('Auto login to user ${userModel.name}');
 
     // 냉장고 불러오기
     await refrigeratorModel.getFoods();
@@ -42,12 +44,18 @@ Future<void> autoLogin() async {
 // 모델
 UserModel userModel = UserModel();
 RefrigeratorModel refrigeratorModel = RefrigeratorModel();
+CameraModel cameraModel = CameraModel();
 DiaryModel diaryModel = DiaryModel();
 RecipeModel recipeModel = RecipeModel();
 
 // 라우터
-final _router =
-    AppRouter.getRouter(userModel, refrigeratorModel, diaryModel, recipeModel);
+final _router = AppRouter.getRouter(
+  userModel,
+  refrigeratorModel,
+  cameraModel,
+  diaryModel,
+  recipeModel,
+);
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});

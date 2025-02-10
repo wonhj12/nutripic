@@ -8,14 +8,9 @@ import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class DiaryPostView extends StatefulWidget {
+class DiaryPostView extends StatelessWidget {
   const DiaryPostView({super.key});
 
-  @override
-  State<DiaryPostView> createState() => _DiaryPostViewState();
-}
-
-class _DiaryPostViewState extends State<DiaryPostView> {
   @override
   Widget build(BuildContext context) {
     DiaryPostViewModel diaryPostViewModel = context.watch<DiaryPostViewModel>();

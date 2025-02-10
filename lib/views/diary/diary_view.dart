@@ -8,14 +8,9 @@ import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:provider/provider.dart';
 
-class DiaryView extends StatefulWidget {
+class DiaryView extends StatelessWidget {
   const DiaryView({super.key});
 
-  @override
-  State<DiaryView> createState() => _DiaryViewState();
-}
-
-class _DiaryViewState extends State<DiaryView> {
   @override
   Widget build(BuildContext context) {
     DiaryViewModel diaryViewModel = context.watch<DiaryViewModel>();

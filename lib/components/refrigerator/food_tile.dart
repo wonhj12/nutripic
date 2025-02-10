@@ -14,17 +14,14 @@ class FoodTile extends StatelessWidget {
   /// 식재료 선택 가능 여부
   final bool isSelectable;
 
-  /// 유통기한 표시 여부
-  final bool showDday;
-
   /// 식재료 선택시 콜백 함수
   final Function(Food) select;
+
   const FoodTile({
     super.key,
     required this.food,
     required this.isSelected,
     required this.isSelectable,
-    this.showDday = false,
     required this.select,
   });
 
@@ -48,7 +45,11 @@ class FoodTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: isSelected ? Palette.delete : Palette.gray100,
+                      color: isSelected
+                          ? Palette.green400
+                          : food.expired && !isSelectable
+                              ? Palette.delete
+                              : Palette.gray200,
                       width: 1,
                     ),
                   ),
