@@ -4,12 +4,12 @@ import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/enums/storage_type.dart';
 
-class RecipeFilterViewModel extends ChangeNotifier {
+class RecipeFinishViewModel extends ChangeNotifier {
   RefrigeratorModel refrigeratorModel;
   CameraModel cameraModel;
   BuildContext context;
 
-  RecipeFilterViewModel({
+  RecipeFinishViewModel({
     required this.refrigeratorModel,
     required this.cameraModel,
     required this.context,

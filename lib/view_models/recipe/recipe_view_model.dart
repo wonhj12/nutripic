@@ -57,9 +57,9 @@ class RecipeViewModel with ChangeNotifier {
           final random = Random();
           final Set<int> indices = {};
 
-          while (indices.length < 5) {
+          while (indices.length < 10) {
             // 무한 루프 방지
-            indices.add(random.nextInt(10));
+            indices.add(random.nextInt(22));
           }
           recipeIds.addAll(indices.toList());
         }
@@ -104,7 +104,7 @@ class RecipeViewModel with ChangeNotifier {
 
 // 필터 화면 이동
   void onFilter() {
-    context.go('/recipe/filter');
+    context.go('/recipe/search/filter');
   }
 
 // 다이얼로그 표시 메서드

@@ -3,20 +3,26 @@ import 'package:nutripic/models/recipe_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/objects/recipe.dart';
 
-class RecipeDetailViewModel extends ChangeNotifier {
-  RecipeModel recipeModel;
+class RecipeSearchViewModel extends ChangeNotifier {
   BuildContext context;
+  RecipeModel recipeModel;
 
-  RecipeDetailViewModel({
-    required this.recipeModel,
+  RecipeSearchViewModel({
     required this.context,
+    required this.recipeModel,
   });
 
-  void onRecipeFinish() {
-    context.go('/recipe/finish');
+  // 필요에 따라 추가적인 메서드 및 로직을 여기에 작성할 수 있습니다.
+
+  void onTapDetail(Recipe recipe) async {
+    try {
+      recipeModel.saveSpecificRecipe(recipe);
+      context.go('/recipe/detail');
+    } catch (e) {
+      debugPrint('$e');
+    }
   }
 
-  // 즐겨찾기 상태를 토글하는 메서드
   void toggleFavorite(Recipe recipe) {
     int index = recipeModel.recipes.indexOf(recipe);
     if (index != -1) {
@@ -32,5 +38,7 @@ class RecipeDetailViewModel extends ChangeNotifier {
     }
   }
 
-  // 필요에 따라 추가적인 메서드 및 로직을 여기에 작성할 수 있습니다.
+  void onRecipeView() {
+    context.go('/recipe');
+  }
 }

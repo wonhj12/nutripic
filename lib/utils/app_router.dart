@@ -20,6 +20,8 @@ import 'package:nutripic/view_models/login/login_view_model.dart';
 import 'package:nutripic/view_models/login/signup_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_detail_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_filter_view_model.dart';
+import 'package:nutripic/view_models/recipe/recipe_finish_view_model.dart';
+import 'package:nutripic/view_models/recipe/recipe_search_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
 import 'package:nutripic/view_models/onboarding_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
@@ -39,6 +41,7 @@ import 'package:nutripic/views/diary/diary_post_view.dart';
 import 'package:nutripic/views/login/login_view.dart';
 import 'package:nutripic/views/recipe/recipe_detail_view.dart';
 import 'package:nutripic/views/recipe/recipe_filter_view.dart';
+import 'package:nutripic/views/recipe/recipe_finish_view.dart';
 import 'package:nutripic/views/recipe/recipe_search_view.dart';
 import 'package:nutripic/views/recipe/recipe_view.dart';
 import 'package:nutripic/views/onboarding_view.dart';
@@ -292,15 +295,27 @@ class AppRouter {
                   routes: [
                     // 검색 화면 경로 추가
                     GoRoute(
-                      path: 'search',
-                      builder: (context, state) => ChangeNotifierProvider(
-                        create: (context) => RecipeViewModel(
-                          recipeModel: recipeModel,
-                          context: context,
-                        ),
-                        child: RecipeSearchView(),
-                      ),
-                    ),
+                        path: 'search',
+                        builder: (context, state) => ChangeNotifierProvider(
+                              create: (context) => RecipeSearchViewModel(
+                                recipeModel: recipeModel,
+                                context: context,
+                              ),
+                              child: const RecipeSearchView(),
+                            ),
+                        routes: [
+                          GoRoute(
+                            path: 'filter',
+                            builder: (context, state) => ChangeNotifierProvider(
+                              create: (context) => RecipeFilterViewModel(
+                                refrigeratorModel: refrigeratorModel,
+                                cameraModel: cameraModel,
+                                context: context,
+                              ),
+                              child: const RecipeFilterView(),
+                            ),
+                          ),
+                        ]),
                     GoRoute(
                       path: 'detail',
                       builder: (context, state) => ChangeNotifierProvider(
@@ -312,14 +327,14 @@ class AppRouter {
                       ),
                     ),
                     GoRoute(
-                      path: 'filter',
+                      path: 'finish',
                       builder: (context, state) => ChangeNotifierProvider(
-                        create: (context) => RecipeFilterViewModel(
+                        create: (context) => RecipeFinishViewModel(
                           refrigeratorModel: refrigeratorModel,
                           cameraModel: cameraModel,
                           context: context,
                         ),
-                        child: const RecipeFilterView(),
+                        child: const RecipeFinishView(),
                       ),
                     ),
                   ],
