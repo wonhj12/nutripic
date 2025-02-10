@@ -8,6 +8,7 @@ import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/camera/camera_add_view_model.dart';
 import 'package:nutripic/view_models/camera/camera_confirm_view_model.dart';
+import 'package:nutripic/view_models/camera/camera_loading_fail_view_model.dart';
 import 'package:nutripic/view_models/camera/camera_loading_view_model.dart';
 import 'package:nutripic/view_models/camera/camera_view_model.dart';
 import 'package:nutripic/view_models/camera/food_edit_view_model.dart';
@@ -26,6 +27,7 @@ import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:nutripic/views/camera/camera_add_view.dart';
 import 'package:nutripic/views/camera/camera_confirm_view.dart';
+import 'package:nutripic/views/camera/camera_loading_fail_view.dart';
 import 'package:nutripic/views/camera/camera_loading_view.dart';
 import 'package:nutripic/views/camera/food_edit_view.dart';
 import 'package:nutripic/views/diary/diary_record_view.dart';
@@ -181,6 +183,17 @@ class AppRouter {
                           context: context,
                         ),
                         child: const CameraLoadingView(),
+                      ),
+                    ),
+                    // 분석 실패 화면
+                    GoRoute(
+                      path: 'fail',
+                      parentNavigatorKey: _rootNavigatorKey,
+                      builder: (context, state) => ChangeNotifierProvider(
+                        create: (context) => CameraLoadingFailViewModel(
+                          context: context,
+                        ),
+                        child: const CameraLoadingFailView(),
                       ),
                     ),
                     // 식재료 추가
