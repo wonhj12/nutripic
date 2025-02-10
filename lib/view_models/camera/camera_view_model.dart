@@ -53,10 +53,12 @@ class CameraViewModel with ChangeNotifier {
   }
 
   /// 식재료 추가 확인 페이지로 이동
-  void onTapComplete() {
+  void onTapComplete() async {
     // 촬영한 사진이 있을 때만 이동
     if (cameraModel.images.isNotEmpty) {
-      context.push('/refrigerator/camera/confirm');
+      // 사진 삭제 후 되돌아오는 경우를 대비해 async await 처리
+      await context.push('/refrigerator/camera/confirm');
+      notifyListeners();
     }
   }
 

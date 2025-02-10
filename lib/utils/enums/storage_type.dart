@@ -7,4 +7,8 @@ enum StorageType {
   final int rawValue;
   final String name;
   const StorageType(this.rawValue, this.name);
+
+  factory StorageType.fromString(String name) {
+    return StorageType.values.firstWhere((value) => value.name == name);
+  }
 }

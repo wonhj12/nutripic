@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:nutripic/components/recipe/recipe_ingredients.dart';
 import 'package:nutripic/components/recipe/recipe_step_item.dart';
 import 'package:nutripic/objects/recipe.dart';
+import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/recipe/recipe_detail_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:nutripic/components/recipe/recipe_info.dart';
-import 'package:nutripic/components/recipe/ingredient_item.dart';
 
 class RecipeDetailView extends StatelessWidget {
   const RecipeDetailView({
@@ -40,9 +42,10 @@ class RecipeDetailView extends StatelessWidget {
             expandedHeight: 232,
             pinned: true,
             leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
+              icon: SvgPicture.asset(
+                'assets/icons/backIcon.svg',
+                width: 18,
+                height: 18,
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -65,48 +68,10 @@ class RecipeDetailView extends StatelessWidget {
                   RecipeInfo(recipe: recipe),
                   const SizedBox(height: 24),
                   // 재료 섹션
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    width: MediaQuery.of(context).size.width * (343 / 375),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black26, width: 0.7),
-                      color: Colors.white, // 투명한 흰색 배경
-                      borderRadius: BorderRadius.circular(16), // 모서리 둥글게
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "재료",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                        const Divider(
-                          thickness: 0.7,
-                          color: Colors.black26,
-                        ),
-                        const SizedBox(height: 8),
-                        // 재료 리스트 (두 개씩)
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: recipe.ingredient
-                              .map((ingredient) =>
-                                  IngredientItem(ingredient: ingredient))
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  ),
+                  RecipeIngredient(ingredients: recipe.ingredient),
 
-                  const SizedBox(height: 57),
+                  const SizedBox(height: 36),
                   // 조리 단계 섹션
-
-////////////////////////////////////
-                  const SizedBox(height: 8),
-                  // 조리 단계 리스트
                   Column(
                     children: List.generate(recipe.procedure.length, (index) {
                       return RecipeStepItem(
@@ -115,32 +80,36 @@ class RecipeDetailView extends StatelessWidget {
                       );
                     }),
                   ),
-                  const SizedBox(height: 32),
+                  const Divider(
+                    thickness: 0.5, // 구분선 두께 조정
+                    color: Colors.black26,
+                  ),
+                  const SizedBox(height: 12),
                   // 레시피 완료 버튼
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        // 레시피 완료 시 처리 (예: SnackBar 표시)
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('레시피를 완료했습니다!'),
-                          ),
-                        );
+                        recipeDetailViewModel.onRecipeFinish();
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 16),
+                        fixedSize: const Size(
+                            343, 50), // Figma에서 설정된 크기 (너비 343, 높이 50)
+                        backgroundColor: Palette.green500,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius:
+                              BorderRadius.circular(8), // Figma에서 반경 8px
                         ),
+                        elevation: 0, // 그림자 제거
+                        padding: EdgeInsets.zero, // 내부 패딩 제거
                       ),
-                      child: const Text(
+                      child: Text(
                         '레시피 완료',
-                        style: TextStyle(fontSize: 18),
+                        style: Palette.title2SemiBold
+                            .copyWith(color: Colors.white),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 42),
                 ],
               ),
             ),

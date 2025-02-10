@@ -3,16 +3,16 @@ class Food {
   final int id;
 
   /// 식재료 이름
-  final String name;
+  String name;
 
   /// 아이콘 이름
-  final String icon;
+  String icon;
 
   /// 대분류
-  final String class1;
+  String class1;
 
   /// 소분류
-  final String class2;
+  String class2;
 
   /// 식재료가 추가된 날짜
   final DateTime addedDate;
@@ -21,7 +21,7 @@ class Food {
   final DateTime? expireDate;
 
   /// 유통기한 지났는지 여부
-  final bool expired;
+  bool expired;
 
   /// 유통기한까지 남은 날짜 수
   final int? daysTilExpire;
@@ -67,13 +67,33 @@ class Food {
       'class2': class2,
       'addedDate': addedDate.toIso8601String(),
       'expireDate': expireDate?.toIso8601String(),
-      // 'daysTilExpire': daysTilExpire,
     };
+  }
+
+  /// 식재료 값 수정하는 함수
+  /// <br /> `id`, `addedDate`는 수정 불가
+  void update({
+    String? name,
+    String? icon,
+    String? class1,
+    String? class2,
+    DateTime? expireDate,
+    bool? expired,
+  }) {
+    this.name = name ?? this.name;
+    this.icon = icon ?? this.icon;
+    this.class1 = class1 ?? this.class1;
+    this.class2 = class2 ?? this.class2;
+    this.expireDate = expireDate ?? this.expireDate;
+    this.expired = expired ?? this.expired;
   }
 
   @override
   String toString() {
-    return 'name: $name, '
+    return 'id: $id, '
+        'name: $name, '
+        'class1: $class1, '
+        'class2: $class2, '
         'expireDate: $expireDate';
   }
 }

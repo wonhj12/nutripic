@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/recipe/overlay_box.dart';
 import 'package:nutripic/objects/recipe.dart';
+import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -54,11 +55,7 @@ class RecipeCard extends StatelessWidget {
                           // 레시피 이름
                           Text(
                             recipe.name,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: screenWidth * 0.05, // 폰트 크기
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Palette.title2Medium,
                             textAlign: TextAlign.left,
                           ),
                           SizedBox(height: screenHeight * 0.005),
@@ -67,12 +64,12 @@ class RecipeCard extends StatelessWidget {
                             children: [
                               // 난이도 (별)
                               Row(
-                                children: List.generate(5, (starIndex) {
+                                children: List.generate(3, (starIndex) {
                                   return Icon(
                                     starIndex < recipe.difficulty
                                         ? Icons.star
                                         : Icons.star_border,
-                                    color: Colors.yellow[700],
+                                    color: Palette.green600,
                                     size: screenWidth * 0.04, // 별 크기
                                   );
                                 }),
@@ -81,10 +78,8 @@ class RecipeCard extends StatelessWidget {
                               // 소요 시간
                               Text(
                                 "${recipe.cookingTime}분 이내",
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: screenWidth * 0.035,
-                                ),
+                                style: Palette.caption1
+                                    .copyWith(color: Palette.success),
                               ),
                             ],
                           ),

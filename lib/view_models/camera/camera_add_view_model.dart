@@ -4,6 +4,7 @@ import 'package:nutripic/models/camera_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/api.dart';
+import 'package:nutripic/utils/enums/storage_type.dart';
 
 class CameraAddViewModel with ChangeNotifier {
   RefrigeratorModel refrigeratorModel;
@@ -20,6 +21,9 @@ class CameraAddViewModel with ChangeNotifier {
   bool isSelectState = false;
 
   void onPressClose() {
+    cameraModel.reset();
+
+    context.pop();
     context.pop();
     context.pop();
   }
@@ -75,6 +79,19 @@ class CameraAddViewModel with ChangeNotifier {
     }
   }
 
+  /// 등록하기, 편집 버튼 클릭
+  void onPressedEdit({Food? food, StorageType? storage}) async {
+    if (context.mounted) {
+      await context.push(
+        '/refrigerator/add/edit',
+        extra: {'food': food, 'storage': storage},
+      );
+    }
+
+    notifyListeners();
+  }
+
+  /// 보관/삭제하기 버튼 클릭
   void onPressedSave() async {
     isLoading = true;
     notifyListeners();
@@ -102,6 +119,7 @@ class CameraAddViewModel with ChangeNotifier {
 
       // 냉장고 화면까지 pop 2번 해야됨
       // refrigerator/camera/add
+      if (context.mounted) context.pop();
       if (context.mounted) context.pop();
       if (context.mounted) context.pop();
     }
