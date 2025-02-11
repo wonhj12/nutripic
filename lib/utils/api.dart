@@ -99,13 +99,17 @@ class API {
       throw Error();
     }
 
+    debugPrint('Got ${foods.expand((e) => e).length} foods');
     return foods;
   }
 
   /// 냉장고에 저장된 식재료를 삭제하는 delete 요청
   static Future<void> deleteFood(List<int> foodIds) async {
     try {
-      await _deleteApi('/storage/delete', jsonData: jsonEncode(foodIds));
+      await _deleteApi(
+        '/storage/delete',
+        jsonData: jsonEncode({'foodIds': foodIds}),
+      );
     } catch (e) {
       debugPrint('Error in deleteFood: $e');
       throw Error();
@@ -114,13 +118,20 @@ class API {
 
   /// 촬영한 식재료 사진을 서버에 전송하는 함수
   /// <br /> GPT 인식 후 인식된 식재료를 받음
-  static Future<List<List<Food>>> postImageToFood(File image) async {
+  static Future<List<List<Food>>> postImageToFood(List<File> images) async {
     try {
+      FormData formData = FormData();
+
+      for (File image in images) {
+        formData.files.add(MapEntry(
+          'image',
+          await MultipartFile.fromFile(image.path),
+        ));
+      }
+
       final response = await _postApi(
         '/image-to-food/analyze',
-        jsonData: FormData.fromMap(
-          {'image': await MultipartFile.fromFile(image.path)},
-        ),
+        jsonData: formData,
       );
 
       if (response != null) {

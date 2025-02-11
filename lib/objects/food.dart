@@ -18,10 +18,13 @@ class Food {
   final DateTime addedDate;
 
   /// 유통기한
-  DateTime expireDate;
+  final DateTime? expireDate;
 
   /// 유통기한 지났는지 여부
   bool expired;
+
+  /// 유통기한까지 남은 날짜 수
+  final int? daysTilExpire;
 
   Food({
     required this.id,
@@ -30,8 +33,9 @@ class Food {
     required this.class1,
     required this.class2,
     required this.addedDate,
-    required this.expireDate,
+    this.expireDate,
     required this.expired,
+    this.daysTilExpire,
   });
 
   /// jsonData에서 받아온 데이터를 Food로 변환 저장하는 함수
@@ -44,7 +48,13 @@ class Food {
       class2: json['class2'],
       addedDate: DateTime.parse(json['addedDate']),
       expireDate: DateTime.parse(json['expireDate']),
-      expired: json['expired'],
+      daysTilExpire: json['daysTilExpire'],
+      expired: json['expireDate'] != null && json['daysTilExpire'] != null
+          ? DateTime.now()
+                  .difference(DateTime.parse(json['expireDate']))
+                  .inDays >=
+              json['daysTilExpire']
+          : false,
     );
   }
 
@@ -55,9 +65,8 @@ class Food {
       'icon': icon,
       'class1': class1,
       'class2': class2,
-      'addedDate': addedDate.toUtc().toIso8601String(),
-      'expireDate': expireDate.toUtc().toIso8601String(),
-      'expired': expired,
+      'addedDate': addedDate.toIso8601String(),
+      'expireDate': expireDate?.toIso8601String(),
     };
   }
 
