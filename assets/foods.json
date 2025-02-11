@@ -1,0 +1,434 @@
+[
+  {
+    "id": 1,
+    "class1": "채소",
+    "class2": "오이",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "cucumber"
+  },
+  {
+    "id": 2,
+    "class1": "채소",
+    "class2": "토마토",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 3,
+    "class1": "채소",
+    "class2": "아스파라거스",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "basil"
+  },
+  {
+    "id": 4,
+    "class1": "채소",
+    "class2": "아보카도",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "cabbage"
+  },
+  {
+    "id": 5,
+    "class1": "채소",
+    "class2": "브로콜리",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "spinach"
+  },
+  {
+    "id": 6,
+    "class1": "채소",
+    "class2": "당근",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "carrot"
+  },
+  {
+    "id": 7,
+    "class1": "채소",
+    "class2": "콜리플라워",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "cabbage"
+  },
+  {
+    "id": 8,
+    "class1": "채소",
+    "class2": "옥수수",
+    "storageType": "room",
+    "expireDate": 3,
+    "icon": "cabbage"
+  },
+  {
+    "id": 9,
+    "class1": "채소",
+    "class2": "마늘",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "basil"
+  },
+  {
+    "id": 10,
+    "class1": "채소",
+    "class2": "대파",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "basil"
+  },
+  {
+    "id": 11,
+    "class1": "채소",
+    "class2": "상추",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "cabbage"
+  },
+  {
+    "id": 12,
+    "class1": "채소",
+    "class2": "양파",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "cabbage"
+  },
+  {
+    "id": 13,
+    "class1": "채소",
+    "class2": "감자",
+    "storageType": "room",
+    "expireDate": 3,
+    "icon": "cabbage"
+  },
+  {
+    "id": 15,
+    "class1": "채소",
+    "class2": "시금치",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "spinach"
+  },
+  {
+    "id": 16,
+    "class1": "과일",
+    "class2": "사과",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 17,
+    "class1": "과일",
+    "class2": "바나나",
+    "storageType": "room",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 18,
+    "class1": "과일",
+    "class2": "오렌지",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 19,
+    "class1": "과일",
+    "class2": "블루베리",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 20,
+    "class1": "과일",
+    "class2": "레몬",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 21,
+    "class1": "과일",
+    "class2": "라임",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 22,
+    "class1": "과일",
+    "class2": "망고",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 23,
+    "class1": "과일",
+    "class2": "배",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 24,
+    "class1": "과일",
+    "class2": "파인애플",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 25,
+    "class1": "과일",
+    "class2": "딸기",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "tomato"
+  },
+  {
+    "id": 26,
+    "class1": "육류",
+    "class2": "소고기",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "chicken_breast"
+  },
+  {
+    "id": 27,
+    "class1": "육류",
+    "class2": "닭고기",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "chicken_breast"
+  },
+  {
+    "id": 28,
+    "class1": "육류",
+    "class2": "닭가슴살",
+    "storageType": "fridge",
+    "expireDate": 3,
+    "icon": "chicken_breast"
+  },
+  {
+    "id": 30,
+    "class1": "육류",
+    "class2": "소시지",
+    "storageType": "fridge",
+    "expireDate": 30,
+    "icon": "chicken_breast"
+  },
+  {
+    "id": 31,
+    "class1": "해산물",
+    "class2": "생선",
+    "storageType": "freezer",
+    "expireDate": 90,
+    "icon": "shrimp"
+  },
+  {
+    "id": 32,
+    "class1": "해산물",
+    "class2": "새우",
+    "storageType": "freezer",
+    "expireDate": 90,
+    "icon": "shrimp"
+  },
+  {
+    "id": 33,
+    "class1": "버섯",
+    "class2": "버섯",
+    "storageType": "fridge",
+    "expireDate": 7,
+    "icon": "basil"
+  },
+  {
+    "id": 34,
+    "class1": "조미료",
+    "class2": "케찹",
+    "storageType": "fridge",
+    "expireDate": 365,
+    "icon": "ketchup"
+  },
+  {
+    "id": 35,
+    "class1": "조미료",
+    "class2": "잼",
+    "storageType": "fridge",
+    "expireDate": 365,
+    "icon": "peanut_butter"
+  },
+  {
+    "id": 36,
+    "class1": "조미료",
+    "class2": "마요네즈",
+    "storageType": "fridge",
+    "expireDate": 365,
+    "icon": "mayonnaise"
+  },
+  {
+    "id": 37,
+    "class1": "조미료",
+    "class2": "설탕",
+    "storageType": "room",
+    "expireDate": 365,
+    "icon": "salt"
+  },
+  {
+    "id": 38,
+    "class1": "조미료",
+    "class2": "소금",
+    "storageType": "room",
+    "expireDate": 365,
+    "icon": "salt"
+  },
+  {
+    "id": 39,
+    "class1": "조미료",
+    "class2": "식용유",
+    "storageType": "room",
+    "expireDate": 365,
+    "icon": "oil"
+  },
+  {
+    "id": 42,
+    "class1": "빵류",
+    "class2": "식빵",
+    "storageType": "room",
+    "expireDate": 7,
+    "icon": "bread"
+  },
+  {
+    "id": 43,
+    "class1": "유제품",
+    "class2": "버터",
+    "storageType": "fridge",
+    "expireDate": 180,
+    "icon": "peanut_butter"
+  },
+  {
+    "id": 44,
+    "class1": "유제품",
+    "class2": "치즈",
+    "storageType": "fridge",
+    "expireDate": 90,
+    "icon": "cheese"
+  },
+  {
+    "id": 45,
+    "class1": "유제품",
+    "class2": "우유",
+    "storageType": "fridge",
+    "expireDate": 10,
+    "icon": "ketchup"
+  },
+  {
+    "id": 46,
+    "class1": "유제품",
+    "class2": "요거트",
+    "storageType": "fridge",
+    "expireDate": 10,
+    "icon": "peanut_butter"
+  },
+  {
+    "id": 47,
+    "class1": "달걀",
+    "class2": "달걀",
+    "storageType": "fridge",
+    "expireDate": 45,
+    "icon": "egg"
+  },
+  {
+    "id": 48,
+    "class1": "과자류",
+    "class2": "초콜릿",
+    "storageType": "room",
+    "expireDate": 60,
+    "icon": "peanut_butter"
+  },
+  {
+    "id": 29,
+    "class1": "육류",
+    "class2": "햄",
+    "storageType": "fridge",
+    "expireDate": 30,
+    "icon": "chicken_breast"
+  },
+  {
+    "id": 14,
+    "class1": "채소",
+    "class2": "고구마",
+    "storageType": "room",
+    "expireDate": 3,
+    "icon": "cabbage"
+  },
+  {
+    "id": 40,
+    "class1": "곡물",
+    "class2": "견과류",
+    "storageType": "room",
+    "expireDate": 90,
+    "icon": "rice"
+  },
+  {
+    "id": 41,
+    "class1": "곡물",
+    "class2": "쌀",
+    "storageType": "room",
+    "expireDate": 90,
+    "icon": "rice"
+  },
+  {
+    "id": 50,
+    "class1": "조미료",
+    "class2": "후추",
+    "storageType": "room",
+    "expireDate": 365,
+    "icon": "pepper"
+  },
+  {
+    "id": 51,
+    "class1": "조미료",
+    "class2": "땅콩버터",
+    "storageType": "room",
+    "expireDate": 365,
+    "icon": "peanut_butter"
+  },
+  {
+    "id": 52,
+    "class1": "조미료",
+    "class2": "레몬즙",
+    "storageType": "room",
+    "expireDate": 365,
+    "icon": "lemon_juice"
+  },
+  {
+    "id": 53,
+    "class1": "조미료",
+    "class2": "고추장",
+    "storageType": "room",
+    "expireDate": 365,
+    "icon": "gochujang"
+  },
+  {
+    "id": 54,
+    "class1": "곡물",
+    "class2": "파스타",
+    "storageType": "room",
+    "expireDate": 365,
+    "icon": "pasta"
+  },
+  {
+    "id": 55,
+    "class1": "조미료",
+    "class2": "시치미",
+    "storageType": "room",
+    "expireDate": 365,
+    "icon": "shichimi"
+  }
+]
