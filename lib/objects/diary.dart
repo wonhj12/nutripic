@@ -1,24 +1,24 @@
 class Diary {
   /// 게시물 아이디
-  int? diaryId;
+  int? id;
 
   /// 게시 날짜
   DateTime? date;
 
   /// 게시물 본문
-  String? content;
+  String? body;
 
   /// 게시물 사진 Url
-  String? imageUrl;
+  String? url;
 
   /// 식사시간
   String? mealTime;
 
   Diary({
+    this.id,
+    this.body,
+    this.url,
     this.date,
-    this.diaryId,
-    this.content,
-    this.imageUrl,
     this.mealTime,
   });
 
@@ -33,18 +33,18 @@ class Diary {
   /// jsonData에서 받아온 데이터를 Diary로 변환 저장하는 함수
   factory Diary.fromJson(Map<String, dynamic> json) {
     return Diary(
-        diaryId: json['id'],
-        content: json['body'],
-        imageUrl: json['url'],
+        id: json['id'],
+        body: json['body'],
+        url: json['url'],
         date: DateTime.parse(json['date']),
         mealTime: mealTimeMapping[json['mealTime']]);
   }
 
   @override
   String toString() {
-    return 'diaryId: $diaryId '
+    return 'diaryId: $id '
         'date: $date '
-        'content: $content '
-        'imageUrl: $imageUrl';
+        'content: $body '
+        'imageUrl: $url';
   }
 }

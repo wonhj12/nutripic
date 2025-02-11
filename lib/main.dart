@@ -18,7 +18,7 @@ Future<void> main() async {
   KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']);
 
   // 가능하다면 자동 로그인 진행
-  //await autoLogin();
+  await autoLogin();
 
   runApp(const MainApp());
 }

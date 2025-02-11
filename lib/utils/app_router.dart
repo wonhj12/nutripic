@@ -249,15 +249,16 @@ class AppRouter {
                   routes: [
                     GoRoute(
                       path: 'post',
+                      parentNavigatorKey: _rootNavigatorKey,
                       builder: (context, state) {
                         final extra = state.extra as Map<String, dynamic>?;
                         final diaryId = extra?['diaryId'] as int?;
-                        final selectedDay = extra?['selectedDate'] as DateTime;
+                        final selectedDay = extra?['selectedDay'] as DateTime;
                         return ChangeNotifierProvider(
                           create: (context) => DiaryPostViewModel(
                             diaryModel: diaryModel,
                             context: context,
-                            selectedDate: selectedDay,
+                            selectedDay: selectedDay,
                             diaryId: diaryId,
                           ),
                           child: const DiaryPostView(),
@@ -266,45 +267,15 @@ class AppRouter {
                     ),
                     GoRoute(
                       path: 'record',
-                      // builder: (context, state) {
-                      //   final selectedDay = state.extra as DateTime;
-                      //   return ChangeNotifierProvider(
-                      //     create: (context) => DiaryRecordViewModel(
-                      //       diaryModel: diaryModel,
-                      //       context: context,
-                      //       selectedDate: selectedDay,
-                      //     ),
-                      //     child: const DiaryRecordView(),
-                      //   );
-                      // },
-                      pageBuilder: (context, state) {
+                      builder: (context, state) {
                         final selectedDay = state.extra as DateTime;
-                        return CustomTransitionPage<void>(
-                          key: state.pageKey,
-                          child: ChangeNotifierProvider(
-                            create: (context) => DiaryRecordViewModel(
-                              diaryModel: diaryModel,
-                              context: context,
-                              selectedDate: selectedDay,
-                            ),
-                            child: const DiaryRecordView(),
+                        return ChangeNotifierProvider(
+                          create: (context) => DiaryRecordViewModel(
+                            diaryModel: diaryModel,
+                            context: context,
+                            selectedDay: selectedDay,
                           ),
-                          transitionDuration: const Duration(milliseconds: 300),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(0.0, 1.0); // 아래에서 시작
-                            const end = Offset.zero; // 원래 위치로 이동
-                            const curve = Curves.easeInOut; // 부드러운 애니메이션
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-                            var offsetAnimation = animation.drive(tween);
-
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          },
+                          child: const DiaryRecordView(),
                         );
                       },
                     ),

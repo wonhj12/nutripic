@@ -104,10 +104,10 @@ class DiaryCard extends StatelessWidget {
               padding: const EdgeInsets.all(5),
               alignment: Alignment.centerLeft,
               width: MediaQuery.of(context).size.width,
-              height: diary.content!.length > 30 ? 70 : 50,
+              height: diary.body!.length > 30 ? 70 : 50,
               child: Text.rich(
                 TextSpan(
-                  text: diary.content,
+                  text: diary.body,
                   style: const TextStyle(
                     color: Palette.gray600,
                     fontSize: 8,

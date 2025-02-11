@@ -5,187 +5,176 @@ import 'package:nutripic/utils/palette.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarScaffold extends StatefulWidget {
-  final bool isLoading;
-  final bool addButton;
+  /// 수정화면 구분
   final bool isPatch;
+
+  /// 추가 버튼
+  final bool addButton;
+
+  /// 현재 보여주는 날짜
   DateTime focusedDay;
-  DateTime selectedDate;
-  final Widget? body;
-  final bool isCalendarVisible;
-  final String? selectedDateString;
-  final Function? onTapCalenderVisible;
-  final Function? onPressedAdd;
+
+  ///선택한 날짜
+  DateTime selectedDay;
+
+  /// 현재 보여주는 날짜 업데이트 함수
   final Function? updateFocusedDay;
+
+  ///선택한 날짜 업데이트 함수
   final Function? updateSelectedDate;
 
-  /// ### 위에 캘린더 모달이 적용된 Scaffold
+  /// 캘린더 표시 선택 함수
+  final Function? onTapCalenderVisible;
+
+  /// 캘린더 표시 여부
+  final bool isCalendarVisible;
+
+  ///body 위젯젯
+  final Widget? body;
+
+  final Function? onPressedAdd;
+
+  /// 네비게이션 바
+  final Widget? bottomNavigationBar;
+
+  /// 다른 날짜로 이동하는 함수
+  final Function? moveDate;
+
+  /// 위에 캘린더 모달이 적용된 Scaffold
   CalendarScaffold({
     super.key,
-    this.isLoading = false,
-    this.body,
-    this.addButton = false,
     this.isPatch = false,
-    required this.focusedDay,
-    required this.selectedDate,
-    required this.isCalendarVisible,
-    required this.selectedDateString,
+    this.addButton = false,
     required this.onTapCalenderVisible,
+    required this.isCalendarVisible,
+    this.body,
+    required this.focusedDay,
+    required this.selectedDay,
     this.onPressedAdd,
     required this.updateFocusedDay,
     required this.updateSelectedDate,
+    this.bottomNavigationBar,
+    this.moveDate,
   });
 
   @override
   State<CalendarScaffold> createState() => _CalendarScaffoldState();
 }
 
-class _CalendarScaffoldState extends State<CalendarScaffold>
-    with SingleTickerProviderStateMixin {
-  DateTime? tempSelectedDate;
+class _CalendarScaffoldState extends State<CalendarScaffold> {
+  DateTime? tempSelectedDay;
   DateTime? tempFocusedDay;
-  late AnimationController animationController;
-  late Animation<Offset> slideAnimation;
 
   @override
   void initState() {
     super.initState();
-    tempSelectedDate = widget.selectedDate;
+    tempSelectedDay = widget.selectedDay;
     tempFocusedDay = widget.focusedDay;
-
-    animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
-
-    slideAnimation = Tween<Offset>(
-      begin: const Offset(0, -1),
-      end: Offset.zero,
-    ).animate(
-        CurvedAnimation(parent: animationController, curve: Curves.easeInBack));
-
-    if (widget.isCalendarVisible) {
-      animationController.forward();
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant CalendarScaffold oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.isCalendarVisible != oldWidget.isCalendarVisible) {
-      if (widget.isCalendarVisible) {
-        animationController.forward();
-      } else {
-        animationController.reverse();
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: AppBar(
-          //나중에 통일해야댐
-          backgroundColor: Palette.gray00,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1),
-            child: Container(
-              height: 1.0, // 선의 두께
-              color: Palette.gray100,
+      child: PopScope(
+        canPop: true,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Palette.gray00,
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(1),
+              child: Container(
+                height: 1.0,
+                color: Palette.gray100,
+              ),
             ),
-          ),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              size: 20,
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                size: 20,
+              ),
+              onPressed: () {
+                context.pop();
+              },
             ),
-            onPressed: () {
-              context.pop();
-            },
-          ),
-          title: widget.isPatch
-              ? Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Text(
-                      widget.selectedDateString!,
-                      style: const TextStyle(
-                        color: Palette.gray900,
-                        fontSize: 13,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ],
-                )
-              : GestureDetector(
-                  onTap: () {
-                    widget.onTapCalenderVisible!();
-                  },
-                  child: Row(
+            title: widget.isPatch
+                ?
+
+                /// 수정 화면
+                Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const SizedBox(
                         width: 15,
                       ),
                       Text(
-                        widget.selectedDateString!,
+                        '${widget.selectedDay.month}월 ${widget.selectedDay.day}일',
                         style: const TextStyle(
                           color: Palette.gray900,
                           fontSize: 13,
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      Icon(widget.isCalendarVisible
-                          ? Icons.arrow_drop_up
-                          : Icons.arrow_drop_down),
                     ],
-                  ),
-                ),
-          centerTitle: true,
-          actions: widget.addButton
-              ? [
-                  IconButton(
-                    icon: const Icon(Icons.add), // '추가' 아이콘
-                    onPressed: () => widget.onPressedAdd!(),
-                  ),
-                ]
-              : [],
-        ),
-        backgroundColor: Palette.gray00,
-        body: Stack(
-          children: [
-            // body
-            Container(
-              child: widget.body,
-            ),
+                  )
+                :
 
-            // 로딩
-            if (widget.isLoading) const Center(child: LoadingScreen()),
-            if (widget.isCalendarVisible)
+                ///등록 화면
+                GestureDetector(
+                    onTap: () => widget.onTapCalenderVisible!(),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Text(
+                          '${widget.selectedDay.month}월 ${widget.selectedDay.day}일',
+                          style: const TextStyle(
+                            color: Palette.gray900,
+                            fontSize: 13,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        Icon(widget.isCalendarVisible
+                            ? Icons.arrow_drop_up
+                            : Icons.arrow_drop_down),
+                      ],
+                    ),
+                  ),
+            centerTitle: true,
+            actions: widget.addButton
+                ? [
+                    IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () => widget.onPressedAdd!(),
+                    ),
+                  ]
+                : [],
+          ),
+          backgroundColor: Palette.gray00,
+          body: Stack(
+            children: [
+              // body
               Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.8),
-                ),
+                child: widget.body,
               ),
-            if (widget.isCalendarVisible)
-              AnimatedPositioned(
-                left: 0,
-                right: 0,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                top: 0,
-                child: SlideTransition(
-                  position: slideAnimation,
+
+              if (widget.isCalendarVisible)
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.8),
+                  ),
+                ),
+              if (widget.isCalendarVisible)
+                AnimatedPositioned(
+                  left: 0,
+                  right: 0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  top: 0,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     height: 400,
@@ -204,11 +193,11 @@ class _CalendarScaffoldState extends State<CalendarScaffold>
                           daysOfWeekHeight: 30.0,
                           rowHeight: 40,
                           selectedDayPredicate: (day) =>
-                              isSameDay(widget.selectedDate, day),
-                          onDaySelected: (selectedDate, focusedDay) {
-                            if (selectedDate.month == focusedDay.month) {
+                              isSameDay(widget.selectedDay, day),
+                          onDaySelected: (selectedDay, focusedDay) {
+                            if (selectedDay.month == focusedDay.month) {
                               widget.updateFocusedDay!(focusedDay);
-                              widget.updateSelectedDate!(selectedDate);
+                              widget.updateSelectedDate!(selectedDay);
                             }
                           },
                           headerStyle: HeaderStyle(
@@ -272,8 +261,8 @@ class _CalendarScaffoldState extends State<CalendarScaffold>
                               child: OutlinedButton(
                                 onPressed: () {
                                   widget.onTapCalenderVisible!();
-                                  widget.updateFocusedDay!(tempFocusedDay!);
-                                  widget.updateSelectedDate!(tempSelectedDate!);
+                                  widget.updateFocusedDay!(tempFocusedDay);
+                                  widget.updateSelectedDate!(tempSelectedDay);
                                 },
                                 style: OutlinedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
@@ -299,9 +288,12 @@ class _CalendarScaffoldState extends State<CalendarScaffold>
                               child: TextButton(
                                 onPressed: () {
                                   widget.onTapCalenderVisible!();
-                                  widget.updateFocusedDay!(widget.focusedDay!);
-                                  widget.updateSelectedDate!(
-                                      widget.selectedDate!);
+                                  widget.updateFocusedDay!(widget.focusedDay);
+                                  widget
+                                      .updateSelectedDate!(widget.selectedDay);
+                                  if (widget.moveDate != null) {
+                                    widget.moveDate!();
+                                  }
                                 },
                                 style: TextButton.styleFrom(
                                   shape: RoundedRectangleBorder(
@@ -328,8 +320,9 @@ class _CalendarScaffoldState extends State<CalendarScaffold>
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
+          bottomNavigationBar: widget.bottomNavigationBar,
         ),
       ),
     );

@@ -22,46 +22,43 @@ class DiaryCalendarHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            GestureDetector(
-              onTap: onTapLeft,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                child: const Icon(
-                  Icons.chevron_left,
-                  size: 24,
-                  //color: Palette.black,
-                ),
+            // 이전 달 이동 버튼
+            IconButton(
+              onPressed: onTapLeft,
+              icon: const Icon(
+                Icons.chevron_left,
+                size: 24,
+                color: Palette.gray700,
               ),
             ),
+
+            // 현재 달
             Text(
               '$month월',
+
+              // TODO: 텍스트 스타일 통일하기
               style: Palette.caption,
             ),
-            GestureDetector(
-              onTap: onTapRight,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                child: const Icon(
-                  Icons.chevron_right,
-                  size: 24,
-                  //color: Palette.black,
-                ),
+
+            // 다음 달 이동 버튼
+            IconButton(
+              onPressed: onTapRight,
+              icon: const Icon(
+                Icons.chevron_right,
+                size: 24,
+                color: Palette.gray700,
               ),
             ),
           ],
         ),
+
+        // 다이어리 생성 화면 이동 버튼
         IconButton(
           onPressed: onTapAdd,
           icon: const Icon(
             Icons.add,
             size: 24,
-            //color: Palette.black,
+            color: Palette.gray700,
           ),
         ),
       ],

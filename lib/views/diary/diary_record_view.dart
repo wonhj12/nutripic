@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:nutripic/components/box_button.dart';
 import 'package:nutripic/components/diary/calendar_scaffold.dart';
 import 'package:nutripic/components/diary/diary_card.dart';
 import 'package:nutripic/components/diary/diary_dialog.dart';
 import 'package:nutripic/components/diary/diary_option_modal.dart';
+import 'package:nutripic/utils/enums/box_button_type.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/diary/diary_record_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class DiaryRecordView extends StatelessWidget {
   const DiaryRecordView({super.key});
@@ -16,13 +16,13 @@ class DiaryRecordView extends StatelessWidget {
   Widget build(BuildContext context) {
     DiaryRecordViewModel diaryRecordViewModel =
         context.watch<DiaryRecordViewModel>();
-    // if (!diaryRecordViewModel.isLoading &&
-    //     diaryRecordViewModel.todayDiaries.isEmpty) {
-    //   diaryRecordViewModel.getDiaryRecord();
-    // }
+
     return CalendarScaffold(
       body: diaryRecordViewModel.diaryModel.diariesForDay.isEmpty
-          ? Center(
+          ?
+
+          // 불러올 다이어리 목록이 없는 경우
+          Center(
               child: Column(
                 children: [
                   const SizedBox(
@@ -50,12 +50,13 @@ class DiaryRecordView extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
+
+                  // TODO: 버튼 형식도 통일하기: 플립에서 깨짐
                   SizedBox(
                     width: 72,
                     height: 32,
                     child: TextButton(
-                      onPressed: () =>
-                          diaryRecordViewModel.navigateToDiaryPost(),
+                      onPressed: diaryRecordViewModel.navigateToDiaryPost,
                       style: TextButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -84,9 +85,11 @@ class DiaryRecordView extends StatelessWidget {
                   onPressed: () => showModalBottomSheet(
                       context: context,
                       builder: (context) => DiaryOptionModal(
-                            diaryId: diary.diaryId!,
-                            onTapPatch: () =>
-                                diaryRecordViewModel.onTapPatch(diary.diaryId!),
+                            diaryId: diary.id!,
+                            onTapPatch: () {
+                              Navigator.pop(context);
+                              diaryRecordViewModel.onTapPatch(diary.id!);
+                            },
                             onTapDelete: () {
                               showDialog(
                                   context: context,
@@ -97,7 +100,7 @@ class DiaryRecordView extends StatelessWidget {
                                         onPressedDelete: () {
                                           Navigator.pop(context);
                                           diaryRecordViewModel
-                                              .onTapDelete(diary.diaryId!);
+                                              .onTapDelete(diary.id!);
                                         },
                                       ));
                             },
@@ -107,13 +110,13 @@ class DiaryRecordView extends StatelessWidget {
               },
             ),
       isCalendarVisible: diaryRecordViewModel.isCalendarVisible,
-      selectedDateString: diaryRecordViewModel.selectedDateString(),
       onTapCalenderVisible: diaryRecordViewModel.onTapCalenderVisible,
       onPressedAdd: diaryRecordViewModel.navigateToDiaryPost,
-      selectedDate: diaryRecordViewModel.selectedDate,
+      selectedDay: diaryRecordViewModel.selectedDay,
       focusedDay: diaryRecordViewModel.focusedDay,
-      updateSelectedDate: diaryRecordViewModel.updateSelectedDate,
+      updateSelectedDate: diaryRecordViewModel.updateSelectedDay,
       updateFocusedDay: diaryRecordViewModel.updateFocusedDay,
+      moveDate: diaryRecordViewModel.getDiaries,
       addButton:
           diaryRecordViewModel.diaryModel.diariesForDay.isEmpty ? false : true,
     );

@@ -1,26 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/utils/palette.dart';
 
-enum StatusType {
-  //색 바꾸기
-  low(Palette.green700),
-  normal(Palette.green500);
-
-  final Color color;
-  const StatusType(this.color);
-}
-
 class DiarySummaryContainer extends StatelessWidget {
-  final double percent;
-  final StatusType type;
   final int totalDays;
   final int diaryDays;
   final String username;
 
   const DiarySummaryContainer({
     super.key,
-    required this.percent,
-    this.type = StatusType.normal,
     required this.totalDays,
     required this.diaryDays,
     required this.username,
@@ -42,7 +29,7 @@ class DiarySummaryContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //문구
+          // 문구
           Text(
             '$username님',
             style: const TextStyle(
@@ -62,13 +49,26 @@ class DiarySummaryContainer extends StatelessWidget {
             height: 10,
           ),
 
-          //그래프
-          Container(
-            height: 6,
-            width: MediaQuery.of(context).size.width * percent,
-            decoration: BoxDecoration(
-                color: Palette.green400,
-                borderRadius: BorderRadius.circular(5)),
+          // 그래프
+          Stack(
+            children: [
+              Container(
+                height: 6,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    color: Palette.gray100,
+                    borderRadius: BorderRadius.circular(5)),
+              ),
+              AnimatedContainer(
+                height: 6,
+                width:
+                    MediaQuery.of(context).size.width * (diaryDays / totalDays),
+                decoration: BoxDecoration(
+                    color: Palette.green400,
+                    borderRadius: BorderRadius.circular(5)),
+                duration: const Duration(milliseconds: 400),
+              ),
+            ],
           )
         ],
       ),
