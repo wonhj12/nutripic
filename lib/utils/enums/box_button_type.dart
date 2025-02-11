@@ -6,7 +6,7 @@ enum BoxButtonType {
   normal(Palette.gray600, Palette.gray100),
   transparent(Palette.gray00, Colors.transparent),
   delete(Palette.gray00, Palette.delete),
-  primary(Palette.green500, Palette.gray50);
+  primary(Palette.green500, Palette.green50);
 
   final Color color;
   final Color backgroundColor;
