@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nutripic/components/box_button.dart';
 import 'package:nutripic/components/refrigerator/food_tile.dart';
 import 'package:nutripic/objects/food.dart';
+import 'package:nutripic/utils/enums/box_button_type.dart';
 import 'package:nutripic/utils/palette.dart';
 
 class RefrigeratorContainer extends StatelessWidget {
@@ -45,15 +47,18 @@ class RefrigeratorContainer extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
-                    onPressed: addFood,
-                    icon: const Icon(
-                      Icons.add_circle_rounded,
-                      size: 56,
-                      color: Palette.green500,
-                    ),
+                  Text(
+                    '냉장고가 텅 비었어요',
+                    style: Palette.subtitle1SemiBold
+                        .copyWith(color: Palette.gray900),
                   ),
-                  const Text('식재료를 추가해보세요', style: Palette.body1),
+                  const SizedBox(height: 24),
+                  BoxButton(
+                    width: 114,
+                    label: '식재료 추가하기',
+                    type: BoxButtonType.primary,
+                    onPressed: addFood,
+                  )
                 ],
               ),
             )

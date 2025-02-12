@@ -37,7 +37,7 @@ flutter:
     - .env
     - assets/icons/
     - assets/foods/
-    - assets/model/
+    - assets/foods.json
   fonts:
     - family: Pretendard
       fonts:

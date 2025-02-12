@@ -132,7 +132,7 @@ class CameraModel with ChangeNotifier {
   /// 사진 전송 후 GPT 인식한 식재료 가져오는 함수
   Future<bool> getAnalyzedImages() async {
     try {
-      analyzedFoods = await API.postImageToFood(images.first);
+      analyzedFoods = await API.postImageToFood(images);
       return true;
     } catch (e) {
       return false;
