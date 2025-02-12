@@ -24,6 +24,9 @@ class DiaryRecordViewModel extends ChangeNotifier {
   /// 캘린더 표시 여부
   bool isCalendarVisible = false;
 
+  /// 선택 가능한 시간 리스트
+  List<String> mealTimeList = ["아침", "점심", "저녁", "간식", "기타"];
+
   /// 캘린더 표시 함수
   void onTapCalenderVisible() async {
     isCalendarVisible = !isCalendarVisible;

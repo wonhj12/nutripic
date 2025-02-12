@@ -105,7 +105,7 @@ class DiaryRecordView extends StatelessWidget {
                                       ));
                             },
                           )),
-                  getTime: diary.mealTime!,
+                  getTime: diaryRecordViewModel.mealTimeList[diary.mealTime!],
                 );
               },
             ),

@@ -12,7 +12,7 @@ class Diary {
   String? url;
 
   /// 식사시간
-  String? mealTime;
+  int? mealTime;
 
   Diary({
     this.id,
@@ -37,7 +37,7 @@ class Diary {
         body: json['body'],
         url: json['url'],
         date: DateTime.parse(json['date']),
-        mealTime: mealTimeMapping[json['mealTime']]);
+        mealTime: json['mealTime']);
   }
 
   @override

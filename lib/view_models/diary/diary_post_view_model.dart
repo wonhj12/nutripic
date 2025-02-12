@@ -47,7 +47,7 @@ class DiaryPostViewModel with ChangeNotifier {
   int mealTime = -1;
 
   // 게시글
-  String inputText = "";
+  String inputText = " ";
 
   /// 이미지 파일 경로
   String? fileName;
@@ -72,6 +72,7 @@ class DiaryPostViewModel with ChangeNotifier {
     isPatch = true;
     imageUrl = diaryModel.diary!.url;
     selectedDay = diaryModel.diary!.date!;
+    mealTime = diaryModel.diary!.mealTime!;
     inputText = diaryModel.diary!.body!;
     notifyListeners();
   }
