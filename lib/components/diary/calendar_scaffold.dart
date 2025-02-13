@@ -29,9 +29,10 @@ class CalendarScaffold extends StatefulWidget {
   /// 캘린더 표시 여부
   final bool isCalendarVisible;
 
-  ///body 위젯젯
+  ///body 위젯
   final Widget? body;
 
+  /// 추가 버튼 누름
   final Function? onPressedAdd;
 
   /// 네비게이션 바
