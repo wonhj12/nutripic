@@ -8,80 +8,97 @@ import 'package:nutripic/utils/api.dart';
 class DiaryPostViewModel with ChangeNotifier {
   DiaryModel diaryModel;
   BuildContext context;
-  String? imageUrl;
 
-  DiaryPostViewModel(
-      {required this.diaryModel,
-      required this.context,
-      required this.selectedDate});
-
-  final ImagePicker _picker = ImagePicker();
-
-  // 해당 날짜 선택
-  DateTime selectedDate;
-  DateTime focusedDay = DateTime.now();
-  bool isCalendarVisible = false;
-
-  // 시간 선택
-  static List<String> diaryTime = ["아침", "점심", "저녁", "간식", "기타"]; // 버튼 리스트
-  String? selectedTime;
-  bool timeSelected = true;
-
-  // 게시글
-  String inputText = "";
-  bool isPostable = false;
-
-  /// 카메라/갤러리 선택 모달
-  // void showCameraSelectModal() async {
-  //   // 모달 띄워서 사진 업로드 방식 선택 (카메라, 갤러리)
-  //   final mode = await selectCameraModal(context);
-
-  //   // 선택된
-  //   if (mode != null) {
-  //     // 이미지 촬영 / 갤러리에서 이미지 불러오기
-  //     final pickedFile = await _picker.pickImage(source: mode);
-
-  //     // 사진 촬영 완료 후 diary에 사진 경로 업데이트
-  //     // TODO: 기존 경로에 있는 사진을 제거하는 로직 추가 필요
-  //     if (pickedFile != null) {
-  //       final image = File(pickedFile.path);
-  //       diaryModel.diary!.imageUrl = image.path;
-  //       notifyListeners();
-  //     }
-  //   }
-  // }
-
-  /// 시간이 선택되었는지 확인하는 함수수
-  bool isSelected(String time) {
-    return selectedTime == time;
+  DiaryPostViewModel({
+    required this.diaryModel,
+    required this.context,
+    required this.selectedDay,
+    this.imageUrl,
+    this.diaryId,
+  }) {
+    getDiary();
   }
 
-  //시간 선택 함수
-  void selectTime(String time) {
-    if (selectedTime == time) {
-      selectedTime = null;
-      timeSelected = false;
-    } else {
-      selectedTime = time;
-      timeSelected = true;
+  /// 게시 가능 여부
+  bool isPost = false;
+
+  /// 앨범에서 사진 선택
+  final ImagePicker _picker = ImagePicker();
+
+  /// 선택한 이미지 url
+  String? imageUrl;
+
+  /// 최초 등록인지 수정 상태인지 확인
+  bool isPatch = false;
+
+  /// 사용자가 보고 있는 날짜
+  DateTime focusedDay = DateTime.now();
+
+  /// 사용자가 선택한 날짜
+  DateTime? selectedDay;
+
+  /// 캘린더 표시 여부
+  bool isCalendarVisible = false;
+
+  /// 선택 가능한 시간 리스트
+  List<String> mealTimeList = ["아침", "점심", "저녁", "간식", "기타"];
+
+  /// 현재 선택된 시간 index
+  int mealTime = -1;
+
+  // 게시글
+  String inputText = " ";
+
+  /// 이미지 파일 경로
+  String? fileName;
+
+  /// 수정 상태 일 때 다이어리 번호
+  int? diaryId;
+
+  /// 게시 가능 확인 함수
+  void checkPost() async {
+    bool check = imageUrl != null && mealTime != -1 && inputText != "";
+    if (isPost != check) {
+      isPost = check;
+      notifyListeners();
     }
+  }
+
+  /// 수정 상태일 때 다이어리 불러오는 함수
+  Future<void> getDiary() async {
+    if (diaryId == null) return;
+
+    await diaryModel.getDiary(diaryId!);
+    isPatch = true;
+    imageUrl = diaryModel.diary!.url;
+    selectedDay = diaryModel.diary!.date!;
+    mealTime = diaryModel.diary!.mealTime!;
+    inputText = diaryModel.diary!.body!;
     notifyListeners();
-    checkPostable();
   }
 
   /// 이미지 선택 함수
   Future<void> selectFromAlbum() async {
-    // 모달 띄워서 사진 업로드 방식 선택 (카메라, 갤러리)
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
-    // 사진 촬영 완료 후 diary에 사진 경로 업데이트
     if (pickedFile != null) {
       final image = File(pickedFile.path);
-      //diaryModel.diary!.imageUrl = image.path;
       imageUrl = image.path;
+      //fileName = path.basename(pickedFile.path);
       notifyListeners();
-      checkPostable();
+      checkPost();
     }
+  }
+
+  //시간 선택 함수
+  void onTapMealTime(int idx) {
+    if (mealTime == idx) {
+      mealTime = -1;
+    } else {
+      mealTime = idx;
+    }
+    notifyListeners();
+    checkPost();
   }
 
   /// 캘린더 표시 함수
@@ -90,28 +107,19 @@ class DiaryPostViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  /// 입력된 메모 업데이트
+  /// 입력된 메모 업데이트 함수
   void updateInputText(String text) {
     inputText = text;
-    checkPostable(); // 게시 가능 여부 갱신
+    checkPost();
   }
 
-  /// 게시 가능 여부 함수
-  void checkPostable() async {
-    bool newPostable =
-        imageUrl != null && timeSelected == true && inputText.isNotEmpty;
-    if (isPostable != newPostable) {
-      isPostable = newPostable;
-      notifyListeners();
-    }
+  /// selectedDay 변경 함수
+  void updateSelectedDay(DateTime newSelectedDay) {
+    selectedDay = newSelectedDay;
+    notifyListeners();
   }
 
-  /// 선택된 날짜를 String 형식으로 반환하는 함수
-  // 날짜 형식 변환 관련 함수는 아마 나중에 utils에 따로 만들지 않을까 싶긴 합니다.
-  String selectedDateString() {
-    return '${selectedDate.month}월 ${selectedDate.day}일';
-  }
-
+  /// focusedDay 변경 함수
   void updateFocusedDay(DateTime newFocusedDay) {
     focusedDay = newFocusedDay;
     notifyListeners();
@@ -120,17 +128,34 @@ class DiaryPostViewModel with ChangeNotifier {
   /// 게시물 전송
   Future<void> submitPost(BuildContext context) async {
     try {
-      // API 호출
+      //String presignedUrl = await API.getImgPresignedURL(fileName!);
+
       await API.addDiary(
         inputText,
-        selectedDate,
+        selectedDay!,
         imageUrl!,
+        mealTime,
       );
 
       if (context.mounted) context.pop();
-      //debugPrint("게시물 추가 성공: $response");
     } catch (e) {
-      //debugPrint("게시물 추가 실패: $e");
+      debugPrint("게시물 추가 실패: $e");
+    }
+  }
+
+  /// 게시물 수정
+  Future<void> updatePost(BuildContext context) async {
+    try {
+      await API.updateDiary(
+        diaryId!,
+        inputText,
+        selectedDay!,
+        mealTime,
+      );
+
+      if (context.mounted) context.pop();
+    } catch (e) {
+      debugPrint("게시물 수정 실패: $e");
     }
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:nutripic/objects/diary.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/custom_interceptor.dart';
@@ -229,47 +230,111 @@ class API {
 
   /* Diary */
 
-  /// 특정 유저의 모든 다이어리 조회
-  static Future<dynamic> getDiariesForMonth(int idx) async {
+  /// 한 달 다이어리 조회
+  static Future<List<Diary>> getDiariesForMonth(int idx) async {
+    List<Diary> diaries = [];
+
     try {
       final response = await _getApi(
         '/diary/calendar/$idx',
       );
-      return response;
+      if (response != null) {
+        List<dynamic> data = response.data;
+
+        if (data.isNotEmpty) {
+          diaries = data.map((item) => Diary.fromJson(item)).toList();
+        }
+      }
     } catch (e) {
-      debugPrint('Error in getDiary: $e');
+      debugPrint('Error in getDiariesForMonth: $e');
       throw Error();
     }
+    return diaries;
   }
 
-  /// 특정 다이어리 조회
-  static Future<dynamic> getDiariesForDay(int diaryId) async {
+  /// 하루 다이어리 조회
+  static Future<List<Diary>> getDiariesForDay(int idx, int day) async {
+    List<Diary> diaries = [];
+
     try {
       final response = await _getApi(
-        '/diary/$diaryId',
+        '/diary/calendar/$idx/$day',
       );
-      return response;
+      if (response != null) {
+        List<dynamic> data = response.data;
+
+        if (data.isNotEmpty) {
+          diaries = data.map((item) => Diary.fromJson(item)).toList();
+        }
+      }
     } catch (e) {
       debugPrint('Error in getDiariesForDay: $e');
+      throw Error();
+    }
+    return diaries;
+  }
+
+  //특정 다이어리 조회
+  static Future<dynamic> getDiaryById(int idx) async {
+    try {
+      final response = await _getApi(
+        '/diary/$idx',
+      );
+      return response.data;
+    } catch (e) {
+      debugPrint('Error in getDiaryById: $e');
       throw Error();
     }
   }
 
   /// 다이어리 생성
   static Future<dynamic> addDiary(
-      String body, DateTime date, String url) async {
+      String body, DateTime date, String url, int selectedTimeAsString) async {
     try {
       final response = await _postApi(
         '/diary/add',
         jsonData: jsonEncode({
           'body': body,
-          'date': date.toIso8601String(),
+          'date': date.toUtc().toIso8601String(),
           'url': url,
+          'mealTime': selectedTimeAsString,
         }),
       );
-      return response;
+
+      return response.data;
     } catch (e) {
       debugPrint('Error in addDiary: $e');
+      throw Error();
+    }
+  }
+
+  /// 특정 다이어리 수정정
+  static Future<dynamic> updateDiary(
+      int diaryId, String body, DateTime date, int selectedTimeAsString) async {
+    try {
+      await _patchApi(
+        '/diary/update/$diaryId',
+        jsonData: jsonEncode({
+          'body': body,
+          'date': date.toUtc().toIso8601String(),
+          'mealTime': selectedTimeAsString,
+        }),
+      );
+    } catch (e) {
+      debugPrint('Error in deleteDiary: $e');
+      throw Error();
+    }
+  }
+
+  /// URL
+  static Future<dynamic> getImgPresignedURL(String fileName) async {
+    try {
+      final response = await _getApi(
+        '/diary/get-signed-url/$fileName',
+      );
+      return response.data;
+    } catch (e) {
+      debugPrint('Error in getImgPresignedURL: $e');
       throw Error();
     }
   }
@@ -277,11 +342,9 @@ class API {
   /// 특정 다이어리 삭제
   static Future<dynamic> deleteDiary(int diaryId) async {
     try {
-      final response = await _deleteApi(
+      await _deleteApi(
         '/diary/delete/$diaryId',
       );
-      debugPrint(response);
-      return response;
     } catch (e) {
       debugPrint('Error in deleteDiary: $e');
       throw Error();

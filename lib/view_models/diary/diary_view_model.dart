@@ -6,33 +6,51 @@ import 'package:nutripic/objects/diary.dart';
 class DiaryViewModel extends ChangeNotifier {
   DiaryModel diaryModel;
   BuildContext context;
-  DiaryViewModel({required this.diaryModel, required this.context}) {
-    updateDiaries();
+  DiaryViewModel({
+    required this.diaryModel,
+    required this.context,
+  }) {
+    update();
   }
 
+  /// 사용자가 보고 있는 날짜
   DateTime focusedDay = DateTime.now();
-  DateTime? selectedDate;
 
-  bool clicked = false;
-  int currentIndex = 0;
-  bool isLoading = false;
+  /// 사용자가 선택한 날짜
+  DateTime? selectedDay;
 
-  /// 다이어리 업데이트
-  Future<void> updateDiaries() async {
-    isLoading = true;
-    notifyListeners();
+  /// 현재 달의 날짜 수
+  int? dayOfMonth;
 
-    try {
-      await diaryModel.getDiaries(DateTime.now().month - focusedDay.month);
-    } catch (e) {
-      debugPrint('Error fetching diaries: $e');
-    }
+  /// 현재 달에서 다이어리가 있는 날짜 수
+  int diaryDays = 0;
 
-    isLoading = false;
+  /// 업데이트
+  void update() async {
+    getDiaries();
+    dayOfMonth = DateTime(focusedDay.year, focusedDay.month + 1, 0).day;
     notifyListeners();
   }
 
-  /// 이전달 이동 함수
+  /// 다이어리 및 날짜 별 다이어리 갯수 불러오기
+  Future<void> getDiaries() async {
+    await diaryModel.getDiariesForMonth(
+        (DateTime.now().year - focusedDay.year) * 12 +
+            DateTime.now().month -
+            focusedDay.month);
+
+    diaryDays = diaryModel.diariesForMonth
+        .where((diary) =>
+            diary.date?.year == focusedDay.year &&
+            diary.date?.month == focusedDay.month)
+        .map((diary) => diary.date?.day)
+        .toSet()
+        .length;
+
+    notifyListeners();
+  }
+
+  /// 이전 달로 이동하는 함수
   Future<void> goToPreviousMonth() async {
     if (focusedDay.month == 1) {
       focusedDay = DateTime(focusedDay.year - 1, 12);
@@ -40,113 +58,47 @@ class DiaryViewModel extends ChangeNotifier {
       focusedDay = DateTime(focusedDay.year, focusedDay.month - 1);
     }
 
-    updateDiaries();
+    update();
   }
 
-  /// 다음달 이동 함수
+  /// 이전 달로 이동하는 함수
   Future<void> goToNextMonth() async {
-    if (focusedDay.month > 11) {
+    if (focusedDay.month == 12) {
       focusedDay = DateTime(focusedDay.year + 1, 1);
     } else {
       focusedDay = DateTime(focusedDay.year, focusedDay.month + 1);
     }
 
-    updateDiaries(); // 다이어리 업데이트
+    update();
   }
 
-  /// 선택된 날짜 변경
+  /// focusedDay 업데이트하는 함수
   void updateFocusedDay(DateTime newFocusedDay) {
     focusedDay = newFocusedDay;
-    notifyListeners();
+    update();
   }
 
-  /// 선택된 날짜의 일기 불러오기
-  List<Diary> getDiariesForDay(DateTime date) {
-    return diaryModel.diariesForMonth
-        .where((diary) => diary.date == date)
-        .toList();
+  /// 선택된 날짜의 일기 불러오는 함수
+  List<Diary> getDiariesByDay(DateTime date) {
+    return diaryModel.diariesForMonth.where((diary) {
+      return diary.date?.year == date.year &&
+          diary.date?.month == date.month &&
+          diary.date?.day == date.day;
+    }).toList();
   }
 
-  /// 다이어리 추가 화면으로 이동
-  void navigateToDiaryPost(DateTime selectedDay) async {
-    await GoRouter.of(context).push('/diary/post', extra: selectedDay);
-    updateDiaries();
-    notifyListeners();
+  /// 다이어리 등록 화면으로 이동하는 함수
+  void navigateToDiaryPost() async {
+    await context.push(
+      '/diary/post',
+      extra: {'diaryId': null, 'selectedDay': DateTime.now()},
+    );
+    update();
   }
 
-  /// 다이어리 리스트 화면으로 이동
-  void navigateToDiaryRecord(DateTime selectedDay) {
-    context.go('/diary/record', extra: selectedDay);
+  /// 다이어리 리스트 화면으로 이동하는 함수
+  void navigateToDiaryRecord(DateTime selectedDay) async {
+    await context.push('/diary/record', extra: selectedDay);
+    update();
   }
-
-  /// 일기 있는 날짜수 반환
-  int getDiariesForMonth() {
-    final diariesForMonth = diaryModel.diariesForMonth
-        .where((diary) =>
-            diary.date?.year == focusedDay.year &&
-            diary.date?.month == focusedDay.month)
-        .map((diary) => diary.date?.day)
-        .toSet();
-    return diariesForMonth.length;
-  }
-
-  /// 이번 달 날짜수 반환
-  int getTotalDaysInMonth() {
-    // 다음 달 0일로 설정해 해당 달의 마지막 날 계산
-    return DateTime(focusedDay.year, focusedDay.month + 1, 0).day;
-  }
-
-  /// 건강한 식사 비율 반환
-  double getProperMealPercentage() {
-    final int totalDays = getTotalDaysInMonth();
-    final int properMealDays = getDiariesForMonth();
-    if (totalDays == 0) return 0.0;
-    return properMealDays / totalDays;
-  }
-
-  ///사진 추가 방식 선택
-  // void floatingButtonClick() {
-  //   clicked = !clicked;
-  //   notifyListeners();
-  // }
-
-  /// 카메라/갤러리 선택 후 사진 촬영
-  // Future<void> imagePick(ImageSource source) async {
-  //   // 새로 등록시 기존 선택 되어잇는 diary 제거
-  //   diaryModel.reset();
-
-  //   // 이미지 촬영 / 갤러리에서 이미지 불러오기
-  //   final pickedFile = await _picker.pickImage(source: source);
-
-  //   // 사진 촬영 완료 후 새 diary 생성, 사진 등록
-  //   if (pickedFile != null) {
-  //     final image = File(pickedFile.path);
-  //     diaryModel.diary = Diary(imageUrl: image.path);
-
-  //     if (context.mounted) {
-  //       context.go('/diary/post');
-  //     }
-  //   }
-  // }
-
-  /// 일기 목록 모달 보여주기
-  // void showDiaryRecordModal(DateTime date) {
-  //   final diaryRecords = getDiariesForDay(date);
-  //   if (diaryRecords.isEmpty) return;
-
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return ChangeNotifierProvider(
-  //         create: (context) => DiaryRecordViewModel(),
-  //         child: const DiaryRecordView(),
-  //       );
-  //     },
-  //     shape: const RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.vertical(
-  //         top: Radius.circular(25.0),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:nutripic/components/box_button.dart';
+import 'package:nutripic/components/diary/calendar_scaffold.dart';
 import 'package:nutripic/components/diary/diary_card.dart';
+import 'package:nutripic/components/diary/diary_dialog.dart';
+import 'package:nutripic/components/diary/diary_option_modal.dart';
+import 'package:nutripic/utils/enums/box_button_type.dart';
+import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/diary/diary_record_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -11,52 +16,109 @@ class DiaryRecordView extends StatelessWidget {
   Widget build(BuildContext context) {
     DiaryRecordViewModel diaryRecordViewModel =
         context.watch<DiaryRecordViewModel>();
-    if (!diaryRecordViewModel.isLoading &&
-        diaryRecordViewModel.todayDiaries.isEmpty) {
-      diaryRecordViewModel.getDiaryRecord();
-    }
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.go('/diary/post',
-                  extra: diaryRecordViewModel.selectedDate);
-            },
-            icon: const Icon(
-              Icons.add,
+
+    return CalendarScaffold(
+      body: diaryRecordViewModel.diaryModel.diariesForDay.isEmpty
+          ?
+
+          // 불러올 다이어리 목록이 없는 경우
+          Center(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  const Text(
+                    '등록한 일지가 없어요.',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Palette
+                          .gray700, // You can choose the color to match your design
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const Text(
+                    '식단을 등록하고 기록해 보세요.',
+                    style: TextStyle(
+                      fontSize: 8,
+                      color: Palette
+                          .gray400, // You can choose the color to match your design
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+
+                  // TODO: 버튼 형식도 통일하기: 플립에서 깨짐
+                  SizedBox(
+                    width: 72,
+                    height: 32,
+                    child: TextButton(
+                      onPressed: diaryRecordViewModel.navigateToDiaryPost,
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        backgroundColor: Palette.gray100,
+                      ),
+                      child: const Text(
+                        "등록하기",
+                        style: TextStyle(
+                          fontSize: 8,
+                          color: Palette.green600,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          : ListView.builder(
+              itemCount: diaryRecordViewModel.diaryModel.diariesForDay.length,
+              itemBuilder: (context, index) {
+                final diary =
+                    diaryRecordViewModel.diaryModel.diariesForDay[index];
+                return DiaryCard(
+                  diary: diary,
+                  onPressed: () => showModalBottomSheet(
+                      context: context,
+                      builder: (context) => DiaryOptionModal(
+                            diaryId: diary.id!,
+                            onTapPatch: () {
+                              Navigator.pop(context);
+                              diaryRecordViewModel.onTapPatch(diary.id!);
+                            },
+                            onTapDelete: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => DiaryDialog(
+                                        onPressedCancel: () {
+                                          Navigator.pop(context);
+                                        },
+                                        onPressedDelete: () {
+                                          Navigator.pop(context);
+                                          diaryRecordViewModel
+                                              .onTapDelete(diary.id!);
+                                        },
+                                      ));
+                            },
+                          )),
+                  getTime: diaryRecordViewModel.mealTimeList[diary.mealTime!],
+                );
+              },
             ),
-          )
-        ],
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            size: 15,
-          ),
-          onPressed: () {
-            context.go('/diary');
-          },
-        ),
-        title: Text(
-          diaryRecordViewModel.selectedDateString(),
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 13,
-            fontWeight: FontWeight.normal,
-          ),
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: diaryRecordViewModel.todayDiaries.length,
-        itemBuilder: (context, index) {
-          final diary = diaryRecordViewModel.todayDiaries[index];
-          return DiaryCard(
-            diary: diary,
-            onPressed: () =>
-                diaryRecordViewModel.showOptionModal(diary.diaryId!),
-          );
-        },
-      ),
+      isCalendarVisible: diaryRecordViewModel.isCalendarVisible,
+      onTapCalenderVisible: diaryRecordViewModel.onTapCalenderVisible,
+      onPressedAdd: diaryRecordViewModel.navigateToDiaryPost,
+      selectedDay: diaryRecordViewModel.selectedDay,
+      focusedDay: diaryRecordViewModel.focusedDay,
+      updateSelectedDate: diaryRecordViewModel.updateSelectedDay,
+      updateFocusedDay: diaryRecordViewModel.updateFocusedDay,
+      moveDate: diaryRecordViewModel.getDiaries,
+      addButton:
+          diaryRecordViewModel.diaryModel.diariesForDay.isEmpty ? false : true,
     );
   }
 }
