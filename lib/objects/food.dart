@@ -18,7 +18,7 @@ class Food {
   final DateTime addedDate;
 
   /// 유통기한
-  final DateTime? expireDate;
+  DateTime? expireDate;
 
   /// 유통기한 지났는지 여부
   bool expired;
