@@ -20,9 +20,7 @@ class DiarySummaryContainer extends StatelessWidget {
       height: 110,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: Palette.gray100,
-        ),
+        border: Border.all(color: Palette.gray100),
       ),
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 21),
       child: Column(
@@ -32,22 +30,22 @@ class DiarySummaryContainer extends StatelessWidget {
           // 문구
           Text(
             '$username님',
-            style: const TextStyle(
-              color: Palette.gray900,
-              fontWeight: FontWeight.w500,
-              fontSize: 10,
-            ),
+            style: Palette.title2SemiBold.copyWith(color: Palette.gray900),
+            // const TextStyle(
+            //   color: Palette.gray900,
+            //   fontWeight: FontWeight.w500,
+            //   fontSize: 10,
+            // ),
           ),
           Text(
             '$totalDays일 중 $diaryDays일을 건강하게 식사했어요!',
-            style: const TextStyle(
-              color: Palette.gray400,
-              fontSize: 8,
-            ),
+            style: Palette.caption2.copyWith(color: Palette.gray400),
+            //  const TextStyle(
+            //   color: Palette.gray400,
+            //   fontSize: 8,
+            // ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
 
           // 그래프
           Stack(

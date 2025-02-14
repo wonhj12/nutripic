@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -10,13 +8,14 @@ class DiaryCalendar extends StatelessWidget {
   final Function(DateTime, DateTime) onDaySelected;
   final Function(DateTime) onPageChanged;
   final Function(DateTime) getDiariesByDay;
-  const DiaryCalendar(
-      {super.key,
-      required this.focusedDay,
-      this.selectedDay,
-      required this.onDaySelected,
-      required this.onPageChanged,
-      required this.getDiariesByDay});
+  const DiaryCalendar({
+    super.key,
+    required this.focusedDay,
+    this.selectedDay,
+    required this.onDaySelected,
+    required this.onPageChanged,
+    required this.getDiariesByDay,
+  });
 
   // 날짜에 따라 원형 이미지 불러오는 위젯
   Widget diaryCircleAvatar(List<dynamic> diariesForDay) {
@@ -51,10 +50,13 @@ class DiaryCalendar extends StatelessWidget {
               child: Center(
                 child: Text(
                   diariesForDay.length.toString(),
-                  style: const TextStyle(
+                  style: Palette.caption1medium.copyWith(
                     color: Palette.green600,
-                    fontSize: 7,
                   ),
+                  //  const TextStyle(
+                  //   color: Palette.green600,
+                  //   fontSize: 7,
+                  // ),
                 ),
               ),
             ),
@@ -88,10 +90,11 @@ class DiaryCalendar extends StatelessWidget {
             return Center(
               child: Text(
                 weekDays[day.weekday - 1],
-                style: const TextStyle(
-                  color: Palette.gray700,
-                  fontSize: 9,
-                ),
+                style: Palette.body2.copyWith(color: Palette.gray900),
+                // const TextStyle(
+                //   color: Palette.gray700,
+                //   fontSize: 9,
+                // ),
               ),
             );
           },
@@ -100,22 +103,22 @@ class DiaryCalendar extends StatelessWidget {
           outsideBuilder: (context, day, focusedDay) {
             return Column(
               children: [
-                const SizedBox(
-                  height: 5,
-                ),
+                const SizedBox(height: 5),
                 const CircleAvatar(
                   radius: 20,
                   backgroundColor: Colors.transparent,
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
+                const SizedBox(height: 5),
                 Text(
                   day.day.toString(),
-                  style: const TextStyle(
-                      color: Palette.gray200,
-                      fontSize: 7,
-                      fontWeight: FontWeight.w500),
+                  style: Palette.caption3Medium.copyWith(
+                    color: Palette.gray200,
+                  ),
+                  // style: const TextStyle(
+                  //   color: Palette.gray200,
+                  //   fontSize: 7,
+                  //   fontWeight: FontWeight.w500,
+                  // ),
                 ),
               ],
             );
@@ -133,15 +136,19 @@ class DiaryCalendar extends StatelessWidget {
                   width: 28,
                   height: 16,
                   decoration: BoxDecoration(
-                      color: Palette.green500,
-                      borderRadius: BorderRadius.circular(5)),
+                    color: Palette.green500,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                   child: Center(
                     child: Text(
                       day.day.toString(),
-                      style: const TextStyle(
+                      style: Palette.caption3Medium.copyWith(
                         color: Palette.gray00,
-                        fontSize: 7,
                       ),
+                      // const TextStyle(
+                      //   color: Palette.gray00,
+                      //   fontSize: 7,
+                      // ),
                     ),
                   ),
                 ),
@@ -160,11 +167,14 @@ class DiaryCalendar extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text(
                   day.day.toString(),
-                  style: const TextStyle(
+                  style: Palette.caption3Medium.copyWith(
                     color: Palette.gray900,
-                    fontSize: 7,
-                    fontWeight: FontWeight.w500,
                   ),
+                  // style: const TextStyle(
+                  //   color: Palette.gray900,
+                  //   fontSize: 7,
+                  //   fontWeight: FontWeight.w500,
+                  // ),
                 ),
               ],
             );

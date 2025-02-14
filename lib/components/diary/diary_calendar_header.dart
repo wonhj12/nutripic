@@ -35,9 +35,7 @@ class DiaryCalendarHeader extends StatelessWidget {
             // 현재 달
             Text(
               '$month월',
-
-              // TODO: 텍스트 스타일 통일하기
-              style: Palette.caption,
+              style: Palette.subtitle1SemiBold.copyWith(color: Palette.gray900),
             ),
 
             // 다음 달 이동 버튼
@@ -58,7 +56,7 @@ class DiaryCalendarHeader extends StatelessWidget {
           icon: const Icon(
             Icons.add,
             size: 24,
-            color: Palette.gray700,
+            color: Palette.gray900,
           ),
         ),
       ],
