@@ -209,7 +209,7 @@ class RecipeFinishView extends StatelessWidget {
                     width: 8,
                   ),
                   const Text(
-                    '해당 식제료들을 삭제하시겠어요?',
+                    '해당 식재료들을 삭제하시겠어요?',
                     style: Palette.title2Medium,
                   ),
                 ],
