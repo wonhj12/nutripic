@@ -43,7 +43,7 @@ class Food {
     return Food(
       id: json['id'] ?? -1,
       name: json['name'],
-      icon: json['icon'] ?? 'carrot',
+      icon: json['icon'] ?? 'unknown',
       class1: json['class1'],
       class2: json['class2'],
       addedDate: DateTime.parse(json['addedDate']),
@@ -94,6 +94,7 @@ class Food {
         'name: $name, '
         'class1: $class1, '
         'class2: $class2, '
+        'icon: $icon, '
         'expireDate: $expireDate';
   }
 }

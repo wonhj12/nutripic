@@ -32,6 +32,16 @@ class CameraViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  /// 사진 초점
+  void focusCamera(TapDownDetails detail) {
+    final position = detail.globalPosition;
+    final width = MediaQuery.of(context).size.width;
+    final height = width * 4 / 3 + 128;
+
+    final Offset offset = Offset(position.dx / width, position.dy / height);
+    cameraModel.controller?.setFocusPoint(offset);
+  }
+
   /// 사진 촬영
   /// <br /> 촬영한 사진들은 images 리스트에 저장
   void takePicture() async {

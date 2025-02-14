@@ -46,7 +46,10 @@ class CameraView extends StatelessWidget {
           // 카메라 화면 확보
           // 카메라 화면 표시
           cameraViewModel.cameraModel.isCameraLoaded
-              ? CameraPreview(cameraViewModel.cameraModel.controller!)
+              ? GestureDetector(
+                  onTapDown: cameraViewModel.focusCamera,
+                  child: CameraPreview(cameraViewModel.cameraModel.controller!),
+                )
               : Container(
                   color: Palette.gray900,
                   child: const AspectRatio(aspectRatio: 3 / 4),
