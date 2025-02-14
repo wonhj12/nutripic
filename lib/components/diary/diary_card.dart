@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:nutripic/objects/diary.dart';
 import 'package:nutripic/utils/palette.dart';
@@ -67,7 +65,7 @@ class DiaryCard extends StatelessWidget {
                     ),
                     const Text(
                       "Nutripic",
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Palette.gray400,
                         fontSize: 7,
                       ),

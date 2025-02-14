@@ -5,7 +5,7 @@ import 'package:nutripic/utils/palette.dart';
 /// Main Button 타입
 enum MainButtonType {
   enabled(color: Palette.green500, textColor: Palette.gray00),
-  disabled(color: Palette.gray200, textColor: Palette.gray400),
+  disabled(color: Palette.gray200, textColor: Palette.gray00),
   delete(color: Palette.delete, textColor: Palette.gray00);
 
   final Color color;

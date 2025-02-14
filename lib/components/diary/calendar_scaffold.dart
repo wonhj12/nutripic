@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nutripic/components/common/loading_screen.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -12,10 +11,10 @@ class CalendarScaffold extends StatefulWidget {
   final bool addButton;
 
   /// 현재 보여주는 날짜
-  DateTime focusedDay;
+  final DateTime focusedDay;
 
   ///선택한 날짜
-  DateTime selectedDay;
+  final DateTime selectedDay;
 
   /// 현재 보여주는 날짜 업데이트 함수
   final Function? updateFocusedDay;
@@ -42,7 +41,7 @@ class CalendarScaffold extends StatefulWidget {
   final Function? moveDate;
 
   /// 위에 캘린더 모달이 적용된 Scaffold
-  CalendarScaffold({
+  const CalendarScaffold({
     super.key,
     this.isPatch = false,
     this.addButton = false,
@@ -90,52 +89,36 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
               ),
             ),
             leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                size: 20,
-              ),
-              onPressed: () {
-                context.pop();
-              },
+              icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 24),
+              onPressed: context.pop,
             ),
             title: widget.isPatch
-                ?
-
-                /// 수정 화면
-                Row(
+                ? Row(
+                    /// 수정 화면
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const SizedBox(
-                        width: 15,
-                      ),
                       Text(
                         '${widget.selectedDay.month}월 ${widget.selectedDay.day}일',
-                        style: const TextStyle(
-                          color: Palette.gray900,
-                          fontSize: 13,
-                          fontWeight: FontWeight.normal,
-                        ),
+                        style: Palette.body1.copyWith(color: Palette.gray900),
+                        //  const TextStyle(
+                        //   color: Palette.gray900,
+                        //   fontSize: 16,
+                        //   fontWeight: FontWeight.normal,
+                        // ),
                       ),
                     ],
                   )
                 :
 
-                ///등록 화면
+                /// 등록 화면
                 GestureDetector(
                     onTap: () => widget.onTapCalenderVisible!(),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const SizedBox(
-                          width: 15,
-                        ),
                         Text(
                           '${widget.selectedDay.month}월 ${widget.selectedDay.day}일',
-                          style: const TextStyle(
-                            color: Palette.gray900,
-                            fontSize: 13,
-                            fontWeight: FontWeight.normal,
-                          ),
+                          style: Palette.body1.copyWith(color: Palette.gray900),
                         ),
                         Icon(widget.isCalendarVisible
                             ? Icons.arrow_drop_up
@@ -157,9 +140,7 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
           body: Stack(
             children: [
               // body
-              Container(
-                child: widget.body,
-              ),
+              Container(child: widget.body),
 
               if (widget.isCalendarVisible)
                 Container(
@@ -202,33 +183,28 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
                             }
                           },
                           headerStyle: HeaderStyle(
-                            formatButtonVisible: false,
-                            titleTextFormatter: (date, locale) {
-                              return ('${date.year}년 ${date.month}월');
-                            },
-                            titleTextStyle: const TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                          calendarStyle: const CalendarStyle(
-                            defaultTextStyle: TextStyle(
-                              color: Palette.gray300,
-                              fontSize: 7,
-                            ),
-                            weekendTextStyle: TextStyle(
-                              color: Palette.gray300,
-                              fontSize: 7,
-                            ),
+                              formatButtonVisible: false,
+                              titleTextFormatter: (date, _) =>
+                                  '${date.year}년 ${date.month}월',
+                              titleTextStyle: Palette.title1SemiBold
+                                  .copyWith(color: Palette.gray900)),
+                          calendarStyle: CalendarStyle(
+                            defaultTextStyle:
+                                Palette.body2.copyWith(color: Palette.gray300),
+                            //  TextStyle(
+                            //   color: Palette.gray300,
+                            //   fontSize: 7,
+                            // ),
+                            weekendTextStyle:
+                                Palette.body2.copyWith(color: Palette.gray300),
                             isTodayHighlighted: false,
-                            selectedDecoration: BoxDecoration(
+                            selectedDecoration: const BoxDecoration(
                               color: Palette.green500,
                               shape: BoxShape.circle,
                             ),
-                            selectedTextStyle: TextStyle(
-                              color: Palette.gray00,
-                              fontSize: 7,
-                            ),
-                            todayDecoration: BoxDecoration(),
+                            selectedTextStyle:
+                                Palette.body2.copyWith(color: Palette.gray00),
+                            // todayDecoration: BoxDecoration(),
                           ),
                           calendarBuilders: CalendarBuilders(
                             dowBuilder: (context, day) {
@@ -244,9 +220,8 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
                               return Center(
                                 child: Text(
                                   weekDays[day.weekday - 1],
-                                  style: const TextStyle(
-                                    fontSize: 8,
-                                  ),
+                                  style: Palette.body2
+                                      .copyWith(color: Palette.gray900),
                                 ),
                               );
                             },
@@ -273,18 +248,18 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
                                     color: Palette.gray300,
                                   ),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   '취소',
-                                  style: TextStyle(
-                                    fontSize: 8,
-                                    color: Palette.gray300,
-                                  ),
+                                  style: Palette.subtitle1Medium
+                                      .copyWith(color: Palette.gray300),
+                                  //  TextStyle(
+                                  //   fontSize: 8,
+                                  //   color: Palette.gray300,
+                                  // ),
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             Expanded(
                               child: TextButton(
                                 onPressed: () {
@@ -303,20 +278,16 @@ class _CalendarScaffoldState extends State<CalendarScaffold> {
                                   backgroundColor: Palette.green500,
                                   disabledBackgroundColor: Palette.gray100,
                                 ),
-                                child: const Text(
+                                child: Text(
                                   '확인',
-                                  style: TextStyle(
-                                    fontSize: 8,
-                                    color: Colors.white,
-                                  ),
+                                  style: Palette.subtitle1Medium
+                                      .copyWith(color: Palette.gray00),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   ),

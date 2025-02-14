@@ -43,7 +43,7 @@ class Food {
     return Food(
       id: json['id'] ?? -1,
       name: json['name'],
-      icon: json['icon'] ?? 'unknown',
+      icon: json['icon'] ?? 'null',
       class1: json['class1'],
       class2: json['class2'],
       addedDate: DateTime.parse(json['addedDate']),
