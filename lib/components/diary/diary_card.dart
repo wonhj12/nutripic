@@ -7,6 +7,8 @@ class DiaryCard extends StatelessWidget {
   final Function() onPressed;
   final String getTime;
 
+  // TODO: 작성자 이름 추가
+
   const DiaryCard({
     super.key,
     required this.diary,
@@ -20,7 +22,7 @@ class DiaryCard extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Container(
         width: double.infinity,
-        height: 460,
+        // height: 460,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
             color: Palette.gray00,
@@ -52,23 +54,16 @@ class DiaryCard extends StatelessWidget {
                       child: Center(
                         child: Text(
                           getTime,
-                          //'아침',
-                          style: const TextStyle(
-                              color: Palette.gray600,
-                              fontSize: 9,
-                              fontWeight: FontWeight.w700),
+                          style: Palette.subtitle1SemiBold
+                              .copyWith(color: Palette.gray600),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Text(
-                      "Nutripic",
-                      style: TextStyle(
-                        color: Palette.gray400,
-                        fontSize: 7,
-                      ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'Nutripic',
+                      style: Palette.caption1medium
+                          .copyWith(color: Palette.gray900),
                     ),
                   ],
                 ),
@@ -76,28 +71,23 @@ class DiaryCard extends StatelessWidget {
                 //게시글 별 메뉴바
                 IconButton(
                   onPressed: onPressed,
-                  icon: const Icon(
-                    Icons.more_vert,
-                    size: 20,
-                  ),
+                  icon: const Icon(Icons.more_vert, size: 20),
                 )
               ],
             ),
 
-            //사진
+            // 사진
             ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: //Image.file(
-                  //File(diary.imageUrl!),
-                  Image.network(
-                "https://cphoto.asiae.co.kr/listimglink/1/2020011513515297802_1579063912.jpg",
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                'https://cphoto.asiae.co.kr/listimglink/1/2020011513515297802_1579063912.jpg',
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.width,
                 fit: BoxFit.cover,
               ),
             ),
 
-            //게시글 부분
+            // 게시글 부분
             Container(
               padding: const EdgeInsets.all(5),
               alignment: Alignment.centerLeft,

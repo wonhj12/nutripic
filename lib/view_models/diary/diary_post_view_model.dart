@@ -41,13 +41,13 @@ class DiaryPostViewModel with ChangeNotifier {
   bool isCalendarVisible = false;
 
   /// 선택 가능한 시간 리스트
-  List<String> mealTimeList = ["아침", "점심", "저녁", "간식", "기타"];
+  List<String> mealTimeList = ['아침', '점심', '저녁', '간식', '기타'];
 
   /// 현재 선택된 시간 index
   int mealTime = -1;
 
   // 게시글
-  String inputText = " ";
+  String inputText = '';
 
   /// 이미지 파일 경로
   String? fileName;
@@ -57,7 +57,7 @@ class DiaryPostViewModel with ChangeNotifier {
 
   /// 게시 가능 확인 함수
   void checkPost() async {
-    bool check = imageUrl != null && mealTime != -1 && inputText != "";
+    bool check = imageUrl != null && mealTime != -1 && inputText != '';
     if (isPost != check) {
       isPost = check;
       notifyListeners();
@@ -139,7 +139,7 @@ class DiaryPostViewModel with ChangeNotifier {
 
       if (context.mounted) context.pop();
     } catch (e) {
-      debugPrint("게시물 추가 실패: $e");
+      debugPrint('게시물 추가 실패: $e');
     }
   }
 
@@ -155,7 +155,7 @@ class DiaryPostViewModel with ChangeNotifier {
 
       if (context.mounted) context.pop();
     } catch (e) {
-      debugPrint("게시물 수정 실패: $e");
+      debugPrint('게시물 수정 실패: $e');
     }
   }
 }
