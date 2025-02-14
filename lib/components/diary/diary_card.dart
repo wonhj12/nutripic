@@ -25,17 +25,16 @@ class DiaryCard extends StatelessWidget {
         // height: 460,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-            color: Palette.gray00,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
+          color: Palette.gray00,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Palette.gray100),
+          boxShadow: const [
+            BoxShadow(
               color: Palette.gray100,
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Palette.gray100,
-                blurRadius: 20,
-              )
-            ]),
+              blurRadius: 20,
+            )
+          ],
+        ),
         child: Column(
           children: [
             Row(
@@ -93,14 +92,9 @@ class DiaryCard extends StatelessWidget {
               alignment: Alignment.centerLeft,
               width: MediaQuery.of(context).size.width,
               height: diary.body!.length > 30 ? 70 : 50,
-              child: Text.rich(
-                TextSpan(
-                  text: diary.body,
-                  style: const TextStyle(
-                    color: Palette.gray600,
-                    fontSize: 8,
-                  ),
-                ),
+              child: Text(
+                diary.body ?? '',
+                style: Palette.caption1.copyWith(color: Palette.gray900),
               ),
             ),
           ],
