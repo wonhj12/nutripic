@@ -7,7 +7,7 @@ class CustomThemeData {
 
     // AppBar 테마
     appBarTheme: AppBarTheme(
-      titleTextStyle: Palette.body1.copyWith(color: Palette.gray800),
+      titleTextStyle: Palette.title2Medium.copyWith(color: Palette.gray800),
       centerTitle: true,
       scrolledUnderElevation: 0,
       foregroundColor: Palette.gray800,
