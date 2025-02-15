@@ -157,14 +157,15 @@ class _DiaryPostViewState extends State<DiaryPostView> {
                     child: TextFormField(
                       maxLines: null,
                       controller: textController,
-                      decoration: const InputDecoration(
-                        hintText: '메모 작성하기..',
-                        hintStyle: TextStyle(color: Palette.gray300),
+                      decoration: InputDecoration(
+                        hintText: '메모 작성하기...',
+                        hintStyle:
+                            Palette.body1.copyWith(color: Palette.gray300),
                         border: InputBorder.none,
                         fillColor: Colors.transparent,
                         filled: true,
                       ),
-                      style: const TextStyle(fontSize: 8),
+                      style: Palette.body1.copyWith(color: Palette.gray900),
                       textInputAction: TextInputAction.done,
                       onChanged: (text) {
                         diaryPostViewModel.updateInputText(text);

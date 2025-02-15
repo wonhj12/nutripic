@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -177,18 +178,27 @@ class API {
   /* Recipes */
 
   /// 레시피 가져오는 함수
-  static Future<dynamic> getRecipes() async {
+  static Future<List<int>> getRecipes() async {
     try {
       final response = await _getApi('/recipe/recommended');
 
       if (response != null) {
-        return response.data;
-      } else {
-        return ([]);
+        final data = response.data;
+        if (data[0].isEmpty && data[1].isEmpty) {
+          return List.generate(10, (_) => Random().nextInt(262));
+        } else {
+          final List<int> a =
+              (data[0] as List<dynamic>).map<int>((e) => e as int).toList();
+          final List<int> b =
+              (data[1] as List<dynamic>).map<int>((e) => e as int).toList();
+          return a + b;
+        }
       }
     } catch (e) {
       throw Exception('Failed to load recipes: $e');
     }
+
+    return List.generate(10, (_) => Random().nextInt(262));
   }
 
   static Future<dynamic> recipePreview(List<int> recipeIds) async {

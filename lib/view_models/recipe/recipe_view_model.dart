@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/objects/recipe.dart';
 import 'package:go_router/go_router.dart';
-import 'dart:math';
-
 import 'package:nutripic/utils/api.dart';
 
 class RecipeViewModel with ChangeNotifier {
@@ -39,37 +37,10 @@ class RecipeViewModel with ChangeNotifier {
   /// 레시피 전달하는 것.
   void updateRecipes() async {
     try {
-      final List<int> recipeIds = [];
-
-      final reconmmendedRecipes = await API.getRecipes();
-      if (reconmmendedRecipes != null) {
-        if (reconmmendedRecipes[0].length == 0 &&
-            reconmmendedRecipes[1].length == 0) {
-          final random = Random();
-          final Set<int> indices = {};
-
-          while (indices.length < 10) {
-            // 무한 루프 방지
-            indices.add(random.nextInt(30));
-          }
-          recipeIds.addAll(indices.toList());
-        } else {
-          final random = Random();
-          final Set<int> indices = {};
-
-          while (indices.length < 10) {
-            // 무한 루프 방지
-            indices.add(random.nextInt(22));
-          }
-          recipeIds.addAll(indices.toList());
-        }
-        final List<Recipe> recipes = await API.recipePreview(recipeIds);
-        recipeModel.saveRecipes(recipes);
-        notifyListeners();
-        return;
-      } else {
-        return;
-      }
+      final recipeIds = await API.getRecipes();
+      final List<Recipe> recipes = await API.recipePreview(recipeIds);
+      recipeModel.saveRecipes(recipes);
+      notifyListeners();
     } catch (e, stackTrace) {
       debugPrint('Error: $e');
       debugPrint('StackTrace: $stackTrace');
