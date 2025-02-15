@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/box_button.dart';
+import 'package:nutripic/components/common/box_button.dart';
 import 'package:nutripic/components/diary/calendar_scaffold.dart';
 import 'package:nutripic/components/diary/diary_card.dart';
 import 'package:nutripic/components/diary/diary_dialog.dart';

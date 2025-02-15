@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/camera/image_confirm_select.dart';
+import 'package:nutripic/components/refrigerator/image_confirm_select.dart';
 import 'package:nutripic/utils/palette.dart';
 
 /// Image Confirm Grid에서 사용되는 이미지

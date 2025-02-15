@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/camera/image_confirm_preview.dart';
+import 'package:nutripic/components/refrigerator/image_confirm_preview.dart';
 
 class ImageConfirmGrid extends StatelessWidget {
   /// 이미지 리스트

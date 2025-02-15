@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/button_tile.dart';
+import 'package:nutripic/components/user_info/button_tile.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/user_info/linked_providers.dart';

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/box_button.dart';
-import 'package:nutripic/components/camera/food_add_container.dart';
+import 'package:nutripic/components/common/box_button.dart';
+import 'package:nutripic/components/refrigerator/food_add_container.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
-import 'package:nutripic/components/main_button.dart';
+import 'package:nutripic/components/common/main_button.dart';
 import 'package:nutripic/utils/enums/box_button_type.dart';
 import 'package:nutripic/utils/enums/main_button_type.dart';
 import 'package:nutripic/utils/enums/storage_type.dart';
 import 'package:nutripic/utils/palette.dart';
-import 'package:nutripic/view_models/camera/camera_add_view_model.dart';
+import 'package:nutripic/view_models/refrigerator/camera_add_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CameraAddView extends StatelessWidget {
