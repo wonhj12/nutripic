@@ -6,10 +6,10 @@ import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
-import 'package:nutripic/view_models/refrigerator/camera_add_view_model.dart';
+import 'package:nutripic/view_models/refrigerator/recipe_add_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/camera_confirm_view_model.dart';
-import 'package:nutripic/view_models/refrigerator/camera_loading_fail_view_model.dart';
-import 'package:nutripic/view_models/refrigerator/camera_loading_view_model.dart';
+import 'package:nutripic/view_models/refrigerator/analyze_fail_view_model.dart';
+import 'package:nutripic/view_models/refrigerator/analyze_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/camera_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/food_edit_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
@@ -27,10 +27,10 @@ import 'package:nutripic/view_models/onboarding_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
-import 'package:nutripic/views/refrigerator/camera_add_view.dart';
+import 'package:nutripic/views/refrigerator/recipe_add_view.dart';
 import 'package:nutripic/views/refrigerator/camera_confirm_view.dart';
-import 'package:nutripic/views/refrigerator/camera_loading_fail_view.dart';
-import 'package:nutripic/views/refrigerator/camera_loading_view.dart';
+import 'package:nutripic/views/refrigerator/analyze_fail_view.dart';
+import 'package:nutripic/views/refrigerator/analyze_view.dart';
 import 'package:nutripic/views/refrigerator/food_edit_view.dart';
 import 'package:nutripic/views/diary/diary_record_view.dart';
 import 'package:nutripic/views/diary/diary_view.dart';
@@ -181,11 +181,11 @@ class AppRouter {
                       path: 'loading',
                       parentNavigatorKey: _rootNavigatorKey,
                       builder: (context, state) => ChangeNotifierProvider(
-                        create: (context) => CameraLoadingViewModel(
+                        create: (context) => AnalyzeViewModel(
                           cameraModel: cameraModel,
                           context: context,
                         ),
-                        child: const CameraLoadingView(),
+                        child: const AnalyzeView(),
                       ),
                     ),
                     // 분석 실패 화면
@@ -193,10 +193,10 @@ class AppRouter {
                       path: 'fail',
                       parentNavigatorKey: _rootNavigatorKey,
                       builder: (context, state) => ChangeNotifierProvider(
-                        create: (context) => CameraLoadingFailViewModel(
+                        create: (context) => AnalyzeFailViewModel(
                           context: context,
                         ),
-                        child: const CameraLoadingFailView(),
+                        child: const AnalyzeFailView(),
                       ),
                     ),
                     // 식재료 추가
@@ -204,12 +204,12 @@ class AppRouter {
                       path: 'add',
                       parentNavigatorKey: _rootNavigatorKey,
                       builder: (context, state) => ChangeNotifierProvider(
-                        create: (context) => CameraAddViewModel(
+                        create: (context) => RecipeAddViewModel(
                           refrigeratorModel: refrigeratorModel,
                           cameraModel: cameraModel,
                           context: context,
                         ),
-                        child: const CameraAddView(),
+                        child: const RecipeAddView(),
                       ),
                       routes: [
                         GoRoute(
