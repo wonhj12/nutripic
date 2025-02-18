@@ -6,7 +6,7 @@ import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
-import 'package:nutripic/view_models/refrigerator/recipe_add_view_model.dart';
+import 'package:nutripic/view_models/refrigerator/food_add_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/camera_confirm_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/analyze_fail_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/analyze_view_model.dart';
@@ -27,7 +27,7 @@ import 'package:nutripic/view_models/onboarding_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
-import 'package:nutripic/views/refrigerator/recipe_add_view.dart';
+import 'package:nutripic/views/refrigerator/food_add_view.dart';
 import 'package:nutripic/views/refrigerator/camera_confirm_view.dart';
 import 'package:nutripic/views/refrigerator/analyze_fail_view.dart';
 import 'package:nutripic/views/refrigerator/analyze_view.dart';
@@ -204,12 +204,12 @@ class AppRouter {
                       path: 'add',
                       parentNavigatorKey: _rootNavigatorKey,
                       builder: (context, state) => ChangeNotifierProvider(
-                        create: (context) => RecipeAddViewModel(
+                        create: (context) => FoodAddViewModel(
                           refrigeratorModel: refrigeratorModel,
                           cameraModel: cameraModel,
                           context: context,
                         ),
-                        child: const RecipeAddView(),
+                        child: const FoodAddView(),
                       ),
                       routes: [
                         GoRoute(

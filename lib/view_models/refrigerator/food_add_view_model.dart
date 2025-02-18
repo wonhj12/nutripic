@@ -6,11 +6,11 @@ import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/api.dart';
 import 'package:nutripic/utils/enums/storage_type.dart';
 
-class RecipeAddViewModel with ChangeNotifier {
+class FoodAddViewModel with ChangeNotifier {
   RefrigeratorModel refrigeratorModel;
   CameraModel cameraModel;
   BuildContext context;
-  RecipeAddViewModel({
+  FoodAddViewModel({
     required this.refrigeratorModel,
     required this.cameraModel,
     required this.context,

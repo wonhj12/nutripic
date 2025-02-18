@@ -8,15 +8,15 @@ import 'package:nutripic/utils/enums/box_button_type.dart';
 import 'package:nutripic/utils/enums/main_button_type.dart';
 import 'package:nutripic/utils/enums/storage_type.dart';
 import 'package:nutripic/utils/palette.dart';
-import 'package:nutripic/view_models/refrigerator/recipe_add_view_model.dart';
+import 'package:nutripic/view_models/refrigerator/food_add_view_model.dart';
 import 'package:provider/provider.dart';
 
-class RecipeAddView extends StatelessWidget {
-  const RecipeAddView({super.key});
+class FoodAddView extends StatelessWidget {
+  const FoodAddView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    RecipeAddViewModel recipeAddViewModel = context.watch<RecipeAddViewModel>();
+    FoodAddViewModel recipeAddViewModel = context.watch<FoodAddViewModel>();
 
     return CustomScaffold(
       appBar: CustomAppBar(
