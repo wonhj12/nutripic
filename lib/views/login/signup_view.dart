@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
-import 'package:nutripic/components/custom_single_child_scroll_view.dart';
-import 'package:nutripic/components/custom_text_field.dart';
-import 'package:nutripic/components/main_button.dart';
+import 'package:nutripic/components/common/custom_single_child_scroll_view.dart';
+import 'package:nutripic/components/common/custom_text_field.dart';
+import 'package:nutripic/components/common/main_button.dart';
 import 'package:nutripic/utils/enums/main_button_type.dart';
 import 'package:nutripic/utils/enums/text_field_type.dart';
 import 'package:nutripic/utils/palette.dart';

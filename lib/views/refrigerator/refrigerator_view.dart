@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_search_container.dart';
-import 'package:nutripic/components/box_button.dart';
+import 'package:nutripic/components/common/box_button.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_container.dart';
 import 'package:nutripic/components/refrigerator/refrigerator_select_container.dart';

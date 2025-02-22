@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/camera/recognized_food_tile.dart';
+import 'package:nutripic/components/refrigerator/recognized_food_tile.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/palette.dart';
 

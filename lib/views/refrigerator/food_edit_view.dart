@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
-import 'package:nutripic/components/custom_drop_down.dart';
-import 'package:nutripic/components/custom_text_field.dart';
-import 'package:nutripic/components/main_button.dart';
-import 'package:nutripic/view_models/camera/food_edit_view_model.dart';
+import 'package:nutripic/components/common/custom_drop_down.dart';
+import 'package:nutripic/components/common/custom_text_field.dart';
+import 'package:nutripic/components/common/main_button.dart';
+import 'package:nutripic/view_models/refrigerator/food_edit_view_model.dart';
 import 'package:provider/provider.dart';
 
 class FoodEditView extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/image_button.dart';
+import 'package:nutripic/components/common/image_button.dart';
 import 'package:nutripic/utils/enums/login_type.dart';
 
 class LinkedProviders extends StatelessWidget {

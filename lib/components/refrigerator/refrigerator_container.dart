@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/box_button.dart';
+import 'package:nutripic/components/common/box_button.dart';
 import 'package:nutripic/components/refrigerator/food_tile.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/enums/box_button_type.dart';

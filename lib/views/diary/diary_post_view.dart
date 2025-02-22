@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nutripic/components/diary/calendar_scaffold.dart';
-import 'package:nutripic/components/main_button.dart';
+import 'package:nutripic/components/common/main_button.dart';
 import 'package:nutripic/utils/enums/main_button_type.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
