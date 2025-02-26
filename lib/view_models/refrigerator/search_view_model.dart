@@ -5,7 +5,7 @@ class SearchViewModel with ChangeNotifier {
   RefrigeratorModel refrigeratorModel;
   BuildContext context;
 
-  SearchViewModel({required this.refrigeratorModel, required this.context}) {}
+  SearchViewModel({required this.refrigeratorModel, required this.context});
 
   TextEditingController controller = TextEditingController();
 
