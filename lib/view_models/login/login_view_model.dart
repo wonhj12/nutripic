@@ -41,7 +41,7 @@ class LoginViewModel with ChangeNotifier {
         break;
       // 애플
       case LoginType.apple:
-        // user = await _appleLogin();
+        user = await _appleLogin();
         break;
       default:
         break;
