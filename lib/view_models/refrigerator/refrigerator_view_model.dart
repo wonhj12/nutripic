@@ -100,6 +100,12 @@ class RefrigeratorViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  /// 검색 페이지 이동
+  void onTapSearch() async {
+    await context.push('/refrigerator/search');
+    notifyListeners();
+  }
+
   /// 카메라 호출 함수
   void onTapCamera() async {
     // 카메라 초기화

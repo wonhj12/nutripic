@@ -105,6 +105,41 @@ class API {
     return foods;
   }
 
+  /// 식재료를 검색하는 get 요청
+  static Future<List<Map<String, dynamic>>> getStorageSearch(
+      String keyword) async {
+    try {
+      final response = await _getApi(
+        '/storage/search',
+        queryParameters: {'keyword': keyword},
+        tokenRequired: false,
+      );
+
+      if (response != null) {
+        return (response.data as List)
+            .map((e) => e as Map<String, dynamic>)
+            .toList();
+      }
+    } catch (e) {
+      debugPrint('Error in getStorageSearch: $e');
+      throw Error();
+    }
+
+    return [];
+  }
+
+  /// 식재료 id로 DB에 식재료 추가하는 post 요청
+  static Future<void> postFoodsById(int id) async {
+    try {
+      await _postApi('/storage/add-by-id', jsonData: {
+        'foodIds': [id]
+      });
+    } catch (e) {
+      debugPrint('Error in postFoodsById: $e');
+      throw Error();
+    }
+  }
+
   /// 냉장고에 저장된 식재료를 삭제하는 delete 요청
   static Future<void> deleteFood(List<int> foodIds) async {
     try {

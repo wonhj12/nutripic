@@ -25,6 +25,7 @@ import 'package:nutripic/view_models/recipe/recipe_search_view_model.dart';
 import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
 import 'package:nutripic/view_models/onboarding_view_model.dart';
 import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
+import 'package:nutripic/view_models/refrigerator/search_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:nutripic/views/refrigerator/food_add_view.dart';
@@ -46,6 +47,7 @@ import 'package:nutripic/views/recipe/recipe_search_view.dart';
 import 'package:nutripic/views/recipe/recipe_view.dart';
 import 'package:nutripic/views/onboarding_view.dart';
 import 'package:nutripic/views/refrigerator/refrigerator_view.dart';
+import 'package:nutripic/views/refrigerator/search_view.dart';
 import 'package:nutripic/views/user_info/user_edit_view.dart';
 import 'package:nutripic/views/user_info/user_info_view.dart';
 import 'package:provider/provider.dart';
@@ -149,6 +151,18 @@ class AppRouter {
                     child: const RefrigeratorView(),
                   ),
                   routes: [
+                    // 검색
+                    GoRoute(
+                      path: 'search',
+                      parentNavigatorKey: _rootNavigatorKey,
+                      builder: (context, state) => ChangeNotifierProvider(
+                        create: (context) => SearchViewModel(
+                          refrigeratorModel: refrigeratorModel,
+                          context: context,
+                        ),
+                        child: const SearchView(),
+                      ),
+                    ),
                     // 카메라 사진 촬영
                     GoRoute(
                       path: 'camera',
