@@ -128,6 +128,18 @@ class API {
     return [];
   }
 
+  /// 식재료 id로 DB에 식재료 추가하는 post 요청
+  static Future<void> postFoodsById(int id) async {
+    try {
+      await _postApi('/storage/add-by-id', jsonData: {
+        'foodIds': [id]
+      });
+    } catch (e) {
+      debugPrint('Error in postFoodsById: $e');
+      throw Error();
+    }
+  }
+
   /// 냉장고에 저장된 식재료를 삭제하는 delete 요청
   static Future<void> deleteFood(List<int> foodIds) async {
     try {
