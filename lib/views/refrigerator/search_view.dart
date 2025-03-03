@@ -42,6 +42,23 @@ class SearchView extends StatelessWidget {
           onSubmitted: (_) => searchViewModel.search(),
         ),
       ),
+      body: ListView.separated(
+        padding: const EdgeInsets.only(top: 24),
+        itemCount: searchViewModel.searchedFoods.length,
+        itemBuilder: (context, index) => Container(
+          width: double.infinity,
+          height: 40,
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: Text(
+            searchViewModel.searchedFoods[index]['class2'],
+            style: Palette.body1,
+          ),
+        ),
+        separatorBuilder: (context, index) => const Divider(
+          color: Palette.gray100,
+          height: 1,
+        ),
+      ),
     );
   }
 }
