@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
+import 'package:nutripic/components/refrigerator/search_tile.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/refrigerator/search_view_model.dart';
 import 'package:provider/provider.dart';
@@ -45,14 +46,9 @@ class SearchView extends StatelessWidget {
       body: ListView.separated(
         padding: const EdgeInsets.only(top: 24),
         itemCount: searchViewModel.searchedFoods.length,
-        itemBuilder: (context, index) => Container(
-          width: double.infinity,
-          height: 40,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Text(
-            searchViewModel.searchedFoods[index]['class2'],
-            style: Palette.body1,
-          ),
+        itemBuilder: (context, index) => SearchTile(
+          title: searchViewModel.searchedFoods[index]['class2'],
+          onTap: () => searchViewModel.onTapFood(index),
         ),
         separatorBuilder: (context, index) => const Divider(
           color: Palette.gray100,
