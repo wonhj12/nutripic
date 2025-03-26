@@ -10,9 +10,15 @@ class RecipeSearchViewModel extends ChangeNotifier {
   RecipeSearchViewModel({
     required this.context,
     required this.recipeModel,
-  });
+  }) {
+    // 검색 결과 필터링
+    filterRecipes();
+  }
 
-  // 필요에 따라 추가적인 메서드 및 로직을 여기에 작성할 수 있습니다.
+  List<Recipe> filteredRecipes = [];
+
+  /// 검색된 레시피 이름
+  String query = '';
 
   void onTapDetail(Recipe recipe) async {
     try {
@@ -38,7 +44,19 @@ class RecipeSearchViewModel extends ChangeNotifier {
     }
   }
 
+  void filterRecipes() {
+    filteredRecipes = recipeModel.recipes
+        .where((recipe) => recipe.name.contains(query))
+        .toList();
+    notifyListeners();
+  }
+
   void onRecipeView() {
     context.go('/recipe');
+  }
+
+  void onTextChanged(String value) {
+    query = value;
+    filterRecipes();
   }
 }
