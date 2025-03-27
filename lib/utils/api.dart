@@ -273,6 +273,19 @@ class API {
     }
   }
 
+  /// 레시피 좋아요 처리
+  static Future<void> postRecipeBookmarkAdd(int id) async {
+    try {
+      await _postApi(
+        '/recipe/bookmark/add',
+        jsonData: jsonEncode({'recipeId': id}),
+      );
+    } catch (e) {
+      debugPrint('Error in postRecipeBookmarkAdd: $e');
+      throw Error();
+    }
+  }
+
   /* Diary */
 
   /// 한 달 다이어리 조회
