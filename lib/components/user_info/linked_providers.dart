@@ -46,8 +46,18 @@ class LinkedProviders extends StatelessWidget {
               : 'apple_disabled.svg',
           onTap: () {},
         ),
+        const SizedBox(width: 12),
 
         // 이메일
+        ImageButton(
+          width: 40,
+          height: 40,
+          radius: 20,
+          img: loginType == LoginType.email
+              ? 'email_enabled.svg'
+              : 'email_disabled.svg',
+          onTap: () {},
+        ),
       ],
     );
   }
