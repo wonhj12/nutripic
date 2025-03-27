@@ -29,19 +29,9 @@ class RecipeSearchViewModel extends ChangeNotifier {
     }
   }
 
-  void toggleFavorite(Recipe recipe) {
-    int index = recipeModel.recipes.indexOf(recipe);
-    if (index != -1) {
-      bool? currentFavorite = recipeModel.recipes[index].isFavorite;
-      debugPrint('Toggling favorite for ${recipe.name}: $currentFavorite');
-
-      // `currentFavorite`이 null인지 확인
-      recipeModel.recipes[index].isFavorite = !currentFavorite;
-      debugPrint(
-          'New favorite state: ${recipeModel.recipes[index].isFavorite}');
-
-      notifyListeners();
-    }
+  void toggleFavorite(int idx) {
+    filteredRecipes[idx].isFavorite = !filteredRecipes[idx].isFavorite;
+    notifyListeners();
   }
 
   void filterRecipes() {

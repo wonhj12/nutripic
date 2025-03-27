@@ -52,19 +52,12 @@ class RecipeViewModel with ChangeNotifier {
   }
 
 // 즐겨찾기 상태를 토글하는 메서드
-  void toggleFavorite(Recipe recipe) {
-    int index = recipeModel.recipes.indexOf(recipe);
-    if (index != -1) {
-      bool? currentFavorite = recipeModel.recipes[index].isFavorite;
-      debugPrint('Toggling favorite for ${recipe.name}: $currentFavorite');
+  void toggleFavorite(int index) async {
+    recipeModel.recipes[index].isFavorite =
+        !recipeModel.recipes[index].isFavorite;
+    // await API.postRecipeBookmarkAdd(recipeModel.recipes[index].id);
 
-      // `currentFavorite`이 null인지 확인
-      recipeModel.recipes[index].isFavorite = !currentFavorite;
-      debugPrint(
-          'New favorite state: ${recipeModel.recipes[index].isFavorite}');
-
-      notifyListeners();
-    }
+    notifyListeners();
   }
 
 // 필터 화면 이동

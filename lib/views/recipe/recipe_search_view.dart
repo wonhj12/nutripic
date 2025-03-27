@@ -170,8 +170,7 @@ class RecipeSearchView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return RecipeTile(
                         recipe: recipeSearchViewModel.filteredRecipes[index],
-                        like: () => recipeSearchViewModel.toggleFavorite(
-                            recipeSearchViewModel.filteredRecipes[index]),
+                        like: () => recipeSearchViewModel.toggleFavorite(index),
                         onTap: () => recipeSearchViewModel.onTapDetail(index),
                       );
                     },
