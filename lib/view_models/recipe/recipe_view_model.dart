@@ -53,11 +53,19 @@ class RecipeViewModel with ChangeNotifier {
 
 // 즐겨찾기 상태를 토글하는 메서드
   void toggleFavorite(int index) async {
-    recipeModel.recipes[index].isFavorite =
-        !recipeModel.recipes[index].isFavorite;
-    // await API.postRecipeBookmarkAdd(recipeModel.recipes[index].id);
+    try {
+      if (recipeModel.recipes[index].isFavorite) {
+        recipeModel.recipes[index].isFavorite = false;
+        await API.deleteRecipeBookmark(recipeModel.recipes[index].id);
+      } else {
+        recipeModel.recipes[index].isFavorite = true;
+        await API.postRecipeBookmarkAdd(recipeModel.recipes[index].id);
+      }
 
-    notifyListeners();
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error in toggleFavorite: $e');
+    }
   }
 
 // 필터 화면 이동
