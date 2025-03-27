@@ -336,6 +336,7 @@ class AppRouter {
                         ]),
                     GoRoute(
                       path: 'detail',
+                      parentNavigatorKey: _rootNavigatorKey,
                       builder: (context, state) => ChangeNotifierProvider(
                         create: (context) => RecipeDetailViewModel(
                           recipeModel: recipeModel,
