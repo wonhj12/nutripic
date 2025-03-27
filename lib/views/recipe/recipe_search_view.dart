@@ -64,7 +64,8 @@ class RecipeSearchView extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Padding(
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
             padding: const EdgeInsets.only(top: 20, bottom: 12),
             child: TextField(
               onChanged: recipeSearchViewModel.onTextChanged,
