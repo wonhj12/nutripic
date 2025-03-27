@@ -8,7 +8,8 @@ class UserInfoViewModel with ChangeNotifier {
   UserInfoViewModel({required this.userModel, required this.context});
 
   /// 프로필 수정 페이지로 이동
-  void onTapEdit() {
-    context.go('/user/edit');
+  void onTapEdit() async {
+    await context.push('/user/edit');
+    notifyListeners();
   }
 }

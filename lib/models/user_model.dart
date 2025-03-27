@@ -62,6 +62,10 @@ class UserModel with ChangeNotifier {
     createdAt = user.metadata.creationTime;
   }
 
+  void updateName(String name) {
+    this.name = name;
+  }
+
   /// 모델 데이터를 초기화하는 함수
   void reset() {
     uid = null;
