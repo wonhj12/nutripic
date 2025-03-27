@@ -273,7 +273,7 @@ class API {
     }
   }
 
-  /// 레시피 좋아요 처리
+  /// 레시피 북마크에 추가
   static Future<void> postRecipeBookmarkAdd(int id) async {
     try {
       await _postApi(
@@ -282,6 +282,19 @@ class API {
       );
     } catch (e) {
       debugPrint('Error in postRecipeBookmarkAdd: $e');
+      throw Error();
+    }
+  }
+
+  /// 레시피 북마크 삭제
+  static Future<void> deleteRecipeBookmark(int id) async {
+    try {
+      await _deleteApi(
+        '/recipe/bookmark/delete',
+        jsonData: jsonEncode({'recipeId': id}),
+      );
+    } catch (e) {
+      debugPrint('Error in deleteRecipeBookmark: $e');
       throw Error();
     }
   }
