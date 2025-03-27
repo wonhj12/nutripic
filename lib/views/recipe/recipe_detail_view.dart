@@ -32,7 +32,7 @@ class RecipeDetailView extends StatelessWidget {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(
-                recipeDetailViewModel.recipeModel.specificRecipe!.imageUrl,
+                recipeDetailViewModel.recipeModel.selectedRecipe!.imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
@@ -45,27 +45,27 @@ class RecipeDetailView extends StatelessWidget {
                 children: [
                   // 레시피 정보
                   RecipeInfo(
-                    recipe: recipeDetailViewModel.recipeModel.specificRecipe!,
+                    recipe: recipeDetailViewModel.recipeModel.selectedRecipe!,
                     onPressed: () => recipeDetailViewModel.toggleFavorite(
-                        recipeDetailViewModel.recipeModel.specificRecipe!),
+                        recipeDetailViewModel.recipeModel.selectedRecipe!),
                   ),
                   const SizedBox(height: 24),
 
                   // 재료 섹션
                   RecipeIngredient(
                       ingredients: recipeDetailViewModel
-                          .recipeModel.specificRecipe!.ingredient),
+                          .recipeModel.selectedRecipe!.ingredient),
                   const SizedBox(height: 36),
 
                   // 조리 단계 섹션
                   Column(
                     children: List.generate(
-                        recipeDetailViewModel.recipeModel.specificRecipe!
+                        recipeDetailViewModel.recipeModel.selectedRecipe!
                             .procedure.length, (index) {
                       return RecipeStepItem(
                         stepNumber: index + 1,
                         stepDescription: recipeDetailViewModel
-                            .recipeModel.specificRecipe!.procedure[index],
+                            .recipeModel.selectedRecipe!.procedure[index],
                       );
                     }),
                   ),

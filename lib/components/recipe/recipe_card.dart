@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:nutripic/objects/recipe.dart';
 import 'package:nutripic/utils/palette.dart';
-import 'package:nutripic/view_models/recipe/recipe_view_model.dart';
-import 'package:provider/provider.dart';
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
 
-  const RecipeCard({super.key, required this.recipe});
+  final Function() onTap;
+
+  final Function() like;
+
+  const RecipeCard(
+      {super.key,
+      required this.recipe,
+      required this.onTap,
+      required this.like});
 
   @override
   Widget build(BuildContext context) {
-    RecipeViewModel recipeViewModel = context.watch<RecipeViewModel>();
-
     return Material(
       color: Colors.transparent, // 리플 효과를 위해 투명하게 설정
       child: InkWell(
-        onTap: () {
-          recipeViewModel.onTapDetail(recipe);
-        },
+        onTap: onTap,
         child: Stack(
           children: [
             // 배경 이미지
@@ -91,9 +93,7 @@ class RecipeCard extends StatelessWidget {
                             : Palette.gray200,
                         size: 24,
                       ),
-                      onPressed: () {
-                        recipeViewModel.toggleFavorite(recipe);
-                      },
+                      onPressed: like,
                     ),
                   ],
                 ),

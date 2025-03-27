@@ -15,19 +15,13 @@ class RecipeViewModel with ChangeNotifier {
   }
 
   /// 레시피 상세 페이지로 이동
-  void onTapDetail(Recipe recipe) async {
+  void onTapDetail(int idx) async {
     try {
-      recipeModel.saveSpecificRecipe(recipe);
+      recipeModel.selectedRecipe = recipeModel.recipes[idx];
       context.go('/recipe/detail');
     } catch (e) {
       debugPrint('$e');
     }
-  }
-
-  void onTapAll() {
-    recipeModel.saveSpecificRecipe(Recipe(
-        id: 3, difficulty: 1, name: 'qwer', cookingTime: 2, imageUrl: 'asdf'));
-    context.go('/recipe/detail');
   }
 
   void onRecipeSearch() {
@@ -134,4 +128,3 @@ List<String> _foodFilters = [
   'potato',
 ];
 final List<String> _selectedFilters = []; // 선택된 필터 저장
-

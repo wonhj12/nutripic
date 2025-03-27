@@ -20,9 +20,9 @@ class RecipeSearchViewModel extends ChangeNotifier {
   /// 검색된 레시피 이름
   String query = '';
 
-  void onTapDetail(Recipe recipe) async {
+  void onTapDetail(int idx) async {
     try {
-      recipeModel.saveSpecificRecipe(recipe);
+      recipeModel.selectedRecipe = filteredRecipes[idx];
       context.go('/recipe/detail');
     } catch (e) {
       debugPrint('$e');

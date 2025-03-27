@@ -172,8 +172,7 @@ class RecipeSearchView extends StatelessWidget {
                         recipe: recipeSearchViewModel.filteredRecipes[index],
                         like: () => recipeSearchViewModel.toggleFavorite(
                             recipeSearchViewModel.filteredRecipes[index]),
-                        onTap: () => recipeSearchViewModel.onTapDetail(
-                            recipeSearchViewModel.filteredRecipes[index]),
+                        onTap: () => recipeSearchViewModel.onTapDetail(index),
                       );
                     },
                   ),
