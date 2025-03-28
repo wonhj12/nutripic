@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/components/user_info/button_tile.dart';
+import 'package:nutripic/components/user_info/bookmark_container.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
 import 'package:nutripic/components/refrigerator/food_tile.dart';
-import 'package:nutripic/components/user_info/saved_recipe_tile.dart';
 import 'package:nutripic/objects/food.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
@@ -80,26 +79,15 @@ class UserInfoView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                '관심 레시피',
+                '저장한 레시피',
                 style:
                     Palette.subtitle1SemiBold.copyWith(color: Palette.gray900),
               ),
             ),
             const SizedBox(height: 16),
 
-            const SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  SizedBox(width: 16),
-                  SavedRecipeTile(name: '샐러드', time: '5분', difficulty: '누구나'),
-                  SizedBox(width: 6),
-                  SavedRecipeTile(name: '파스타', time: '10분', difficulty: '누구나'),
-                  SizedBox(width: 6),
-                  SavedRecipeTile(name: '우동', time: '8분', difficulty: '누구나'),
-                  SizedBox(width: 16),
-                ],
-              ),
+            BookmarkContainer(
+              recipes: userInfoViewModel.recipeModel.bookmarkedRecipes,
             ),
             const SizedBox(height: 48),
 
@@ -138,27 +126,27 @@ class UserInfoView extends StatelessWidget {
             ),
             const SizedBox(height: 48),
 
-            /* 도움말 */
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                '도움말',
-                style:
-                    Palette.subtitle1SemiBold.copyWith(color: Palette.gray900),
-              ),
-            ),
-            const SizedBox(height: 16),
+            // /* 도움말 */
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 16),
+            //   child: Text(
+            //     '도움말',
+            //     style:
+            //         Palette.subtitle1SemiBold.copyWith(color: Palette.gray900),
+            //   ),
+            // ),
+            // const SizedBox(height: 16),
 
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: ButtonTile(title: '공지사항'),
-            ),
-            const SizedBox(height: 8),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: ButtonTile(title: 'FAQ'),
-            ),
-            const SizedBox(height: 32),
+            // const Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 16),
+            //   child: ButtonTile(title: '공지사항'),
+            // ),
+            // const SizedBox(height: 8),
+            // const Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 16),
+            //   child: ButtonTile(title: 'FAQ'),
+            // ),
+            // const SizedBox(height: 32),
           ],
         ),
       ),
