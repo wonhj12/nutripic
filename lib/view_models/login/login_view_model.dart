@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/utils/api.dart';
+import 'package:nutripic/utils/credentials.dart';
 import 'package:nutripic/utils/enums/login_type.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginViewModel with ChangeNotifier {
   UserModel userModel;
@@ -14,7 +12,6 @@ class LoginViewModel with ChangeNotifier {
   LoginViewModel({required this.userModel, required this.context});
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final kakao.UserApi _kakaoApi = kakao.UserApi.instance;
 
   bool isLoading = false;
 
@@ -67,28 +64,43 @@ class LoginViewModel with ChangeNotifier {
     try {
       // 카카오톡이 설치되어있으면 카카오톡으로 로그인 진행
       // 카카오톡이 없으면 카카오 계정으로 로그인 진행
-      if (await kakao.isKakaoTalkInstalled()) {
-        await _kakaoApi.loginWithKakaoTalk();
-      } else {
-        await _kakaoApi.loginWithKakaoAccount();
-      }
-      final kakaoUser = await _kakaoApi.me();
+      // if (await kakao.isKakaoTalkInstalled()) {
+      //   await _kakaoApi.loginWithKakaoTalk();
+      // } else {
+      //   await _kakaoApi.loginWithKakaoAccount();
+      // }
+      // final kakaoUser = await _kakaoApi.me();
 
-      // 카카오 userId 넘겨주면 firebase custom token 생성
-      final token = await API.postKakaoCustomToken(kakaoUser.id.toString());
+      // // 카카오 userId 넘겨주면 firebase custom token 생성
+      // final String token =
+      //     await API.postKakaoCustomToken(kakaoUser.id.toString());
+
+      // // Firebase 인증
+      // final UserCredential userCredential =
+      //     await _firebaseAuth.signInWithCustomToken(token);
+      // final User? user = userCredential.user;
+
+      // // 첫 카카오 로그인이면 기본 정보 등록
+      // if (userCredential.additionalUserInfo != null &&
+      //     userCredential.additionalUserInfo!.isNewUser) {
+      //   await API.postUser(user!.uid);
+      //   await user.updateDisplayName(kakaoUser.properties?['nickname']);
+      //   await user.updatePhotoURL(kakaoUser.properties?['profile_image']);
+      // }
+
+      final OAuthCredential credential = await kakaoCredential();
 
       // Firebase 인증
-      final userCredential = await _firebaseAuth.signInWithCustomToken(token);
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
       final user = userCredential.user;
 
-      // 첫 카카오 로그인이면 기본 정보 등록
-      if (userCredential.additionalUserInfo != null &&
-          userCredential.additionalUserInfo!.isNewUser) {
-        await user?.updateDisplayName(kakaoUser.properties?['nickname']);
-        await user?.updatePhotoURL(kakaoUser.properties?['profile_image']);
+      // 새 사용자면 db에 uid 등록
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        await API.postUser(user!.uid);
       }
 
-      return _firebaseAuth.currentUser;
+      return user;
     } catch (e) {
       debugPrint('Error in _kakaoLogin: $e');
       return null;
@@ -98,20 +110,7 @@ class LoginViewModel with ChangeNotifier {
   /// 구글 로그인
   Future<User?> _googleLogin() async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-      if (googleUser == null) {
-        return null;
-      }
-
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-
-      // OAuth credential 생성
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+      final OAuthCredential credential = await googleCredential();
 
       // Firebase 인증
       final userCredential =
@@ -138,19 +137,7 @@ class LoginViewModel with ChangeNotifier {
   /// 애플 개발자 계정 등록 후 사용 가능
   Future<User?> _appleLogin() async {
     try {
-      final AuthorizationCredentialAppleID appleCredential =
-          await SignInWithApple.getAppleIDCredential(
-        scopes: [
-          AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
-        ],
-      );
-
-      // OAuth credential 생성
-      final OAuthCredential credential = OAuthProvider('apple.com').credential(
-        accessToken: appleCredential.authorizationCode,
-        idToken: appleCredential.identityToken,
-      );
+      final OAuthCredential credential = await appleCredential();
 
       // Firebase 인증
       final userCredential =
