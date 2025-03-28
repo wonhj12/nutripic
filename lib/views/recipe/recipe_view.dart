@@ -68,7 +68,7 @@ class RecipeView extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          recipeViewModel.updateRecipes();
+          recipeViewModel.recipeModel.getRecipes();
         },
         child: PageView.builder(
           scrollDirection: Axis.vertical,
