@@ -15,19 +15,13 @@ class RecipeViewModel with ChangeNotifier {
   }
 
   /// 레시피 상세 페이지로 이동
-  void onTapDetail(Recipe recipe) async {
+  void onTapDetail(int idx) async {
     try {
-      recipeModel.saveSpecificRecipe(recipe);
+      recipeModel.selectedRecipe = recipeModel.recipes[idx];
       context.go('/recipe/detail');
     } catch (e) {
       debugPrint('$e');
     }
-  }
-
-  void onTapAll() {
-    recipeModel.saveSpecificRecipe(Recipe(
-        id: 3, difficulty: 1, name: 'qwer', cookingTime: 2, imageUrl: 'asdf'));
-    context.go('/recipe/detail');
   }
 
   void onRecipeSearch() {
@@ -58,18 +52,19 @@ class RecipeViewModel with ChangeNotifier {
   }
 
 // 즐겨찾기 상태를 토글하는 메서드
-  void toggleFavorite(Recipe recipe) {
-    int index = recipeModel.recipes.indexOf(recipe);
-    if (index != -1) {
-      bool? currentFavorite = recipeModel.recipes[index].isFavorite;
-      debugPrint('Toggling favorite for ${recipe.name}: $currentFavorite');
-
-      // `currentFavorite`이 null인지 확인
-      recipeModel.recipes[index].isFavorite = !currentFavorite;
-      debugPrint(
-          'New favorite state: ${recipeModel.recipes[index].isFavorite}');
+  void toggleFavorite(int index) async {
+    try {
+      if (recipeModel.recipes[index].isFavorite) {
+        recipeModel.recipes[index].isFavorite = false;
+        await API.deleteRecipeBookmark(recipeModel.recipes[index].id);
+      } else {
+        recipeModel.recipes[index].isFavorite = true;
+        await API.postRecipeBookmarkAdd(recipeModel.recipes[index].id);
+      }
 
       notifyListeners();
+    } catch (e) {
+      debugPrint('Error in toggleFavorite: $e');
     }
   }
 
@@ -134,4 +129,3 @@ List<String> _foodFilters = [
   'potato',
 ];
 final List<String> _selectedFilters = []; // 선택된 필터 저장
-

@@ -31,6 +31,4 @@ class RecipeDetailViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  // 필요에 따라 추가적인 메서드 및 로직을 여기에 작성할 수 있습니다.
 }

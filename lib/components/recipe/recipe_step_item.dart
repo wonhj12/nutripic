@@ -22,7 +22,8 @@ class RecipeStepItem extends StatelessWidget {
             stepNumber.toString(),
             style: Palette.recipeOrder,
           ),
-          const SizedBox(width: 12), // 간격 추가
+          const SizedBox(width: 8), // 간격 추가
+
           // 단계 설명
           Expanded(
             child: Text(

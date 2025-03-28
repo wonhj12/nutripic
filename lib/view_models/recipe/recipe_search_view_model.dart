@@ -10,35 +10,43 @@ class RecipeSearchViewModel extends ChangeNotifier {
   RecipeSearchViewModel({
     required this.context,
     required this.recipeModel,
-  });
+  }) {
+    // 검색 결과 필터링
+    filterRecipes();
+  }
 
-  // 필요에 따라 추가적인 메서드 및 로직을 여기에 작성할 수 있습니다.
+  List<Recipe> filteredRecipes = [];
 
-  void onTapDetail(Recipe recipe) async {
+  /// 검색된 레시피 이름
+  String query = '';
+
+  void onTapDetail(int idx) async {
     try {
-      recipeModel.saveSpecificRecipe(recipe);
+      recipeModel.selectedRecipe = filteredRecipes[idx];
       context.go('/recipe/detail');
     } catch (e) {
       debugPrint('$e');
     }
   }
 
-  void toggleFavorite(Recipe recipe) {
-    int index = recipeModel.recipes.indexOf(recipe);
-    if (index != -1) {
-      bool? currentFavorite = recipeModel.recipes[index].isFavorite;
-      debugPrint('Toggling favorite for ${recipe.name}: $currentFavorite');
+  void toggleFavorite(int idx) {
+    filteredRecipes[idx].isFavorite = !filteredRecipes[idx].isFavorite;
+    notifyListeners();
+  }
 
-      // `currentFavorite`이 null인지 확인
-      recipeModel.recipes[index].isFavorite = !currentFavorite;
-      debugPrint(
-          'New favorite state: ${recipeModel.recipes[index].isFavorite}');
-
-      notifyListeners();
-    }
+  void filterRecipes() {
+    filteredRecipes = recipeModel.recipes
+        .where((recipe) => recipe.name.contains(query))
+        .toList();
+    notifyListeners();
   }
 
   void onRecipeView() {
     context.go('/recipe');
+  }
+
+  void onTextChanged(String value) {
+    query = value;
+    filterRecipes();
   }
 }
