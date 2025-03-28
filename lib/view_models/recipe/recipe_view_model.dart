@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nutripic/models/recipe_model.dart';
 import 'package:nutripic/objects/recipe.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nutripic/utils/api.dart';
 
 class RecipeViewModel with ChangeNotifier {
   RecipeModel recipeModel;
@@ -11,7 +10,12 @@ class RecipeViewModel with ChangeNotifier {
     required this.recipeModel,
     required this.context,
   }) {
-    updateRecipes();
+    initialize();
+  }
+
+  void initialize() async {
+    await recipeModel.getRecipes();
+    notifyListeners();
   }
 
   /// 레시피 상세 페이지로 이동
@@ -32,19 +36,6 @@ class RecipeViewModel with ChangeNotifier {
 
   void onRecipeSearch() {
     context.go('/recipe/search');
-  }
-
-  /// 레시피 전달하는 것.
-  void updateRecipes() async {
-    try {
-      final recipeIds = await API.getRecipes();
-      final List<Recipe> recipes = await API.recipePreview(recipeIds);
-      recipeModel.saveRecipes(recipes);
-      notifyListeners();
-    } catch (e, stackTrace) {
-      debugPrint('Error: $e');
-      debugPrint('StackTrace: $stackTrace');
-    }
   }
 
   // 필터를 토글하는 메서드
@@ -134,4 +125,3 @@ List<String> _foodFilters = [
   'potato',
 ];
 final List<String> _selectedFilters = []; // 선택된 필터 저장
-
