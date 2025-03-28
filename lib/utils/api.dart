@@ -273,6 +273,25 @@ class API {
     }
   }
 
+  static Future<List<Recipe>> getBookmarkedRecipes() async {
+    try {
+      final response = await _getApi('/recipe/bookmark/view');
+
+      if (response != null) {
+        final recipes = (response.data as List)
+            .map((recipe) => Recipe.fromJson(recipe))
+            .toList();
+
+        return recipes;
+      }
+    } catch (e) {
+      debugPrint('Error in getBookmarkedRecipes: $e');
+      throw Error();
+    }
+
+    return [];
+  }
+
   /* Diary */
 
   /// 한 달 다이어리 조회
