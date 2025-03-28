@@ -4,8 +4,8 @@ import 'package:nutripic/utils/api.dart';
 
 class RecipeModel with ChangeNotifier {
   /// 레시피 모델
-  List<Recipe> recipes;
-  Recipe? specificRecipe;
+  List<Recipe> recipes = [];
+  Recipe? selectedRecipe;
 
   List<Recipe> bookmarkedRecipes = [];
 
@@ -32,7 +32,11 @@ class RecipeModel with ChangeNotifier {
     }
   }
 
-  void saveSpecificRecipe(Recipe recipe) {
-    specificRecipe = recipe;
+  void saveSelectedRecipe(Recipe recipe) {
+    selectedRecipe = recipe;
+  }
+
+  void saveRecipes(List<Recipe> recipeList) {
+    recipes = recipeList;
   }
 }

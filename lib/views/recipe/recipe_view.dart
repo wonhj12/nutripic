@@ -11,13 +11,6 @@ class RecipeView extends StatelessWidget {
   Widget build(BuildContext context) {
     RecipeViewModel recipeViewModel = context.watch<RecipeViewModel>();
 
-    if (recipeViewModel.recipeModel.recipes.isEmpty) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
     return Scaffold(
       extendBodyBehindAppBar: true, // Body를 AppBar 뒤로 확장
       appBar: AppBar(
@@ -82,7 +75,10 @@ class RecipeView extends StatelessWidget {
           itemCount: recipeViewModel.recipeModel.recipes.length,
           itemBuilder: (context, index) {
             return RecipeCard(
-                recipe: recipeViewModel.recipeModel.recipes[index]);
+              recipe: recipeViewModel.recipeModel.recipes[index],
+              onTap: () => recipeViewModel.onTapDetail(index),
+              like: () => recipeViewModel.toggleFavorite(index),
+            );
           },
         ),
       ),

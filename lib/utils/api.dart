@@ -292,6 +292,32 @@ class API {
     return [];
   }
 
+  /// 레시피 북마크에 추가
+  static Future<void> postRecipeBookmarkAdd(int id) async {
+    try {
+      await _postApi(
+        '/recipe/bookmark/add',
+        jsonData: jsonEncode({'recipeId': id}),
+      );
+    } catch (e) {
+      debugPrint('Error in postRecipeBookmarkAdd: $e');
+      throw Error();
+    }
+  }
+
+  /// 레시피 북마크 삭제
+  static Future<void> deleteRecipeBookmark(int id) async {
+    try {
+      await _deleteApi(
+        '/recipe/bookmark/delete',
+        jsonData: jsonEncode({'recipeId': id}),
+      );
+    } catch (e) {
+      debugPrint('Error in deleteRecipeBookmark: $e');
+      throw Error();
+    }
+  }
+
   /* Diary */
 
   /// 한 달 다이어리 조회
