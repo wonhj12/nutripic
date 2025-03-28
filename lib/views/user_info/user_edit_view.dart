@@ -228,7 +228,7 @@ class UserEditView extends StatelessWidget {
 
               // 회원탈퇴
               TextButton(
-                onPressed: () => {},
+                onPressed: userEditViewModel.deleteUser,
                 child: const Text('회원탈퇴'),
               ),
             ],
