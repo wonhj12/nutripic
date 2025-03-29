@@ -40,17 +40,18 @@ class UserModel with ChangeNotifier {
       loginType = LoginType.kakao;
     } else {
       final provider = user.providerData[0].providerId;
+      print(provider);
       switch (provider) {
         case 'password':
           loginType = LoginType.email;
           break;
-        case 'kakao':
+        case 'oidc.kakao':
           loginType = LoginType.kakao;
           break;
         case 'google.com':
           loginType = LoginType.google;
           break;
-        case 'apple':
+        case 'apple.com':
           loginType = LoginType.apple;
           break;
         default:
