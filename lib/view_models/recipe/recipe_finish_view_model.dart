@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nutripic/models/camera_model.dart';
 import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/objects/food.dart';
+import 'package:nutripic/utils/api.dart';
 import 'package:nutripic/utils/enums/storage_type.dart';
 
 class RecipeFinishViewModel extends ChangeNotifier {
@@ -71,5 +73,28 @@ class RecipeFinishViewModel extends ChangeNotifier {
   void onTapCabinet() {
     refrigeratorModel.storage = StorageType.room;
     notifyListeners();
+  }
+
+  /// 선택된 식재료 삭제
+  Future<void> deleteFoods() async {
+    try {
+      // 삭제할 식재료 아이디 API로 전달
+      final List<int> foodIds = filterSelectedFoods.map((e) => e.id).toList() +
+          filterSelectedExpiredFoods.map((e) => e.id).toList();
+      // Optimistic Update를 위해서 API 요청은 후처리로 진행
+      await API.deleteFood(foodIds);
+
+      // selectedFoods에 있는 식재료를 리스트에서 삭제
+      refrigeratorModel.foods[storage.rawValue]
+          .removeWhere((food) => filterSelectedFoods.contains(food));
+
+      // selectedExpiredFoods에 있는 식재료를 리스트에서 삭제
+      refrigeratorModel.expiredFoods[storage.rawValue]
+          .removeWhere((food) => filterSelectedExpiredFoods.contains(food));
+
+      context.go('/refrigerator');
+    } catch (e) {
+      debugPrint('Error on deleteFoods');
+    }
   }
 }
