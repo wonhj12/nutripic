@@ -13,7 +13,7 @@ class RecipeDetailViewModel extends ChangeNotifier {
   });
 
   void onRecipeFinish() {
-    context.go('/recipe/finish');
+    context.go('/recipe/detail/finish');
   }
 
   // 즐겨찾기 상태를 토글하는 메서드

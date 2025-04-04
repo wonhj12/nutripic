@@ -344,17 +344,20 @@ class AppRouter {
                         ),
                         child: const RecipeDetailView(),
                       ),
-                    ),
-                    GoRoute(
-                      path: 'finish',
-                      builder: (context, state) => ChangeNotifierProvider(
-                        create: (context) => RecipeFinishViewModel(
-                          refrigeratorModel: refrigeratorModel,
-                          cameraModel: cameraModel,
-                          context: context,
+                      routes: [
+                        GoRoute(
+                          path: 'finish',
+                          parentNavigatorKey: _rootNavigatorKey,
+                          builder: (context, state) => ChangeNotifierProvider(
+                            create: (context) => RecipeFinishViewModel(
+                              refrigeratorModel: refrigeratorModel,
+                              cameraModel: cameraModel,
+                              context: context,
+                            ),
+                            child: const RecipeFinishView(),
+                          ),
                         ),
-                        child: const RecipeFinishView(),
-                      ),
+                      ],
                     ),
                   ],
                 ),
