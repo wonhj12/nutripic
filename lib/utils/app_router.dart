@@ -372,6 +372,7 @@ class AppRouter {
                   builder: (context, state) => ChangeNotifierProvider(
                     create: (context) => UserInfoViewModel(
                       userModel: userModel,
+                      refrigeratorModel: refrigeratorModel,
                       recipeModel: recipeModel,
                       context: context,
                     ),

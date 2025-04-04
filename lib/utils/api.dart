@@ -210,6 +210,24 @@ class API {
     }
   }
 
+  /// 최근 사용한 식재료를 가져오는 get 요청
+  static Future<List<Food>> getRecentFoods() async {
+    List<Food> foods = [];
+
+    try {
+      final response = await _getApi('/storage/recent');
+      if (response != null) {
+        foods =
+            (response.data as List).map((food) => Food.fromJson(food)).toList();
+      }
+    } catch (e) {
+      debugPrint('Error in getRecentFoods: $e');
+      throw Error();
+    }
+
+    return foods;
+  }
+
   /* Recipes */
 
   /// 레시피 가져오는 함수
