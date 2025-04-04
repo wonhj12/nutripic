@@ -41,7 +41,7 @@ class RefrigeratorContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: foods.isEmpty
+      child: foods.isEmpty && expiredFoods.isEmpty
           // 식재료 리스트가 없으면 추가 버튼 생성
           ? Center(
               child: Column(
@@ -126,7 +126,7 @@ class RefrigeratorContainer extends StatelessWidget {
                   if (expiredFoods.isNotEmpty) const SizedBox(height: 30),
 
                   // 보유 식재료
-                  if (expiredFoods.isNotEmpty)
+                  if (foods.isNotEmpty)
                     Text(
                       '보유 식재료',
                       style: Palette.subtitle1Medium
