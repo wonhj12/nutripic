@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nutripic/components/user_info/bookmark_container.dart';
 import 'package:nutripic/components/common/custom_app_bar.dart';
 import 'package:nutripic/components/common/custom_scaffold.dart';
-import 'package:nutripic/components/refrigerator/food_tile.dart';
-import 'package:nutripic/objects/food.dart';
+import 'package:nutripic/components/user_info/recent_food_container.dart';
 import 'package:nutripic/utils/palette.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:provider/provider.dart';
@@ -102,27 +101,8 @@ class UserInfoView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  FoodTile(
-                    food: Food(
-                      id: 0,
-                      name: '당근',
-                      icon: 'carrot',
-                      class1: 'class1',
-                      class2: 'class2',
-                      addedDate: DateTime.now(),
-                      expireDate: DateTime.now(),
-                      expired: false,
-                    ),
-                    isSelected: false,
-                    isSelectable: false,
-                    select: (Food _) {},
-                  ),
-                ],
-              ),
+            RecentFoodContainer(
+              foods: userInfoViewModel.refrigeratorModel.recentFoods,
             ),
             const SizedBox(height: 48),
 

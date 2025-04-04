@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/models/recipe_model.dart';
+import 'package:nutripic/models/refrigerator_model.dart';
 import 'package:nutripic/models/user_model.dart';
 
 class UserInfoViewModel with ChangeNotifier {
   UserModel userModel;
+  RefrigeratorModel refrigeratorModel;
   RecipeModel recipeModel;
   BuildContext context;
 
   UserInfoViewModel({
     required this.userModel,
+    required this.refrigeratorModel,
     required this.recipeModel,
     required this.context,
   }) {
@@ -18,6 +21,7 @@ class UserInfoViewModel with ChangeNotifier {
 
   void initialize() async {
     await recipeModel.getBookmarkedRecipes();
+    await refrigeratorModel.getRecentFoods();
     notifyListeners();
   }
 

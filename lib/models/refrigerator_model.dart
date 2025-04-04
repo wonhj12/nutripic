@@ -21,6 +21,9 @@ class RefrigeratorModel with ChangeNotifier {
   /// 선택된 유통기한 임박 식재료
   Set<Food> selectedExpiredFoods = <Food>{};
 
+  /// 최근 사용한 식재료
+  List<Food> recentFoods = [];
+
   /// 모델을 초기화하는 함수
   void reset() {
     storage = StorageType.fridge;
@@ -28,6 +31,7 @@ class RefrigeratorModel with ChangeNotifier {
     expiredFoods = [[], [], []];
     selectedFoods.clear();
     selectedExpiredFoods.clear();
+    recentFoods = [];
   }
 
   /// 선택된 식재료 초기화
@@ -81,5 +85,11 @@ class RefrigeratorModel with ChangeNotifier {
     } catch (e) {
       debugPrint('Error on deleteFoods');
     }
+  }
+
+  /// 최근 사용한 식재료 가져오기
+  Future<void> getRecentFoods() async {
+    /// 서버에서 최근 사용한 식재료 가져오기
+    recentFoods = await API.getRecentFoods();
   }
 }
